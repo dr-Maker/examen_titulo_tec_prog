@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\tienda_virtual",
+    "\\tienda_virtual\\Assets",
+    "\\tienda_virtual\\Assets\\images",
+    "\\tienda_virtual\\Views",
+    "\\tienda_virtual\\Views\\Producto",
+    "\\tienda_virtual\\Views\\Shared",
+    "\\tienda_virtual\\Views\\Usuario"
+  ],
+  "SelectedNode": "\\tienda_virtual\\Views\\Shared\\section.cshtml",
+  "PreviewInSolutionExplorer": false
+}

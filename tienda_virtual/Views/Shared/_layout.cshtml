@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Assets/css/Style.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+    <header class="div_header d-flex">
+        <div class="d-flex">
+            <div class="logo">
+                <img src="~/Assets/images/logo.jpg" />
+            </div>
+            <div class="name-store">
+                <h1>NOMBRE TIENDA</h1>
+            </div>
+        </div>
+        <div class="head_menu">
+            <ul class="d-flex option_menu">
+                <li>
+                    <a href="#">inicio</a>
+                </li>
+
+                <li>
+                    <a href="#">categoria 1</a>
+                </li>
+
+                <li>
+                    <a href="#">categoria 2</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <hr />
+
+    <div class="d-flex">
+         @RenderBody()
+
+         @RenderSection("login", required: false)
+    </div>
+    <footer>
+        <p>Realizado por <span>Jonathan Venegas &copy;</span> <br /> para el <span>Examén de titulo AIEP</span> </p>
+    </footer>
+</body>
+</html>
