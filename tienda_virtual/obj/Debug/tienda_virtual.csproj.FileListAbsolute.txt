@@ -76,6 +76,7 @@ E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual
 E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual\tienda_virtual\bin\es\System.Web.WebPages.resources.dll
 E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual\tienda_virtual\bin\es\System.Web.WebPages.Deployment.resources.dll
 E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual\tienda_virtual\bin\es\System.Web.WebPages.Razor.resources.dll
+E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual\tienda_virtual\obj\Debug\tienda_virtual.csprojAssemblyReference.cache
 E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual\tienda_virtual\obj\Debug\tienda_virtual.csproj.CoreCompileInputs.cache
 E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual\tienda_virtual\obj\Debug\tienda_virtual.csproj.CopyComplete
 E:\Universidad\AIEP\Segundo año AIEP\Proyecto de Titulo\software\tienda_virtual\tienda_virtual\obj\Debug\tienda_virtual.dll

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace tienda_virtual.Controllers
+namespace tienda_virtual
 {
-    public class ProductoController : Controller
+    public class ProductController : Controller
     {
         // GET: Producto
         public ActionResult Index()

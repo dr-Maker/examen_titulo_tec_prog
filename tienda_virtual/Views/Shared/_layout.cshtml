@@ -1,6 +1,7 @@
 ﻿
+
 @{
-    Layout = null;
+    
 }
 
 <!DOCTYPE html>
@@ -24,26 +25,20 @@
         </div>
         <div class="head_menu">
             <ul class="d-flex option_menu">
+
                 <li>
                     <a href="#">inicio</a>
                 </li>
-
-                <li>
-                    <a href="#">categoria 1</a>
-                </li>
-
-                <li>
-                    <a href="#">categoria 2</a>
-                </li>
+                @RenderPage("~/Views/Category/Menu.cshtml")
             </ul>
         </div>
     </header>
+        
     <hr />
-
     <div class="d-flex">
-         @RenderBody()
+        @RenderPage("~/Views/User/Login.cshtml")
+        @RenderBody()
 
-         @RenderSection("login", required: false)
     </div>
     <footer>
         <p>Realizado por <span>Jonathan Venegas &copy;</span> <br /> para el <span>Examén de titulo AIEP</span> </p>

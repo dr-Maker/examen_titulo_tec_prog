@@ -16,5 +16,17 @@ namespace tienda_virtual
             RouteConfig.RegisterRoutes(RouteTable.Routes);
     
         }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            Session["user"] = "";
+            Session["role"] = "";
+        }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+            Session["user"] = "";
+            Session["role"] = "";
+        }
     }
 }
