@@ -1,0 +1,37 @@
+﻿
+@{
+    @model List<ProductModel>
+    List<CategoryModel> ListCategory = ViewBag.CategoryList;
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div class="w-100 height">
+    <h1 class="txt-center">Listado de Productos</h1>
+    @Html.ActionLink("Nuevo Producto", "Insert", "Product", new { @class = "mg-10 btn_new" })
+
+    <table class="tab">
+        <thead class="txt-center">
+            <tr>
+                <th>ID producto</th>
+                <th>Categoria</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Disponible</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody class="txt-center">
+            @foreach (var products in Model)
+            {
+                <tr>
+                    <td>@products.Id_product</td>
+                    <td>@products.Category</td>
+                    <td>@products.Name_product</td>
+                    <td>$ @products.Price</td>
+                    <td>@products.Stock unidades</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

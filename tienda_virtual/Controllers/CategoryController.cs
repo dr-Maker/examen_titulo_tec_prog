@@ -13,35 +13,44 @@ namespace tienda_virtual
         // GET: Category
         public ActionResult Index()
         {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
             return View();
+           
         }
 
 
         public ActionResult Categories()
         {
-           
+
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
             return View();
+
         }
 
         public ActionResult Register()
         {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
             return View();
+ 
         }
 
         [HttpPost]
         public ActionResult Register(FormCollection frm)
         {
-
+            
             CategoryModel obj = new CategoryModel();
             obj.Category = frm["category"].ToString();
             CategoryBuss.CategoryRegister(obj);
-            return RedirectToAction("Categories", "Category");
+            return RedirectToAction("Categories");
         }
 
 
         public ActionResult Menu()
         {
-
+          
             return View();
         }
 

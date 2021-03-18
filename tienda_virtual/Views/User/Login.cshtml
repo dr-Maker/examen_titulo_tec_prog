@@ -42,19 +42,16 @@
 
     }
 
-
-
-
     <ul>
         @if (@Session["role"] != null && @Session["role"].ToString() == "admin")
         {
 
             <li>
-                @Html.ActionLink("Registro de Categoria", "Register", "Category")
+                @Html.ActionLink("Registro de Categoria", "Categories", "Category")
 
             </li>
             <li>
-                <a href="#">Registro de Productos</a>
+                @Html.ActionLink("Registro de Productos", "Products", "Product")
             </li>
         }
         else

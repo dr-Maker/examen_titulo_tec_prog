@@ -13,12 +13,16 @@ namespace tienda_virtual
         // GET: Usuario
         public ActionResult Index()
         {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
             return View();
         }
 
 
         public ActionResult Register()
         {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
             return View();
         }
 

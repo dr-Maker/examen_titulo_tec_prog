@@ -36,6 +36,38 @@ CREATE TABLE usuario(
 )
 
 
+DROP TABLE producto
+
+CREATE TABLE producto
+(
+id_product INT IDENTITY(1000001,1) PRIMARY KEY,
+id_category INT NOT NULL,
+name_product VARCHAR(255) NOT NULL,
+brand VARCHAR(255) NOT NULL,
+size VARCHAR(15) NOT NULL,
+stock INT NOT NULL,
+price INT NOT NULL,
+pdto_description VARCHAR(500) DEFAULT 'Producto' NOT NULL,
+arribal_date DATETIME  NULL,
+imagen VARCHAR(500) DEFAULT 'not_photo.jpg'  NOT NULL,
+FOREIGN KEY (id_category) REFERENCES categoria(id_category)
+)
+
+
+SELECT * FROM categoria
+
+SELECT * FROM producto
+
+INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
+				    (101, 'Poleron Rojo','VANS','M', 10, 15000, GETDATE());
+INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
+				    (101, 'Poleron Azul','VANS','L', 10, 15000, GETDATE());
+INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
+				    (101, 'Poleron Amarillo','VANS','XL', 10, 15000, GETDATE());
+
+
+
+
 /******Procedimientos almacenados******/
 DROP PROCEDURE sp_insert_user
 
@@ -89,3 +121,34 @@ AS
 	select * from categoria
 GO
 
+sp_list_category
+
+
+truncate table categoria
+
+
+DROP PROCEDURE sp_list_products_by_category
+
+CREATE PROCEDURE sp_list_products_by_category
+AS
+/*hacer inner join con la categoria para poder llenar el objeto en la instacia del objeton negoccio Producto*/
+	SELECT * FROM producto
+GO
+
+DROP PROCEDURE sp_insert_product
+
+CREATE PROCEDURE sp_insert_product
+@category_id INT,
+@name VARCHAR(255),
+@brand VARCHAR(255),
+@size VARCHAR(15),
+@stock INT,
+@price INT
+AS
+INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
+				    (@category_id, @name, @brand, @size, @stock, @price , GETDATE());
+GO
+
+
+
+select * from categoria

@@ -7,8 +7,24 @@
     display: flex;
 }
 
+.mg-10 {
+margin-left:10%;
+}
+.w-100 {
+    width: 100%;
+}
+
+.mg-top-30{
+    margin-top:30px;
+}
+
+.height {
+    /***100% pantalla - Heder 88  - footer 36px  - border 1px en top y bot ****/
+    height: calc(100vh - 88px - 36px - 2px);
+}
+
 img {
-width: 100%;
+    width: 100%;
 }
 
 .txt-center {
@@ -22,7 +38,6 @@ li {
 a{
     text-decoration:none;
 }
-
 
 /***Header***/
 .div_header {
@@ -74,7 +89,15 @@ hr {
     padding: 0px;
 }
 
-/***Formulario***/
+/***Botones****/
+.btn_new {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+/***Formulario 1***/
 .label {
 width:100%;
 text-align:center;
@@ -91,6 +114,21 @@ text-align:center;
 
 .form_register {
 width:70%;
+}
+
+/***Formulario 2***/
+
+.form {
+    margin: 20px auto;
+    width:80%;
+}
+
+.f-label {
+    width: 35%;
+}
+
+.f-input {
+    width: 65%;
 }
 /***Main***/
 aside {
@@ -128,9 +166,28 @@ main, .div_remplace {
 
 /***Registro****/
 
-.register_img {
-width: 30%;
+/***Table***/
+.tab {
+    margin: 30px auto;
+    width: 80%;
+    border: 1px blue solid;
+    padding: 0;
+    border-collapse: collapse;
 }
+    .tab thead {
+        margin: 0 auto;
+        padding: 0;
+        background-color: blue;
+        color : white;
+
+    }
+    .tab tr td, .tab tr th {
+        border: 1px blue solid;
+    }
+    
+    .register_img {
+        width: 30%;
+    }
 /***Footer***/
 footer {
     background: rgba(66,65,67,1);

@@ -1,11 +1,15 @@
-﻿
-<li>
-    <a href="#">categoria 1</a>
-</li>
+﻿@{
+    List<CategoryModel> ListCategory = ViewBag.CategoryList;
+}
 
-<li>
-    <a href="#">categoria 2</a>
-</li>
-<li>
-    <a href="#">categoria 3</a>
-</li>
+
+@foreach (var item in ListCategory)
+{
+    <li>
+        <a href="#">@item.Category</a>
+    </li>
+}
+
+
+
+

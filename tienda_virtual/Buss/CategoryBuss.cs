@@ -22,18 +22,26 @@ namespace tienda_virtual
         }
 
 
-        public static List<CategoryModel>Categories()
+        public static List<CategoryModel> Categories()
         {
-            List<CategoryModel> category = new List<CategoryModel>();
-
-
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_list_category";
-            //db.GetQuery(cmd);
-            category.Add(new CategoryModel(1,"categoria zapatilla"));
-            category.Add(new CategoryModel(2, "categoria poleron"));
-            return category;
+
+            DataTable dt = db.GetQuery(cmd);
+            List<CategoryModel> lista = new List<CategoryModel>();
+
+            CategoryModel obj; 
+
+            foreach (DataRow row in dt.Rows)
+            {
+                obj = new CategoryModel();
+                obj.Id_category = int.Parse(row["id_category"].ToString());
+                obj.Category = row["name_category"].ToString();
+                lista.Add(obj);
+            }
+
+            return lista;
         }
 
     }

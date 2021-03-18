@@ -1,0 +1,30 @@
+﻿@{
+    List<CategoryModel> ListCategory = ViewBag.CategoryList;
+}
+
+<div class="w-100 height">
+
+<h1 class="txt-center">Bienvenido a las Categorias de Productos</h1>
+
+
+    @Html.ActionLink("Nueva Categoria", "Register", "Category", new { @class= "mg-10 btn_new" } )
+
+    <table class="tab">
+        <thead class="txt-center">
+            <tr>
+                <th>Id Categoría</th>
+                <th>Nombre de la Categoria</th>
+            </tr>
+        </thead>
+        <tbody class="txt-center">
+            @foreach (var item in ListCategory)
+            {
+
+                <tr>
+                    <td>@item.Id_category</td>
+                    <td>@item.Category</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -9,14 +9,6 @@ namespace tienda_virtual
     public static class Tools
     {
 
-        public static void categoryList()
-        {
-            /*
-            DataTable dt = CategoryBuss.Categories();
-
-            return dt;
-            */
-        }
 
  
     }
