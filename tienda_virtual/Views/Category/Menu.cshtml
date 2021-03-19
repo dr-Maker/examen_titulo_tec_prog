@@ -5,9 +5,10 @@
 
 @foreach (var item in ListCategory)
 {
-    <li>
-        <a href="#">@item.Category</a>
-    </li>
+<li>
+
+    @Html.ActionLink(@item.Category, "ProductsByCategory", new {  id = item.Id_category}  )
+</li>
 }
 
 

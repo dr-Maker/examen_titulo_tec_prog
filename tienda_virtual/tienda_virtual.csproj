@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -164,6 +165,8 @@
     <Content Include="Views\Category\Categories.cshtml" />
     <Content Include="Views\Product\products.cshtml" />
     <Content Include="Views\Product\Insert.cshtml" />
+    <Content Include="Views\Product\ProductsByCategory.cshtml" />
+    <Content Include="Views\Product\Product.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

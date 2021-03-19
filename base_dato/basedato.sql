@@ -125,15 +125,36 @@ sp_list_category
 
 
 truncate table categoria
+/*crear sp_ productos aleatorios*/
+
+
 
 
 DROP PROCEDURE sp_list_products_by_category
 
-CREATE PROCEDURE sp_list_products_by_category
+CREATE PROCEDURE sp_list_products_aleatory
 AS
 /*hacer inner join con la categoria para poder llenar el objeto en la instacia del objeton negoccio Producto*/
 	SELECT * FROM producto
 GO
+
+
+DROP PROCEDURE sp_list_products_by_category
+CREATE PROCEDURE sp_list_products_by_category
+@category INT
+AS
+/*hacer inner join con la categoria para poder llenar el objeto en la instacia del objeton negoccio Producto*/
+	SELECT * FROM producto WHERE id_category = @category
+GO
+
+DROP PROCEDURE sp_get_product
+CREATE PROCEDURE sp_get_product
+@id_product INT
+AS
+	SELECT * FROM producto WHERE id_product = @id_product
+GO
+
+
 
 DROP PROCEDURE sp_insert_product
 
@@ -143,12 +164,22 @@ CREATE PROCEDURE sp_insert_product
 @brand VARCHAR(255),
 @size VARCHAR(15),
 @stock INT,
-@price INT
+@price INT,
+@imagen VARCHAR(500)
 AS
-INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
-				    (@category_id, @name, @brand, @size, @stock, @price , GETDATE());
+INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date, imagen) VALUES 
+				    (@category_id, @name, @brand, @size, @stock, @price , GETDATE(), @imagen);
 GO
 
 
 
 select * from categoria
+
+UPDATE categoria SET name_category = 'Chaquetas' WHERE id_category = 104
+
+
+select * from categoria
+
+select * from producto
+
+sp_get_product 1000005

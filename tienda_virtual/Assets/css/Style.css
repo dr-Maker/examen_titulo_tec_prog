@@ -153,10 +153,28 @@ main, .div_remplace {
     margin: 20px;
 }
 
-    .pdto_img {
-        width: 300px;
-        margin: 0 auto;
-    }
+
+/***GetProduct****/
+.getProduct {
+    border: 2px black solid;
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.getProduct_container {
+    width: 20%;
+    border: 2px black solid;
+}
+.getProduct_container_info {
+    width:50%;
+    margin: 0 auto;
+}
+
+.pdto_img {
+    width: 300px;
+    margin: 0 auto;
+}
 
             .buy {
                 width: 30%;

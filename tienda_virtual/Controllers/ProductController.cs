@@ -13,8 +13,8 @@ namespace tienda_virtual
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            
-            return View();
+            List<ProductModel> productos = ProductBuss.Products();
+            return View(productos);
         }
                 
         public ActionResult Products()
@@ -29,6 +29,18 @@ namespace tienda_virtual
 
         }
 
+        public ActionResult ProductsByCategory(int id)
+        {
+
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            List<ProductModel> productos = ProductBuss.ProductsByCategory(id);
+
+            return View(productos);
+
+        }
+
         public ActionResult Insert()
         {
             List<CategoryModel> list = CategoryBuss.Categories();
@@ -36,8 +48,17 @@ namespace tienda_virtual
             return View();
         }
 
+        public ActionResult Product(int id) {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            ProductModel producto = ProductBuss.GetProduct(id);
+
+            return View(producto);
+        }
+
         [HttpPost]
-        public ActionResult Insert(FormCollection frm)
+        public ActionResult Insert(FormCollection frm, HttpPostedFileBase file)
         {
 
             ProductModel obj = new ProductModel();
@@ -48,10 +69,24 @@ namespace tienda_virtual
             obj.Stock = int.Parse(frm["stock"].ToString());
             obj.Price = int.Parse(frm["price"].ToString());
             obj.Pdto_description = frm["desciption"].ToString();
-            obj.Imagen = frm["img"].ToString();
+
+            if (file != null)
+            {
+
+                string name_file = (DateTime.Now.ToString("yyyyMMddHHmmss") + "-" + file.FileName).ToLower();
+                String route = Server.MapPath("~/Assets/uploads/");
+                route += name_file;
+                ProductBuss.UploadFile(route,file);
+                obj.Imagen = name_file;
+            }
+
+
             ProductBuss.Insert(obj);
 
             return RedirectToAction("Products", "Product");
         }
+
+
     }
+
 }
