@@ -13,9 +13,23 @@ margin-left:10%;
 .w-100 {
     width: 100%;
 }
-
+.w-80px {
+    width: 80px;
+}
+.mg-1px {
+    margin: 1px;
+}
+.mg-auto {
+    margin: 0 auto;
+}
 .mg-top-30{
     margin-top:30px;
+}
+.mg-top-3-auto-15-bottom {
+    margin: 3px auto 15px;
+}
+.dflex-s-around{
+    justify-content: space-around;
 }
 
 .height {
@@ -25,6 +39,7 @@ margin-left:10%;
 
 img {
     width: 100%;
+    max-height: 235px;
 }
 
 .txt-center {
@@ -120,16 +135,22 @@ width:70%;
 
 .form {
     margin: 20px auto;
-    width:80%;
+    width: 80%;
+ 
 }
 
 .f-label {
     width: 35%;
+    font-size: 1.2rem;
 }
 
 .f-input {
     width: 65%;
+    font: 1.5rem;
+    font-size: 1.2rem;
 }
+
+
 /***Main***/
 aside {
     width: 25%;
@@ -145,21 +166,25 @@ main, .div_remplace {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    background-color:rgba(29,117,189, 0.18);
 }
 
 .product {
-    border: 1px black solid;
     width: 350px;
     margin: 20px;
+    background: rgba(97,166,216,0.29);
+    border-radius: 10px ;
+    -webkit-box-shadow: 4px 4px 9px 0px #000000;
+    box-shadow: 4px 4px 9px 0px #000000;
 }
 
 
 /***GetProduct****/
 .getProduct {
-    border: 2px black solid;
     display: flex;
     width: 70%;
     margin: 0 auto;
+    border: 1px black solid;
 }
 
 .getProduct_container {
@@ -174,6 +199,7 @@ main, .div_remplace {
 .pdto_img {
     width: 300px;
     margin: 0 auto;
+    max-height:235px;
 }
 
             .buy {
@@ -216,3 +242,19 @@ footer {
     text-align: center;
     margin:0;
     }
+
+
+.enlace {
+background-color:red;
+}
+
+.indicator_page {
+    background-color: rgba(29,117,189, 0.18);
+}
+
+.oferta {
+    font-size: 3rem;
+    margin: 0;
+    padding: 8px;
+    background-color: rgba(157,170,181, 0.41);
+}

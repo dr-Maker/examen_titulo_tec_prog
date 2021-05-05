@@ -51,9 +51,7 @@ namespace tienda_virtual
         public ActionResult Product(int id) {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-
             ProductModel producto = ProductBuss.GetProduct(id);
-
             return View(producto);
         }
 
@@ -86,6 +84,7 @@ namespace tienda_virtual
             return RedirectToAction("Products", "Product");
         }
 
+        
 
     }
 

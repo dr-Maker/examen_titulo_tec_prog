@@ -40,7 +40,10 @@
 
             
             <div>
-                <button type="button">-</button><input type="number" value="1" /><button type="button">+</button><button>Añadir al Carro</button>
+                <button class="btn_sum_product" type="button">-</button><input class="" type="number" min="0" value="1" /><button class="btn_rest_product" type="button">+</button>
+
+                @Html.ActionLink("Añadir al Carro", "AddShoppingCart", "ShoppingCart", new { id = Model.Id_product}, null )
+                <button class="btn_shopping_cart"></button>
             </div>
         </div>
     </div>

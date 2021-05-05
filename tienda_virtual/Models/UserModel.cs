@@ -15,6 +15,7 @@ namespace tienda_virtual
         private string motherlastname;
         private string username;
         private DateTime birthday;
+        private int sex;
         private string email;
         private string region;
         private string provincia;
@@ -63,6 +64,6 @@ namespace tienda_virtual
         public string Password { get => password; set => password = value; }
         public DateTime Dateregister { get => dateregister; set => dateregister = value; }
         public string Role { get => role; set => role = value; }
-       
+        public int Sex { get => sex; set => sex = value; }
     }
 }

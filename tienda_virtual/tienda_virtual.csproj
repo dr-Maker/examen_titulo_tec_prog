@@ -117,26 +117,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Buss\CategoryBuss.cs" />
     <Compile Include="Buss\ProductBuss.cs" />
+    <Compile Include="Buss\ShoppingCartBuss.cs" />
     <Compile Include="Buss\UserBuss.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\HelperModel.cs" />
+    <Compile Include="Models\ComunaModel.cs" />
+    <Compile Include="Models\ParamsComuna.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProvinciaModel.cs" />
+    <Compile Include="Models\RegionModel.cs" />
+    <Compile Include="Models\ShoppingCartModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\Style.css" />
+    <Content Include="Assets\js\main.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -155,6 +163,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\uploads\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -167,6 +176,10 @@
     <Content Include="Views\Product\Insert.cshtml" />
     <Content Include="Views\Product\ProductsByCategory.cshtml" />
     <Content Include="Views\Product\Product.cshtml" />
+    <Content Include="Views\ShoppingCart\AddShoppingCart.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\Order.cshtml" />
+    <Content Include="Views\ShoppingCart\Orders.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

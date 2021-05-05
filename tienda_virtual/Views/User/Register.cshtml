@@ -2,6 +2,16 @@
 @{
     ViewBag.Title = "Registro";
     Layout = "~/Views/Shared/_layout.cshtml";
+
+    List<RegionModel> ListRegion = ViewBag.RegionList;
+    List<ProvinciaModel> ListProvincia = ViewBag.ProvinciaList;
+    List<ComunaModel> ListComuna = ViewBag.ComunaList;
+
+    if (TempData["id_region"] == null)
+    {
+        TempData["id_region"] = 0;
+    }
+
 }
 
 
@@ -13,73 +23,110 @@
         <form class="form" method="post">
             <div class="d-flex">
                 <label class="f-label">Primer Nombre</label>
-                <input class="f-input" type="text" name="first_name" placeholder="Ingrese su Nombre" />
+                <input class="f-input" type="text" name="first_name" placeholder="Ingrese su primer Nombre" />
             </div>
+            <br />
             <div class="d-flex">
                 <label class="f-label">Segundo Nombre</label>
-                <input class="f-input" type="text" name="second_name" placeholder="Ingrese su Nombre" />
+                <input class="f-input" type="text" name="second_name" placeholder="Ingrese su segundo Nombre" />
             </div>
+            <br />
             <div class="d-flex">
                 <label class="f-label">Apellido Paterno</label>
-                <input class="f-input" type="text" name="father_lastname" />
+                <input class="f-input" type="text" name="father_lastname" placeholder="Ingrese su Apellido Paterno" />
             </div>
+            <br />
             <div class="d-flex">
                 <label class="f-label">Apellido Materno</label>
-                <input class="f-input" type="text" name="mother_lastname" />
+                <input class="f-input" type="text" name="mother_lastname" placeholder="Ingrese su Apellido Materno" />
             </div>
+            <br />
+            <div class="d-flex">
+                <label class="f-label">Sexo</label>
+                <div class="f-radio">
+                    <input type="radio" name="sexo" value="0" />
+                    <label class="f-label">Femenino</label>
+                    <input type="radio" name="sexo" value="1" />
+                    <label class="f-label">Masculino</label>
+                </div>
+            </div>
+            <br />
             <div class="d-flex">
                 <label class="f-label">Password</label>
-                <input class="f-input" type="password" name="pass" />
+                <input class="f-input" type="password" name="pass" placeholder="Ingrese una Contraseña" />
             </div>
+            <br />
             <div class="d-flex">
-                <label class="f-label">usuario</label>
-                <input class="f-input" type="text" name="user" />
+                <label class="f-label">Nombre Usuario</label>
+                <input class="f-input" type="text" name="user" placeholder="Ingrese un nombre de usuario" />
             </div>
+            <br />
             <div class="d-flex">
                 <label class="f-label">Correo</label>
-                <input class="f-input" type="email" name="email" />
+                <input class="f-input" type="email" name="email" placeholder="Ingrese su correo" />
             </div>
-            <!--
-        <div>
+            <br />
+            <div class="d-flex">
+                <label class="f-label">Fecha de Nacimiento</label>
+                <input class="f-input" type="date" name="datebirth" placeholder="Ingrese su fecha de nacimiento" />
+            </div>
+            <br />
+            
+            <div class="d-flex address">
+                <label class="f-label">Región</label>
+                <select class="f-input" name="region" onchange="goChange();" placeholder="Seleccione su region">
 
-                <label class="label">Fecha Nacimiento</label>
-                <input class="input" type="text" name=""/>
-        </div>
-        <div>
-                <label class="label">Nombre Usuario</label>
-                <input class="input" type="text" />
-        </div>
+                    <option>Seleccione Región...</option>
+                    @foreach (var region in ListRegion)
+                    {
+                        if(TempData["id_region"].ToString() == region.Id_region.ToString())
+                        {
+                            <option selected value="@region.Id_region">@region.Nombre_region</option>
 
-        <div>
-                <label class="label">Region</label>
-                <input class="input" type="text" />
-        </div>
-        <div>
-                <label class="label">Provincia</label>
-                <input class="input" type="text" />
-        </div>
-        <div>
-                <label class="label">Comuna</label>
-                <input class="input" type="text" />
-        </div>
-        <div>
-                <label class="label">Direccion</label>
-                <input class="input" type="text" />
-        </div>
+                            TempData["id_region"] = region.Id_region.ToString();
+                        }
+                        else
+                        {
+                            <option value="@region.Id_region">@region.Nombre_region</option>
+                           
+                        }
 
-        <div>
+                    }
+                </select>
+            </div>       
 
-                <label class="label">Contraseña</label>
-                <input class="input" type="text" />
+            <br />
+            <div class="d-flex address">
+                <label class="f-label">Provincia</label>
+                <select class="f-input" name="provincia" placeholder="Seleccione su provincia">
+                    <option>Seleccione Provincia...</option>
 
-        </div>
+                    
+                    @foreach (var provincia in ListProvincia)
+                    {
+                        <option value="@provincia.Id_provincia">@provincia.Nombre_provincia</option>
+                    }
+                </select>
 
-        <div>
-                <label class="label">Repetir Contraseña</label>
-                <input class="input" type="text" />
-        </div>
+               
+            </div>
+            <br />
+            <div class="d-flex address">
+                <label class="f-label">Comuna</label>
+                <select class="f-input" name="comuna" placeholder="Seleccione su comuna">
+                    <option>Seleccione comuna...</option>
+                    @foreach (var comuna in ListComuna)
+                    {
+                    <option value="@comuna.Id_comuna">@comuna.Nombre_comuna</option>
+                    }
+                </select>
+            </div>
+            <br />
+            <div class="d-flex">
+                <label class="f-label">Direccion</label>
+                <input class="f-input" type="text" name="direccion" placeholder="Ingrese su dirección" />
+            </div>
 
-    -->
             <div class="d-flex">
                 <input class="btn_new mg-top-30" type="submit" value="Ingresar" />
             </div>

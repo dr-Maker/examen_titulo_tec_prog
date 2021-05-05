@@ -23,6 +23,18 @@ namespace tienda_virtual
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
+            List<RegionModel> listRegion = Tools.Region();
+            ViewBag.RegionList = listRegion;
+            List<ProvinciaModel> listProvincia = Tools.provincia();
+            ViewBag.ProvinciaList = listProvincia;
+            List<ComunaModel> listComuna = Tools.Comuna();
+            ViewBag.ComunaList = listComuna;
+            if (TempData["id_region"] == null) {
+                TempData["id_region"] = 0;
+            }
+
+
+
             return View();
         }
 
@@ -38,9 +50,17 @@ namespace tienda_virtual
             obj.Password = frm["pass"].ToString();
             obj.Username = frm["user"].ToString();
             obj.Email = frm["email"].ToString();
+            obj.Sex = int.Parse(frm["sexo"].ToString());
+            obj.Birthday = DateTime.Parse(frm["datebirth"].ToString());      
+            obj.Comuna = frm["comuna"].ToString();
+            obj.Addres = frm["direccion"].ToString();
+
             UserBuss.UserRegister(obj);
 
-
+            if (TempData["id_region"] == null)
+            {
+                TempData["id_region"] = 0;
+            }
 
             return RedirectToAction("Register", "User");
 

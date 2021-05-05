@@ -42,36 +42,39 @@
 
     }
 
-    <ul>
-        @if (@Session["role"] != null && @Session["role"].ToString() == "admin")
-        {
+        <ul>
+            @if (@Session["role"] != null && @Session["role"].ToString() == "admin")
+            {
 
-            <li>
-                @Html.ActionLink("Registro de Categoria", "Categories", "Category")
+                <li>
+                    @Html.ActionLink("Registro de Categoria", "Categories", "Category")
 
-            </li>
-            <li>
-                @Html.ActionLink("Registro de Productos", "Products", "Product")
-            </li>
-        }
-        else
-        {
-        }
+                </li>
+                <li>
+                    @Html.ActionLink("Registro de Productos", "Products", "Product")
+                </li>
+            }
+            else
+            {
+            }
 
 
-        @if (@Session["role"] != null && @Session["role"].ToString() == "user" || @Session["role"].ToString() == "admin")
-        {
-            <li>
-                <a href="#">Mis Productos</a>
-            </li>
-            <li>
-                @Html.ActionLink("Cerrar Sesión", "Logout", "User")
-            </li>
-        }
-        else
-        {
-        }
-    </ul>
+            @if (@Session["role"] != null && @Session["role"].ToString() == "user" || @Session["role"].ToString() == "admin")
+            {
+                <li>
+                    @Html.ActionLink("Mis Productos", "Index", "ShoppingCart")
+                </li>
+                <li>
+                    @Html.ActionLink("Mis Pedido", "Orders", "ShoppingCart")
+                </li>
+                <li>
+                    @Html.ActionLink("Cerrar Sesión", "Logout", "User")
+                </li>
+            }
+            else
+            {
+            }
+        </ul>
 
     <hr />
 

@@ -7,23 +7,25 @@
 }
 
 <main class="w-100 height">
-    <h1 class="txt-center">Venta de producto</h1>
+    <h1 class="txt-center">Venta de producto </h1>
 
     <div class="products">
 
         @foreach (var pdto in Model)
         {
         <div class="product">
-            @Html.ActionLink("enlace", "Product", new { id = pdto.Id_product })
-            <div class="pdto_img">
-                <img src="~/Assets/uploads/@pdto.Imagen.ToString()" />
-            </div>
+            <a href="@Url.Action("Product","Product", new { id = pdto.Id_product })">
 
-            <h2 class="txt-center">@pdto.Name_product</h2>
-            <p class="txt-center">@pdto.Price</p>
-            <div class="d-flex">
-                <button class="buy">comprar</button>
-            </div>
+                <div class="pdto_img">
+                    <img src="~/Assets/uploads/@pdto.Imagen.ToString()" />
+                </div>
+
+                <h2 class="txt-center">@pdto.Name_product</h2>
+                <p class="txt-center">@pdto.Price</p>
+            </a>
+                <div class="d-flex">
+                    @Html.ActionLink("Añadir al Carro", "AddShoppingCart", "ShoppingCart", new { id = pdto.Id_product }, null)
+                </div>
         </div>
         }
 

@@ -1,0 +1,81 @@
+﻿@{
+    @model ShoppingCartModel
+    List<CategoryModel> ListCategory = ViewBag.CategoryList;
+    Layout = "~/Views/Shared/_layout.cshtml";
+
+}
+
+
+
+<div class="w-100 height">
+
+    <h1 class="txt-center">Mi Canasta de Productos</h1>
+
+    <table class="tab">
+        <thead class="txt-center">
+            <tr>
+                <th>Id producto</th>
+                <th>Producto</th>
+                <th>nombre producto</th>
+                <th>precio</th>
+                <th>Cantidad</th>
+                <th>Sub Total</th>
+                <th>Acción</th>
+
+            </tr>
+        </thead>
+        <tbody class="txt-center">
+            @foreach (var item in Model.Productos)
+            {
+
+                <tr>
+                    <td><a href="@Url.Action("Product","Product", new { id = item.Id_product })">@item.Id_product</a></td>
+                    <td><div class="w-80px mg-auto"><img src="~/Assets/uploads/@item.Imagen" /></div></td>
+                    <td>@item.Name_product</td>
+                    <td>$ @item.Price</td>
+                    <td><button> - </button> @item.Cantidad <a href="@Url.Action("AddShoppingCart","ShoppingCart", new { id = item.Id_product })"> + </a></td>
+                    <td>$ 200.000</td>
+                    <td><a href="@Url.Action("DeleteProductShoppingCart","ShoppingCart",new { id = item.Id_product })">Eliminar</a></td>
+                </tr>
+
+            }
+            <tr>
+                <td colspan="2">Total</td>
+
+                <td colspan="5">$20.000</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
+
+    <h2 class="txt-center">Datos de Envío</h2>
+
+    <div class="d-flex">
+        <form class="form">
+            <div class="d-flex">
+                <label class="f-label">Región</label>
+                <input class="f-input" type="text" />
+            </div>
+            <div class="d-flex">
+                <label class="f-label" >Provincia</label>
+                <input class="f-input" type="text" />
+            </div>
+            <div class="d-flex">
+                <label class="f-label" >Comuna</label>
+                <input class="f-input" type="text" />
+            </div>
+            <div class="d-flex">
+                <label class="f-label" >Dirección</label>
+                <input class="f-input" type="text" />
+            </div>
+        </form>
+    </div>
+
+    <div class="d-flex dflex-s-around ">
+        <a href="@Url.Action("Index","Product")">Continuar Comprando</a>
+        <a href="@Url.Action("","")">Borrar todo</a>
+        <a href="@Url.Action("DoShopping","ShoppingCart")">Hacer Pedido</a>
+    </div>
+
+</div>

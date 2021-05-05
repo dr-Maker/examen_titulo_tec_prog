@@ -15,6 +15,7 @@ namespace tienda_virtual
         private string size;
         private int stock;
         private int price;
+        private int cantidad;
         private string pdto_description;
         private string imagen;
 
@@ -28,5 +29,6 @@ namespace tienda_virtual
         public int Price { get => price; set => price = value; }
         public string Pdto_description { get => pdto_description; set => pdto_description = value; }
         public string Imagen { get => imagen; set => imagen = value; }
+        public int Cantidad { get => cantidad; set => cantidad = value; }
     }
 }
