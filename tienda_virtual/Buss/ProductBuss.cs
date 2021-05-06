@@ -26,17 +26,20 @@ namespace tienda_virtual
 
             foreach (DataRow row in dt.Rows)
             {
+                
                 obj = new ProductModel();
                 obj.Id_product = int.Parse(row["id_product"].ToString());
-                obj.Category = int.Parse(row["id_category"].ToString());
+                obj.Category = new CategoryModel();
+                obj.Category.Id_category = int.Parse(row["id_category"].ToString());
+                obj.Category.Category = row["name_category"].ToString();
                 obj.Name_product = row["name_product"].ToString();
-                obj.Brand = row["brand"].ToString();
-                obj.Size = row["size"].ToString();
-                obj.Stock = int.Parse(row["stock"].ToString());
+                obj.Brand = new BrandModel();
+                obj.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
                 obj.Price = int.Parse(row["price"].ToString());
                 obj.Pdto_description = row["pdto_description"].ToString();
                 obj.Imagen = row["imagen"].ToString();
                 lista.Add(obj);
+                
             }
 
             return lista;
@@ -56,17 +59,19 @@ namespace tienda_virtual
 
             foreach (DataRow row in dt.Rows)
             {
+                
                 obj = new ProductModel();
                 obj.Id_product = int.Parse(row["id_product"].ToString());
-                obj.Category = int.Parse(row["id_category"].ToString());
+                obj.Category = new CategoryModel();
+                obj.Category.Id_category = int.Parse(row["id_category"].ToString());
                 obj.Name_product = row["name_product"].ToString();
-                obj.Brand = row["brand"].ToString();
-                obj.Size = row["size"].ToString();
-                obj.Stock = int.Parse(row["stock"].ToString());
+                obj.Brand = new BrandModel();
+                obj.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
                 obj.Price = int.Parse(row["price"].ToString());
                 obj.Pdto_description = row["pdto_description"].ToString();
                 obj.Imagen = row["imagen"].ToString();
                 lista.Add(obj);
+                
             }
 
             return lista;
@@ -83,15 +88,17 @@ namespace tienda_virtual
 
             if (dt != null && dt.Rows.Count > 0)
             {
+                
                 obj.Id_product = int.Parse(dt.Rows[0]["id_product"].ToString());
-                obj.Category = int.Parse(dt.Rows[0]["id_category"].ToString());
+                obj.Category = new CategoryModel();
+                obj.Category.Id_category = int.Parse(dt.Rows[0]["id_category"].ToString());
                 obj.Name_product = dt.Rows[0]["name_product"].ToString();
-                obj.Brand = dt.Rows[0]["brand"].ToString();
-                obj.Size = dt.Rows[0]["size"].ToString();
-                obj.Stock = int.Parse(dt.Rows[0]["stock"].ToString());
+                obj.Brand = new BrandModel();
+                obj.Brand.Id_marca = int.Parse(dt.Rows[0]["id_brand"].ToString());
                 obj.Price = int.Parse(dt.Rows[0]["price"].ToString());
                 obj.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
                 obj.Imagen = dt.Rows[0]["imagen"].ToString();
+                
             }
 
             return obj;
@@ -101,13 +108,12 @@ namespace tienda_virtual
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_insert_product";
-            cmd.Parameters.Add("@category_id", SqlDbType.Int).Value = obj.Category;
+            cmd.Parameters.Add("@category_id", SqlDbType.Int).Value = obj.Category.Id_category;
             cmd.Parameters.Add("@name", SqlDbType.VarChar, 255).Value = obj.Name_product;
-            cmd.Parameters.Add("@brand", SqlDbType.VarChar, 255).Value = obj.Brand;
-            cmd.Parameters.Add("@size", SqlDbType.VarChar, 255).Value = obj.Size;
-            cmd.Parameters.Add("@stock", SqlDbType.Int).Value = obj.Stock;
+            cmd.Parameters.Add("@brand_id", SqlDbType.Int).Value = obj.Brand.Id_marca;
             cmd.Parameters.Add("@price", SqlDbType.Int).Value = obj.Price;
-            cmd.Parameters.Add("@imagen", SqlDbType.VarChar, 500).Value = obj.Imagen;
+            cmd.Parameters.Add("@descrption", SqlDbType.VarChar, 255).Value = obj.Pdto_description;
+            cmd.Parameters.Add("@imagen", SqlDbType.VarChar, 500).Value =obj.Imagen;
             return db.Onlyquery(cmd);
         }
 

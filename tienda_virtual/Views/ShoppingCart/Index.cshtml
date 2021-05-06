@@ -32,8 +32,8 @@
                     <td><a href="@Url.Action("Product","Product", new { id = item.Id_product })">@item.Id_product</a></td>
                     <td><div class="w-80px mg-auto"><img src="~/Assets/uploads/@item.Imagen" /></div></td>
                     <td>@item.Name_product</td>
-                    <td>$ @item.Price</td>
-                    <td><button> - </button> @item.Cantidad <a href="@Url.Action("AddShoppingCart","ShoppingCart", new { id = item.Id_product })"> + </a></td>
+                    <td>$ 10.000</td>
+                    <td><button> - </button> 10 <a href="@Url.Action("AddShoppingCart","ShoppingCart", new { id = item.Id_product })"> + </a></td>
                     <td>$ 200.000</td>
                     <td><a href="@Url.Action("DeleteProductShoppingCart","ShoppingCart",new { id = item.Id_product })">Eliminar</a></td>
                 </tr>

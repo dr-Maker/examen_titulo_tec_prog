@@ -463,3 +463,30 @@ INSERT INTO sexo(nombre_sexo) values ('Femenino');
 INSERT INTO sexo(nombre_sexo) values ('Masculino');
 
 select * from sexo
+
+SELECT * from categoria
+
+SELECT * from marca
+INSERT INTO marca(brand) values ('Adidas');
+INSERT INTO marca(brand) values ('Nike');
+INSERT INTO marca(brand) values ('Umbro');
+INSERT INTO marca(brand) values ('Under Armour');
+INSERT INTO marca(brand) values ('New Balance');
+INSERT INTO marca(brand) values ('Brooks');
+
+
+INSERT INTO tipo_talla(tipo) values ('talla en letras');
+INSERT INTO tipo_talla(tipo) values ('talla de zapatillas');
+
+SELECT * from tipo_talla
+
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'XXS')
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'XS')
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'S')
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'M')
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'L')
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'XL')
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'XXL')
+INSERT INTO sizesProduct(id_tipo, size) values(1, 'N/A')
+
+select * from sizesProduct

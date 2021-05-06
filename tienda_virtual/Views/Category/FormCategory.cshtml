@@ -1,0 +1,23 @@
+﻿
+
+@{
+    @model List<ProductModel>
+    List<CategoryModel> ListCategory = ViewBag.CategoryList;
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div class="w-100 height">
+    <h1 class="txt-center">Modificar Categoria</h1>
+
+    <form class="form" method="post">
+        <div class="d-flex">
+            <label class="f-label">Categoria</label>
+            <input class="f-input" type="text" name="category" />
+        </div>
+        <div>
+            <input class="btn_new mg-top-30" type="submit" value="Registrar categoria" />
+        </div>
+
+    </form>
+
+</div>

@@ -40,7 +40,6 @@ namespace tienda_virtual
             DataTable dt = db.GetQuery(cmd);
 
             ShoppingCartModel obj = new ShoppingCartModel();
-            ProductModel producto;
             List<ProductModel> lista = new List<ProductModel>();
             List<ShoppingCartModel> lista_obj = new List<ShoppingCartModel>();
             foreach (DataRow row in dt.Rows)
@@ -48,7 +47,7 @@ namespace tienda_virtual
                 
                 obj.Id_cart = int.Parse(row["id_cesta"].ToString());
                 obj.Cantidad = int.Parse(row["cantidad"].ToString());
-
+                /*
                 producto = new ProductModel();
                 producto.Id_product = int.Parse(row["id_product"].ToString());
                 producto.Category = int.Parse(row["id_category"].ToString());
@@ -63,6 +62,8 @@ namespace tienda_virtual
                 producto.Id_product = int.Parse(row["id_product"].ToString());
                 lista.Add(producto);
                 obj.Productos = lista;
+                */
+                
 
             }
             return obj;

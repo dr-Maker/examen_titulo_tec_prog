@@ -14,16 +14,23 @@
             <tr>
                 <th>Id Categoría</th>
                 <th>Nombre de la Categoria</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody class="txt-center">
             @foreach (var item in ListCategory)
             {
 
-                <tr>
-                    <td>@item.Id_category</td>
-                    <td>@item.Category</td>
-                </tr>
+            <tr>
+                <td>@item.Id_category</td>
+                <td>@item.Category</td>
+                <!--Implementar Editar y Eliminar categoria-->
+                <td>
+                    @Html.ActionLink("Editar", "FormCategory", "Category", new { id = item.Id_category }, null); 
+                    @Html.ActionLink("Eliminar", "FormCategory", "Category", new {id = item.Id_category}, null );
+
+                </td>
+            </tr>
             }
         </tbody>
     </table>

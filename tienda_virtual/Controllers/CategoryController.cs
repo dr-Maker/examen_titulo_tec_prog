@@ -29,12 +29,22 @@ namespace tienda_virtual
 
         }
 
+
+        public ActionResult FormCategory(int id)
+        {
+
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+            return View();
+        }
+
+
+
         public ActionResult Register()
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             return View();
- 
         }
 
         [HttpPost]
@@ -49,8 +59,7 @@ namespace tienda_virtual
 
 
         public ActionResult Menu()
-        {
-          
+        {  
             return View();
         }
 

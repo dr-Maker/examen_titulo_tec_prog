@@ -1,40 +1,36 @@
 ﻿
 @{
+    @model List<ProductModel>
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
-    List<BrandModel> ListBrand = ViewBag.BrandList;
-
 }
 
-<div class="w-100 height">
 
-    <h1 class="txt-center">Ingresar un nuevo Producto </h1>
+<div class="w-100 height">
+    <h1 class="txt-center">Modificar productos</h1>
+
 
     <form class="form" method="post" enctype="multipart/form-data">
         <div class="d-flex">
             <label class="f-label">Category</label>
-            <select class="f-input" name="category_id" >
+            <select class="f-input" name="category_id">
                 <option>seleccione...</option>
                 @foreach (var item in ListCategory)
                 {
                     <option value="@item.Id_category">@item.Category</option>
-                 }
-                </select>
+                }
+            </select>
 
         </div>
         <div class="d-flex">
             <label class="f-label">Nombre del producto</label>
-            <input class="f-input" type="text" name="product"/>
+            <input class="f-input" type="text" name="product" />
         </div>
         <div class="d-flex">
-            <label class="f-label" >Marca</label>
+            <label class="f-label">Marca</label>
             <select class="f-input" name="brand">
                 <option>seleccione...</option>
-                @foreach (var item in ListBrand)
-                {
-                    <option value="@item.Id_marca">@item.Brand</option>
-
-                }
+              
             </select>
         </div>
         <div class="d-flex">
@@ -42,9 +38,9 @@
             <input class="f-input" type="number" name="price" />
 
         </div>
-       
+
         <div class="d-flex">
-            <label    class="f-label">Descripción</label>
+            <label class="f-label">Descripción</label>
             <textarea class="f-input" name="desciption"></textarea>
         </div>
         <div class="d-flex">
@@ -55,12 +51,6 @@
             <input class="btn_new mg-top-30" type="submit" value="Ingresar Producto" />
         </div>
     </form>
+
 </div>
-
-
-
-
-
-
-
 

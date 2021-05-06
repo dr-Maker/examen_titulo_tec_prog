@@ -15,35 +15,36 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    <div class="container_all">
+        <header class="div_header d-flex">
+            <div class="d-flex">
+                <div class="logo">
+                    <img src="~/Assets/images/logo.jpg" />
+                </div>
+                <div class="name-store">
+                    <h1>DREAM MAKER</h1>
+                </div>
+            </div>
+            <div class="head_menu">
+                <ul class="d-flex option_menu">
 
-    <header class="div_header d-flex">
+                    <li>
+                        @Html.ActionLink("Inicio", "Index", "Product")
+                    </li>
+                    @RenderPage("~/Views/Category/Menu.cshtml")
+                </ul>
+            </div>
+        </header>
+
+        <hr />
         <div class="d-flex">
-            <div class="logo">
-                <img src="~/Assets/images/logo.jpg" />
-            </div>
-            <div class="name-store">
-                <h1>NOMBRE TIENDA</h1>
-            </div>
-        </div>
-        <div class="head_menu">
-            <ul class="d-flex option_menu">
+            @RenderPage("~/Views/User/Login.cshtml")
+            @RenderBody()
 
-                <li>
-                    @Html.ActionLink("Inicio", "Index", "Product")
-                </li>
-                @RenderPage("~/Views/Category/Menu.cshtml")
-            </ul>
         </div>
-    </header>
-        
-    <hr />
-    <div class="d-flex">
-        @RenderPage("~/Views/User/Login.cshtml")
-        @RenderBody()
-
+        <footer>
+            <p>Realizado por <span>Jonathan Venegas &copy;</span> <br /> para el <span>Examén de titulo AIEP</span> </p>
+        </footer>
     </div>
-    <footer>
-        <p>Realizado por <span>Jonathan Venegas &copy;</span> <br /> para el <span>Examén de titulo AIEP</span> </p>
-    </footer>
 </body>
 </html>

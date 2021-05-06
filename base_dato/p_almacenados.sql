@@ -87,11 +87,11 @@ DROP PROCEDURE sp_list_products_aleatory
 CREATE PROCEDURE sp_list_products_aleatory
 AS
 /*hacer inner join con la categoria para poder llenar el objeto en la instacia del objeton negoccio Producto*/
-	SELECT * FROM producto ORDER BY id_product ASC OFFSET 0 ROWS FETCH NEXT 8 ROWS ONLY
+	SELECT * FROM producto
+	INNER JOIN categoria
+	ON producto.id_category = categoria.id_category
+	ORDER BY id_product ASC OFFSET 0 ROWS FETCH NEXT 6 ROWS ONLY
 GO
-
-
-
 
 
 
@@ -103,12 +103,14 @@ CREATE PROCEDURE sp_list_products_by_category
 AS
 /*hacer inner join con la categoria para poder llenar el objeto en la instacia del objeton negoccio Producto*/
 	SELECT * FROM producto WHERE id_category = @category
+	ORDER BY id_product ASC OFFSET 0 ROWS FETCH NEXT 6 ROWS ONLY
 GO
 
 
 
-/*** TRAE UN PRODUCTO  ***/
 
+
+/*** TRAE UN PRODUCTO  ***/
 
 DROP PROCEDURE sp_get_product
 CREATE PROCEDURE sp_get_product
@@ -117,10 +119,13 @@ AS
 	SELECT * FROM producto WHERE id_product = @id_product
 GO
 
+sp_get_product 1000003
+
+select * from producto
 
 
 
-/*** AGREGA UN PRODUCTO AL SISTEMA PARA ESTAR DISPONIBLE A LA VENTA ***/
+/*** AGREGA UN PRODUCTO AL SISTEMA  ***/
 
 
 DROP PROCEDURE sp_insert_product
@@ -128,15 +133,57 @@ DROP PROCEDURE sp_insert_product
 CREATE PROCEDURE sp_insert_product
 @category_id INT,
 @name VARCHAR(255),
-@brand VARCHAR(255),
-@size VARCHAR(15),
-@stock INT,
+@brand_id INT,
 @price INT,
+@descrption VARCHAR(255),
 @imagen VARCHAR(500)
 AS
-INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date, imagen) VALUES 
-				    (@category_id, @name, @brand, @size, @stock, @price , GETDATE(), @imagen);
+INSERT INTO producto(id_category, name_product, id_brand, price, pdto_description, arribal_date, imagen)
+VALUES              (@category_id , @name, @brand_id, @price, @descrption, GETDATE(), @imagen);
+
 GO
+
+sp_insert_product 101, 'producto franela', 1, 30000  ,'detalle' ,'not_photo.jpg'
+
+DROP TRIGGER Insert_Product_Stock 
+
+CREATE TRIGGER Insert_Product_Stock 
+on producto
+for INSERT
+AS 
+BEGIN
+DECLARE @id_producto INT;
+SELECT @id_producto = id_product FROM inserted
+INSERT INTO stocks_and_price(id_producto, stock, id_size)  VALUES ( @id_producto , 0 ,8)
+END
+
+
+select * from sizesProduct
+SELECT * FROM producto
+select * from stocks_and_price
+
+/*
+
+
+id_producto INT NOT NULL,
+stock INT NOT NULL,
+id_size INT NOT NULL,
+
+*/
+
+
+
+
+
+truncate table producto
+select * from producto
+select * from categoria
+select * from marca
+select * from sizesProduct
+
+update producto set imagen = 'not_photo.jpg' where id_product = 1000003
+
+
 
 
 
@@ -155,6 +202,41 @@ sp_get_product 1000005
 
 
 SELECT * FROM producto
+
+
+
+/*** Modifica STOCK A UN UN PRODUCTO DEL SISTEMA  ***/
+DROP PROCEDURE sp_edit_stock
+
+CREATE PROCEDURE sp_edit_stock
+AS
+	
+GO
+
+
+
+
+/*** MUESTRA LISTA DE STOCK PRODUCTO DEL SISTEMA  ***/
+DROP PROCEDURE sp_list_stock
+
+CREATE PROCEDURE sp_list_stock
+AS
+	SELECT * FROM producto 
+	INNER JOIN stocks_and_price
+	ON producto.id_product = stocks_and_price.id_producto
+	INNER JOIN sizesProduct
+	ON stocks_and_price.id_size = sizesProduct.id_size
+	INNER JOIN marca
+	ON marca.id_marca = producto.id_brand
+GO
+
+
+
+
+
+
+
+
 
 
 

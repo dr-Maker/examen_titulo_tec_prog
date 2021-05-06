@@ -16,7 +16,6 @@
                 <th>Categoria</th>
                 <th>Nombre</th>
                 <th>Precio</th>
-                <th>Disponible</th>
                 <th>Acciones</th>
 
             </tr>
@@ -24,13 +23,17 @@
         <tbody class="txt-center">
             @foreach (var products in Model)
             {
-                <tr>
-                    <td>@products.Id_product</td>
-                    <td>@products.Category</td>
-                    <td>@products.Name_product</td>
-                    <td>$ @products.Price</td>
-                    <td>@products.Stock unidades</td>
-                </tr>
+            <tr>
+                <td>@products.Id_product</td>
+                <td>@products.Category.Category</td>
+                <td>@products.Name_product</td>
+                <td>$ @products.Price</td>
+                <td>
+                    @Html.ActionLink("Editar", "FormProducts", "Product", new { id = products.Id_product } , null)
+                    @Html.ActionLink("Eliminar", "FormProducts", "Product", new { id = products.Id_product }, null)
+                </td>
+
+            </tr>
             }
         </tbody>
     </table>
