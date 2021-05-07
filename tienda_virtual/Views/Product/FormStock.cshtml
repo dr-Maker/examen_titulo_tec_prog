@@ -3,6 +3,7 @@
     @model List<ProductModel>
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
+    StockModel stock = ViewBag.Stock;
 }
 
 <div class="w-100 height">
@@ -11,11 +12,11 @@
     <form class="form" method="post">
         <div class="d-flex">
             <label class="f-label">Producto</label>
-            <input class="f-input" type="text" name="category" readonly />
+            <input class="f-input" type="text" name="category" readonly value="@stock.Producto.Name_product"/>
         </div>
         <div class="d-flex">
             <label class="f-label">Stock</label>
-            <input class="f-input" type="number" name="category" />
+            <input class="f-input" type="number" name="category" value="@stock.Stock"/>
         </div>
         <div class="d-flex">
             <label class="f-label">Tipo de Talla</label>
@@ -31,6 +32,9 @@
         </div>
         <div>
             <input class="btn_new mg-top-30" type="submit" value="Registrar categoria" />
+        </div>
+        <div>
+            <button>Cancelar</button>
         </div>
 
     </form>

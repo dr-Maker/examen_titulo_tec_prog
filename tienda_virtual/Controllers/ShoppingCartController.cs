@@ -21,7 +21,7 @@ namespace tienda_virtual
         {
 
             ShoppingCartModel obj = new ShoppingCartModel();
-            obj.Id_product = id;
+            obj.Id_cart = id;
             ShoppingCartBuss.AddShoppingCart(obj);
             //return RedirectToAction("Product","Product", new { id = id });
             return RedirectToAction("Index", "ShoppingCart");
@@ -30,7 +30,7 @@ namespace tienda_virtual
         public ActionResult DeleteProductShoppingCart(int id)
         {
             ShoppingCartModel obj = new ShoppingCartModel();
-            obj.Id_product = id;
+            obj.Id_cart = id;
             ShoppingCartBuss.DeleteProductShoppingCart(obj);
             return RedirectToAction("Index", "ShoppingCart");
         }

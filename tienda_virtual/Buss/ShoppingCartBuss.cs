@@ -16,7 +16,7 @@ namespace tienda_virtual
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_add_product_to_buy";
-            cmd.Parameters.Add("@id_pdto", SqlDbType.Int).Value = obj.Id_product;
+            cmd.Parameters.Add("@id_pdto", SqlDbType.Int).Value = obj.Id_cart;
 
             return db.Onlyquery(cmd);
         }
@@ -26,7 +26,7 @@ namespace tienda_virtual
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_delete_produt_to_buy";
-            cmd.Parameters.Add("@id_pdto", SqlDbType.Int).Value = obj.Id_product;
+            cmd.Parameters.Add("@id_pdto", SqlDbType.Int).Value = obj.Id_cart;
 
             return db.Onlyquery(cmd);
         }
@@ -36,34 +36,44 @@ namespace tienda_virtual
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_product_to_buy";
-            
+            cmd.Parameters.Add("@token", SqlDbType.VarChar,255).Value = "user001";
+
             DataTable dt = db.GetQuery(cmd);
 
             ShoppingCartModel obj = new ShoppingCartModel();
             List<ProductModel> lista = new List<ProductModel>();
+            //ProductModel item = new ProductModel();
             List<ShoppingCartModel> lista_obj = new List<ShoppingCartModel>();
+
             foreach (DataRow row in dt.Rows)
             {
-                
+
+
                 obj.Id_cart = int.Parse(row["id_cesta"].ToString());
+                obj.Token = row["token"].ToString();
                 obj.Cantidad = int.Parse(row["cantidad"].ToString());
-                /*
-                producto = new ProductModel();
-                producto.Id_product = int.Parse(row["id_product"].ToString());
-                producto.Category = int.Parse(row["id_category"].ToString());
-                producto.Name_product = row["name_product"].ToString();
-                producto.Brand = row["brand"].ToString();
-                producto.Size = row["size"].ToString();
-                producto.Stock = int.Parse(row["stock"].ToString());
-                producto.Price = int.Parse(row["price"].ToString());
-                producto.Cantidad = int.Parse(row["cantidad"].ToString());
-                producto.Pdto_description = row["pdto_description"].ToString();
-                producto.Imagen = row["imagen"].ToString();
-                producto.Id_product = int.Parse(row["id_product"].ToString());
-                lista.Add(producto);
+                obj.Subtotal = int.Parse(row["Sub_total"].ToString());
+
                 obj.Productos = lista;
-                */
-                
+
+
+                foreach (var item in lista)
+                {
+                    
+                    item.Id_product = int.Parse(row["producto_id"].ToString());    
+                    item.Category = new CategoryModel();
+                    item.Category.Id_category = int.Parse(row["id_category"].ToString());
+                    item.Pdto_description = row["name_product"].ToString();
+                    item.Brand = new BrandModel();
+                    item.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
+                    item.Price = int.Parse(row["price"].ToString());
+                    item.Pdto_description = row["pdto_description"].ToString();
+                    item.Imagen = row["imagen"].ToString();
+
+                    lista.Add(item);
+                }
+
+                lista_obj.Add(obj);
 
             }
             return obj;

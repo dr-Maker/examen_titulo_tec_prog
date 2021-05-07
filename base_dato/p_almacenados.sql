@@ -215,6 +215,25 @@ GO
 
 
 
+/*** Obtiene un producto STOCK A UN UN PRODUCTO DEL SISTEMA  ***/
+DROP PROCEDURE sp_get_stock
+
+CREATE PROCEDURE sp_get_stock
+@id_stock INT
+AS
+	SELECT * FROM producto 
+	INNER JOIN stocks_and_price
+	ON producto.id_product = stocks_and_price.id_producto
+	INNER JOIN sizesProduct
+	ON stocks_and_price.id_size = sizesProduct.id_size
+	INNER JOIN marca
+	ON marca.id_marca = producto.id_brand
+	WHERE id_stock_price = 2 @id_stock
+GO
+
+
+
+
 
 /*** MUESTRA LISTA DE STOCK PRODUCTO DEL SISTEMA  ***/
 DROP PROCEDURE sp_list_stock
@@ -298,6 +317,10 @@ BEGIN
 END
 GO
 
+sp_add_product_to_buy 1000003
+
+select * from producto 
+
 
 
 /*** Elimina los productos de un tipo A LA CANASTA ***/
@@ -318,22 +341,24 @@ DROP PROCEDURE sp_product_to_buy;
 
 
 CREATE PROCEDURE sp_product_to_buy
- @token VARCHAR(255) = 'user001'
+ @token VARCHAR(255)
 AS
 BEGIN
-
 	SELECT * FROM lista_productos 
 	INNER JOIN producto
 	ON lista_productos.producto_id = producto.id_product
 	WHERE token =  @token
-
 END
 GO
+
+sp_product_to_buy 'user001'
 
 sp_product_to_buy
 
 
+sp_product_to_buy 'user001'
 
+select * from lista_productos
 
 
 

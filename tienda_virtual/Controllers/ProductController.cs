@@ -40,16 +40,16 @@ namespace tienda_virtual
             return View(producto);
         }
 
-
         public ActionResult FormProducts(int id)
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            //ProductModel producto = ProductBuss.GetProduct(id);
-            return View(/*producto*/);
+
+            ProductModel producto = ProductBuss.GetProduct(id);
+            ViewBag.Producto = producto;
+
+            return View();
         }
-
-
 
         public ActionResult Insert()
         {
@@ -101,7 +101,11 @@ namespace tienda_virtual
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-           
+
+            StockModel stock = StockBuss.getStock(id);
+            ViewBag.Stock = stock;
+
+
             return View();
         }
 

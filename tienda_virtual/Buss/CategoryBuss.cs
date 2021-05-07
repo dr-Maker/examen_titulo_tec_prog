@@ -44,5 +44,29 @@ namespace tienda_virtual
             return lista;
         }
 
+
+        public static CategoryModel getCategory(int id)
+        {
+            SqlCommand cmd = new SqlCommand();
+            //cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT * FROM categoria Where id_category = " + id;
+
+            DataTable dt = db.GetQuery(cmd);
+
+            CategoryModel obj = new CategoryModel();
+
+            foreach (DataRow row in dt.Rows)
+            {
+
+                if(dt != null && dt.Rows.Count>0)
+                obj.Id_category = int.Parse(dt.Rows[0]["id_category"].ToString());
+                obj.Category = dt.Rows[0]["name_category"].ToString();
+                
+            }
+
+            return obj;
+        }
+
     }
 }

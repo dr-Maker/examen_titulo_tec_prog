@@ -35,6 +35,10 @@ namespace tienda_virtual
 
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
+
+            CategoryModel category = CategoryBuss.getCategory(id);
+            ViewBag.Category = category;
+
             return View();
         }
 

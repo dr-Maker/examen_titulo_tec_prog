@@ -134,18 +134,15 @@ FOREIGN KEY (id_size) REFERENCES sizesProduct(id_size)
 
 
 
-
-
-
-
-
+--
 DROP TABLE lista_productos;
 
 CREATE TABLE lista_productos(
 id_cesta INT IDENTITY(1000000001, 1) PRIMARY KEY,
 producto_id INT,
 token VARCHAR(500) DEFAULT 'user001' NOT NULL,
-cantidad INT DEFAULT 0 NOT NULL
+cantidad INT DEFAULT 0 NOT NULL,
+Sub_total INT DEFAULT 0 NOT NULL,
 FOREIGN KEY (producto_id) REFERENCES producto(id_product)
 )
 

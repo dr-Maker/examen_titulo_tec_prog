@@ -3,7 +3,7 @@ use db_tienda_virtual;
 /** Insert Producto **/
 
 
-SELECT * FROM categoria
+SELECT * FROM categoria Where id_category = 101
 
 SELECT * FROM producto
 
