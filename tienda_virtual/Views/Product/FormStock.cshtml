@@ -12,26 +12,40 @@
     <form class="form" method="post">
         <div class="d-flex">
             <label class="f-label">Producto</label>
-            <input class="f-input" type="text" name="category" readonly value="@stock.Producto.Name_product"/>
+            <input class="f-input" type="text" name="category" readonly value="@stock.Id_stock" />
         </div>
         <div class="d-flex">
-            <label class="f-label">Stock</label>
-            <input class="f-input" type="number" name="category" value="@stock.Stock"/>
+            <label class="f-label">Producto</label>
+            <input class="f-input" type="text" name="category" readonly value="@stock.Producto.Name_product" />
         </div>
-        <div class="d-flex">
-            <label class="f-label">Tipo de Talla</label>
-            <select class="f-input" >
-                <option>seleccione</option>
-            </select>
-        </div>
+
         <div class="d-flex">
             <label class="f-label">Talla</label>
-            <select class="f-input">
-                <option>seleccione</option>
-            </select>
+            <input class="f-input" type="text" name="category" readonly value="@stock.Size.Size" />
         </div>
+
+        <div class="d-flex">
+            <label class="f-label">Stock Actual</label>
+            <input class="f-input" type="number" name="category" readonly value="@stock.Stock" />
+        </div>
+
+        <div class="d-flex">
+            <label class="f-label">Nevo Stock</label>
+            <input class="f-input" type="number" name="category" />
+        </div>
+
+        <div class="d-flex">
+            <label class="f-label">Precio Actual</label>
+            <input class="f-input" type="number" name="category" readonly value="@stock.Price" />
+        </div>
+
+        <div class="d-flex">
+            <label class="f-label">Nuevo Precio</label>
+            <input class="f-input" type="number" name="category"  />
+        </div>
+
         <div>
-            <input class="btn_new mg-top-30" type="submit" value="Registrar categoria" />
+            <input class="btn_new mg-top-30" type="submit" value="Modificar Stock" />
         </div>
         <div>
             <button>Cancelar</button>

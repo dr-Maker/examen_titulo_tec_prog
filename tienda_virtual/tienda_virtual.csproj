@@ -188,6 +188,7 @@
     <Content Include="Views\Product\FormProducts.cshtml" />
     <Content Include="Views\Category\FormCategory.cshtml" />
     <Content Include="Views\Product\FormStock.cshtml" />
+    <Content Include="Views\Product\AddStock.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

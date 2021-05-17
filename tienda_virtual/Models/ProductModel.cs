@@ -13,6 +13,8 @@ namespace tienda_virtual
         private string name_product;
         private BrandModel brand;
         private int price;
+        private int cantidad;
+        private string talla;
         private string pdto_description;
         private DateTime arrabal_date;
         private string imagen;
@@ -25,10 +27,21 @@ namespace tienda_virtual
         public CategoryModel Category { get => category; set => category = value; }
         public string Name_product { get => name_product; set => name_product = value; }
         public BrandModel Brand { get => brand; set => brand = value; }
+        public int Cantidad { get => cantidad; set => cantidad = value; }
         public int Price { get => price; set => price = value; }
         public string Pdto_description { get => pdto_description; set => pdto_description = value; }
         public DateTime Arrabal_date { get => arrabal_date; set => arrabal_date = value; }
         public string Imagen { get => imagen; set => imagen = value; }
-        
+        public string Talla { get => talla; set => talla = value; }
+
+        public int TotalProducto(int precio, int cantidad)
+        {
+
+            return precio * cantidad;
+        }
+
+
     }
+
+
 }

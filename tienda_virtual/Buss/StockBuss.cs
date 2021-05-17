@@ -28,7 +28,7 @@ namespace tienda_virtual
 
                 obj = new StockModel();
 
-                obj.Id_stock = int.Parse(row["id_stock_price"].ToString());
+                obj.Id_stock = int.Parse(row["id_pdto_stock"].ToString());
 
                 obj.Producto = new ProductModel();
                 obj.Producto.Id_product = int.Parse(row["id_product"].ToString());
@@ -42,8 +42,10 @@ namespace tienda_virtual
                 obj.Size.Id_size = int.Parse(row["id_size"].ToString());
                 obj.Size.Size = row["size"].ToString();
 
+                obj.Price = int.Parse(row["price"].ToString());
+                obj.Stock = int.Parse(row["cantidad"].ToString());
 
-                obj.Stock = int.Parse(row["stock"].ToString());
+
                 lista.Add(obj);
             }
 
@@ -63,9 +65,9 @@ namespace tienda_virtual
 
 
            if (dt != null && dt.Rows.Count > 0)
-            { 
-
-                obj.Id_stock= int.Parse(dt.Rows[0]["id_stock_price"].ToString());
+            {
+                
+                obj.Id_stock= int.Parse(dt.Rows[0]["id_pdto_stock"].ToString());
 
                 obj.Producto = new ProductModel();
                 obj.Producto.Id_product= int.Parse(dt.Rows[0]["id_product"].ToString());
@@ -87,7 +89,7 @@ namespace tienda_virtual
 
                 obj.Producto.Imagen = dt.Rows[0]["imagen"].ToString();
 
-                obj.Stock = int.Parse(dt.Rows[0]["stock"].ToString());
+             
 
                 obj.Size = new SizeModel();
                 obj.Size.Id_size = int.Parse(dt.Rows[0]["id_size"].ToString());
@@ -98,6 +100,47 @@ namespace tienda_virtual
             return obj;
         }
 
+        public static List<StockModel> get_list_size(int id)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_get_list_size";
+            cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = id;
+
+            DataTable dt = db.GetQuery(cmd);
+
+            List<StockModel> lista = new List<StockModel>();
+
+            StockModel obj;
+
+            foreach (DataRow row in dt.Rows)
+            {
+
+                obj = new StockModel();
+
+                obj.Id_stock = int.Parse(row["id_pdto_stock"].ToString());
+
+                obj.Producto = new ProductModel();
+                obj.Producto.Id_product = int.Parse(row["id_product"].ToString());
+                obj.Producto.Name_product = row["name_product"].ToString();
+
+                obj.Producto.Brand = new BrandModel();
+                obj.Producto.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
+                obj.Producto.Brand.Brand = row["brand"].ToString();
+
+                obj.Size = new SizeModel();
+                obj.Size.Id_size = int.Parse(row["id_size"].ToString());
+                obj.Size.Size = row["size"].ToString();
+
+                obj.Price = int.Parse(row["price"].ToString());
+                obj.Stock = int.Parse(row["cantidad"].ToString());
+
+
+                lista.Add(obj);
+            }
+
+            return lista;
+        }
 
 
     }

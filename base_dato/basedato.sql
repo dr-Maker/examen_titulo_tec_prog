@@ -1,5 +1,4 @@
 --CREATE DATABASE db_tienda_virtual;
-
 use db_tienda_virtual;
 
 
@@ -59,27 +58,6 @@ CREATE TABLE usuario(
  )
 
 
-
- truncate table categoria
- truncate table producto 
-
- select * from categoria
-
- delete from categoria
- delete from producto
-
- ALTER TABLE categoria NOCHECK CONSTRAINT id_category
-
-DROP TABLE categoria;
-DROP TABLE producto
-
-
-
-
-select * from categoria
-select * from producto 
-
-
  CREATE TABLE categoria(
  id_category INT IDENTITY(101,1) PRIMARY KEY,
  name_category VARCHAR(255) NOT NULL
@@ -104,7 +82,6 @@ FOREIGN KEY (id_tipo) REFERENCES tipo_talla(id)
 )
 
 
-
 DROP TABLE producto
 CREATE TABLE producto
 (
@@ -112,7 +89,6 @@ id_product INT IDENTITY(1000001,1) PRIMARY KEY,
 id_category INT NOT NULL,
 name_product VARCHAR(255) NOT NULL,
 id_brand INT NOT NULL,
-price INT NOT NULL,
 pdto_description VARCHAR(500) DEFAULT 'Producto' NOT NULL,
 arribal_date DATETIME  NULL,
 imagen VARCHAR(500) DEFAULT 'not_photo.jpg'  NOT NULL,
@@ -120,30 +96,29 @@ FOREIGN KEY (id_category) REFERENCES categoria(id_category),
 FOREIGN KEY (id_brand) REFERENCES marca(id_marca),
 )
 
-
 DROP TABLE stocks_and_price
 
 CREATE TABLE stocks_and_price(
-id_stock_price  INT IDENTITY(1,1) PRIMARY KEY,
+id_pdto_stock  INT IDENTITY(1,1) PRIMARY KEY,
 id_producto INT NOT NULL,
-stock INT NOT NULL,
+price INT NOT NULL,
+cantidad INT DEFAULT 0 NOT NULL,
 id_size INT NOT NULL,
 FOREIGN KEY (id_producto) REFERENCES producto(id_product),
 FOREIGN KEY (id_size) REFERENCES sizesProduct(id_size)
 )
 
 
-
---
 DROP TABLE lista_productos;
-
 CREATE TABLE lista_productos(
 id_cesta INT IDENTITY(1000000001, 1) PRIMARY KEY,
-producto_id INT,
+id_pdto_stock INT,
+cantidad_lleva INT,
+precio_lleva INT,
 token VARCHAR(500) DEFAULT 'user001' NOT NULL,
-cantidad INT DEFAULT 0 NOT NULL,
 Sub_total INT DEFAULT 0 NOT NULL,
-FOREIGN KEY (producto_id) REFERENCES producto(id_product)
+Total INT DEFAULT 0 NOT NULL,
+FOREIGN KEY (id_pdto_stock) REFERENCES stocks_and_price(id_pdto_stock)
 )
 
 
@@ -154,11 +129,8 @@ id_persona
 Total 
 )
 
-
 CREATE TABLE pedidos (
-
 )
-
 
 
 select * from usuario

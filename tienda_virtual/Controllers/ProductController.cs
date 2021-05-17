@@ -13,7 +13,7 @@ namespace tienda_virtual
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            List<ProductModel> productos = ProductBuss.Products();
+            List<ProductModel> productos = ProductBuss.ProductsByAleatory();
             return View(productos);
         }
                 
@@ -22,7 +22,8 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<ProductModel> productos = ProductBuss.Products();
-            return View(productos);
+            ViewBag.ProductList = productos; 
+            return View();
         }
 
         public ActionResult ProductsByCategory(int id)
@@ -37,16 +38,23 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             ProductModel producto = ProductBuss.GetProduct(id);
+            List<StockModel> ListStock = StockBuss.get_list_size(id);
+            ViewBag.ListStock = ListStock;
             return View(producto);
         }
 
-        public ActionResult FormProducts(int id)
+        public ActionResult FormProducts(int id, string accion)
         {
+            ViewBag.action = accion;
+            ViewBag.idProduct = id;
+
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-
             ProductModel producto = ProductBuss.GetProduct(id);
             ViewBag.Producto = producto;
+
+            List<BrandModel> listMarcas = Tools.marcas();
+            ViewBag.MarcasList = listMarcas;
 
             return View();
         }
@@ -97,6 +105,15 @@ namespace tienda_virtual
             return View();
         }
 
+
+        public ActionResult AddStock()
+        {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            return View();
+        }
+
         public ActionResult FormStock(int id)
         {
             List<CategoryModel> list = CategoryBuss.Categories();
@@ -109,9 +126,29 @@ namespace tienda_virtual
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Editar(FormCollection frm)
+        {
+            ProductModel obj = new ProductModel();
+            obj.Id_product = int.Parse(frm["idProduct"].ToString());
+            obj.Category = new CategoryModel();
+            obj.Category.Id_category = int.Parse(frm["category_id"].ToString());
+            obj.Name_product = frm["nameproduct"].ToString();
+            obj.Brand = new BrandModel(); 
+            obj.Brand.Id_marca = int.Parse(frm["idbrand"].ToString());
+            obj.Pdto_description =  frm["desciption"].ToString();
+            ProductBuss.Update(obj);
+            return RedirectToAction("Products", "Product");
+        }
 
+        [HttpPost]
+        public ActionResult Eliminar(FormCollection frm)
+        {
 
-
+            int idProduct = int.Parse(frm["idProduct"].ToString());
+            ProductBuss.Eliminar(idProduct);
+            return RedirectToAction("Products", "Product"); 
+        }
 
     }
 

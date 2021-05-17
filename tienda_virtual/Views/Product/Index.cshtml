@@ -20,11 +20,10 @@
                     </div>
 
                     <h2 class="txt-center mg-1px">@pdto.Name_product</h2>
-                    <p class="txt-center mg-1px">$ 10.000</p>
+                    <h3 class="txt-center mg-1px">@pdto.Brand.Brand</h3>
+                    <p class="txt-center mg-1px">$ @pdto.Price</p>
                 </a>
-                <div class="d-flex">
-                    @Html.ActionLink("Añadir al Carro", "AddShoppingCart", "ShoppingCart", new { id = pdto.Id_product }, new { @class = "btn_new mg-top-3-auto-15-bottom" })
-                </div>
+            
             </div>
         }
      

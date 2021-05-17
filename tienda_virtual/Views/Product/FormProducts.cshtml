@@ -1,62 +1,126 @@
-﻿
-@{
+﻿@{
     @model List<ProductModel>
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
 
     ProductModel producto = ViewBag.Producto;
+
+    List<BrandModel> ListMarca = ViewBag.MarcasList;
+
+    int id_product = ViewBag.idProduct;
+    string action = ViewBag.action;
+    int idProduct = ViewBag.idProduct;
+    string selected;
+    string selectedMarca;
+    string optReadonly;
+    string btn_enviar;
+
+}
+@if (@action.Equals("Eliminar"))
+{
+    optReadonly = "readonly";
+    btn_enviar = "Eliminar Producto";
+}
+else
+{
+    optReadonly = string.Empty;
+    btn_enviar = "Modificar Producto";
 }
 
 
 <div class="w-100 height">
-    <h1 class="txt-center">Modificar productos</h1>
+    <h1 class="txt-center">@action productos</h1>
 
-
+    @using (Html.BeginForm(@action, "Product", FormMethod.Post))
+    {
     <form class="form" method="post" enctype="multipart/form-data">
-        <div class="d-flex">
-            <label class="f-label">Category</label>
-            <select class="f-input" name="category_id">
-                <option>seleccione...</option>
-                @foreach (var item in ListCategory)
-                {
-                    <option value="@item.Id_category">@item.Category</option>
-                }
-            </select>
 
-        </div>
+        <input type="hidden" name="idProduct" value="@id_product" />
+
+        @if (action != "Eliminar")
+        {
+
+
+            <div class="d-flex">
+                <label class="f-label">Category</label>
+                <select class="f-input" name="category_id">
+                    <option>seleccione...</option>
+                    @foreach (var item in ListCategory)
+                    {
+                        if (producto.Category.Id_category == item.Id_category)
+                        {
+                            selected = "selected";
+                        }
+                        else
+                        {
+                            selected = string.Empty;
+                        }
+                        <option @selected value="@item.Id_category">@item.Category</option>
+                    }
+                </select>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex">
+                <label class="f-label">Categoria</label>
+                <input class="f-input" type="text" name="category_id" @optReadonly value="@producto.Category.Id_category" />
+            </div>
+        }
         <div class="d-flex">
             <label class="f-label">Nombre del producto</label>
-            <input class="f-input" type="text" name="product" value="@producto.Name_product"/>
+            <input class="f-input" type="text" name="nameproduct" @optReadonly value="@producto.Name_product" />
         </div>
-        <div class="d-flex">
-            <label class="f-label">Marca</label>
-            <select class="f-input" name="brand">
-                <option>seleccione...</option>
-              
-            </select>
-        </div>
-        <div class="d-flex">
-            <label class="f-label">Precio</label>
-            <input class="f-input" type="number" name="price" value="@producto.Price" />
 
-        </div>
+        @if (action != "Eliminar")
+        {
+
+            <div class="d-flex">
+                <label class="f-label">Marca</label>
+                <select class="f-input" name="idbrand">
+                    <option>seleccione...</option>
+                    @foreach (var marca in ListMarca)
+                    {
+                        if (producto.Brand.Id_marca == marca.Id_marca)
+                        {
+                            selectedMarca = "selected";
+                        }
+                        else
+                        {
+                            selectedMarca = string.Empty;
+                        }
+                        <option @selectedMarca value="@marca.Id_marca">@marca.Brand</option>
+                    }
+                </select>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex">
+                <label class="f-label">Marca</label>
+                <input class="f-input" type="text" name="idbrand" @optReadonly value="@producto.Brand.Brand" />
+            </div>
+        }
 
         <div class="d-flex">
             <label class="f-label">Descripción</label>
-            <textarea class="f-input" name="desciption">@producto.Pdto_description </textarea>
+            <textarea class="f-input" name="desciption" @optReadonly>@producto.Pdto_description </textarea>
         </div>
-        <div>
-            <img src="~/Assets/uploads/@producto.Imagen.ToString()"/>
+        <div style="width:20%;">
+            <img src="~/Assets/uploads/@producto.Imagen.ToString()" />
         </div>
+        @if (action != "Eliminar")
+        {
+            <div class="d-flex">
+                <label class="f-label">Imagen</label>
+                <input class="f-input" type="file" name="file" />
+            </div>
 
-        <div class="d-flex">
-            <label class="f-label">Imagen</label>
-            <input class="f-input" type="file" name="file" />
-        </div>
+        }
         <div>
-            <input class="btn_new mg-top-30" type="submit" value="Ingresar Producto" />
+            <input class="btn_new mg-top-30" type="submit" value="@btn_enviar" />
         </div>
     </form>
-
+    }
 </div>
 

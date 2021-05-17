@@ -11,7 +11,10 @@ namespace tienda_virtual
         private int id_cart;
         private string token;
         private int cantidad;
+        private int precio;
         private int subtotal;
+        private int total;
+
         private List<ProductModel> productos;
         private UserModel usuario;
 
@@ -25,5 +28,11 @@ namespace tienda_virtual
         public string Token { get => token; set => token = value; }
         public int Cantidad { get => cantidad; set => cantidad = value; }
         public int Subtotal { get => subtotal; set => subtotal = value; }
+        public int Precio { get => precio; set => precio = value; }
+        public int Total { get => total; set => total = value; }
+
+      
+
     }
+
 }

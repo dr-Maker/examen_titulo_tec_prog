@@ -2,15 +2,21 @@ use db_tienda_virtual;
 
 /** Insert Producto **/
 
+/*
+pdto_description VARCHAR(500) DEFAULT 'Producto' NOT NULL,
+
+imagen VARCHAR(500) DEFAULT 'not_ph
+
+*/
 
 SELECT * FROM categoria Where id_category = 101
 
 SELECT * FROM producto
-
-INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
-				    (101, 'Poleron Rojo','VANS','M', 10, 15000, GETDATE());
-INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
-				    (101, 'Poleron Azul','VANS','L', 10, 15000, GETDATE());
+SELECT * FROM marca
+INSERT INTO producto(id_category, name_product,id_brand, price, arribal_date, imagen) VALUES 
+				    (101, 'Poleron Rojo',2, 15000, GETDATE(), 'imagen');
+INSERT INTO producto(id_category, name_product,id_brand, size,stock, price, arribal_date) VALUES 
+				    (101, 'Poleron Azul',5,'L', 10, 15000, GETDATE());
 INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal_date) VALUES 
 				    (101, 'Poleron Amarillo','VANS','XL', 10, 15000, GETDATE());
 
@@ -19,12 +25,13 @@ INSERT INTO producto(id_category, name_product,brand, size,stock, price, arribal
 
 
 
+select * from producto
 					
-INSERT INTO lista_productos(producto_id, cantidad) values(1000001, 1)
-INSERT INTO lista_productos(producto_id, cantidad) values(1000002, 1)
-INSERT INTO lista_productos(producto_id, cantidad) values(1000003, 1)
-INSERT INTO lista_productos(producto_id, cantidad) values(1000004, 1)
-INSERT INTO lista_productos(producto_id, cantidad) values(1000005, 1)
+INSERT INTO lista_productos(producto_id ) values(1000001 )
+INSERT INTO lista_productos(producto_id ) values(1000002 )
+INSERT INTO lista_productos(producto_id ) values(1000003 )
+INSERT INTO lista_productos(producto_id ) values(1000004 )
+INSERT INTO lista_productos(producto_id ) values(1000005 )
 
 
 
@@ -490,3 +497,22 @@ INSERT INTO sizesProduct(id_tipo, size) values(1, 'XXL')
 INSERT INTO sizesProduct(id_tipo, size) values(1, 'N/A')
 
 select * from sizesProduct
+
+
+INSERT INTO producto(id_category, name_product,id_brand, price, arribal_date, imagen) VALUES 
+				    (101, 'Poleron Rojo',2, 15000, GETDATE(), 'imagen');
+					INSERT INTO producto(id_category, name_product,id_brand, price, arribal_date, imagen) VALUES 
+				    (101, 'Poleron Verde',2, 15000, GETDATE(), 'imagen');
+
+
+SELECT * From producto
+select * from stocks_and_price
+
+--Nota si hago un drop de productos antes de 
+--ingresar un producto correr trigger Insert_Product_Stock
+
+
+UPDATE stocks_and_price SET stock = 20 WHERE id_stock_price = 1
+SELECT * From producto 
+UPDATE producto SET cantidad = 15 WHERE id_product = 1000003
+

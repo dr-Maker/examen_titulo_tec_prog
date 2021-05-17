@@ -14,12 +14,13 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             ShoppingCartModel obj = ShoppingCartBuss.GetShoppingCart();
-            return View(obj);
+            ViewBag.Shopping = obj;
+            ViewBag.ProductList = obj.Productos;
+            return View();
         }
 
         public ActionResult AddShoppingCart(int id)
         {
-
             ShoppingCartModel obj = new ShoppingCartModel();
             obj.Id_cart = id;
             ShoppingCartBuss.AddShoppingCart(obj);
@@ -34,7 +35,6 @@ namespace tienda_virtual
             ShoppingCartBuss.DeleteProductShoppingCart(obj);
             return RedirectToAction("Index", "ShoppingCart");
         }
-
 
 
         public ActionResult DoShopping()

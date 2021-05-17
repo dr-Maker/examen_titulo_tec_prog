@@ -68,5 +68,30 @@ namespace tienda_virtual
             return obj;
         }
 
+
+        public static bool EditCategory(CategoryModel obj)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_edit_category";
+            cmd.Parameters.Add("@id_category", SqlDbType.Int).Value = obj.Id_category;
+            cmd.Parameters.Add("@category", SqlDbType.VarChar, 255).Value = obj.Category;
+
+            return db.Onlyquery(cmd);
+
+        }
+
+        public static bool DeletedCategory(int id)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_deleted_category";
+            cmd.Parameters.Add("@id_category", SqlDbType.Int).Value = id;
+  
+
+            return db.Onlyquery(cmd);
+
+        }
+
     }
 }

@@ -15,14 +15,12 @@ namespace tienda_virtual
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            return View();
-           
+            return View();      
         }
 
 
         public ActionResult Categories()
         {
-
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             return View();
@@ -30,15 +28,14 @@ namespace tienda_virtual
         }
 
 
-        public ActionResult FormCategory(int id)
+        public ActionResult FormCategory(int id, string accion)
         {
-
+            ViewBag.action = accion;
+            ViewBag.idCategory = id;
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-
             CategoryModel category = CategoryBuss.getCategory(id);
             ViewBag.Category = category;
-
             return View();
         }
 
@@ -61,12 +58,29 @@ namespace tienda_virtual
             return RedirectToAction("Categories");
         }
 
+        [HttpPost]
+        public ActionResult Editar(FormCollection frm)
+        {
+            CategoryModel obj = new CategoryModel();
+            obj.Id_category = int.Parse(frm["id_category"].ToString());
+            obj.Category = frm["category"].ToString();
+            CategoryBuss.EditCategory(obj);
+            return RedirectToAction("Categories");
+        }
+
+        [HttpPost]
+        public ActionResult Eliminar(FormCollection frm)
+        {
+            
+            int idCategory = int.Parse(frm["id_category"].ToString());
+            CategoryBuss.DeletedCategory(idCategory);
+            return RedirectToAction( "Categories");
+        }
+
 
         public ActionResult Menu()
         {  
             return View();
         }
-
-
     }
 }

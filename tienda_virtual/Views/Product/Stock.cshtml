@@ -10,6 +10,9 @@
 <div class="w-100 height">
     <h1 class="txt-center">Stock de Productos</h1>
  
+    <div>
+        @Html.ActionLink("Agregar Talla", "AddStock", "Product")
+    </div>
     <table class="tab">
         <thead class="txt-center">
             <tr>
@@ -18,12 +21,11 @@
                 <th>Marca</th>
                 <th>Talla</th>
                 <th>Precio</th>
-                <th>tipo talla</th>
+                <th>Stock</th>
                 <th>Acciones</th>
 
             </tr>
         </thead>
-        <form  action="post">
             <tbody class="txt-center">
                 @foreach (var item in StockModel)
                 {
@@ -32,42 +34,15 @@
                     <td>@item.Producto.Name_product</td>
                     <td>@item.Producto.Brand.Brand</td>
                     <td>@item.Size.Size</td>
-                    <td>@item.Producto.Price</td>
-
-                    <td>
-                        <input type="checkbox" value="S" />
-                        <label> S</label>
-                        <br />
-                        <input type="checkbox" value="L" />
-                        <label> L</label>
-                        <br />
-                        <input type="checkbox" value="M" />
-                        <label> M</label>
-                        <br />
-                        <input type="checkbox" value="xxl" />
-                        <label> XL</label>
-                        <br />
-                        <input type="checkbox" value="xxl" />
-                        <label> XXL</label>
-                    </td>
-
-                    <td>
-                        <select>
-                            <option>tipo talla 1</option>
-                            <option>tipo talla 1</option>
-                        </select>
-                    </td>
+                    <td>@item.Price</td>
+                    <td>@item.Stock</td>
                     <td>
 
-                            <input type="submit" value="Agregar"/>
-                  
-          
-                            @Html.ActionLink("Modificar Stock", "FormStock", "Product", new { id = item.Id_stock }, null)
+                        @Html.ActionLink("Modificar Stock o Precio", "FormStock", "Product", new { id = item.Id_stock }, null)
 
                     </td>
                 </tr>
                 }
             </tbody>
-        </form>
     </table>
 </div>

@@ -41,41 +41,42 @@ namespace tienda_virtual
             DataTable dt = db.GetQuery(cmd);
 
             ShoppingCartModel obj = new ShoppingCartModel();
-            List<ProductModel> lista = new List<ProductModel>();
-            //ProductModel item = new ProductModel();
+            ProductModel item;
             List<ShoppingCartModel> lista_obj = new List<ShoppingCartModel>();
 
             foreach (DataRow row in dt.Rows)
             {
-
-
                 obj.Id_cart = int.Parse(row["id_cesta"].ToString());
                 obj.Token = row["token"].ToString();
-                obj.Cantidad = int.Parse(row["cantidad"].ToString());
                 obj.Subtotal = int.Parse(row["Sub_total"].ToString());
+                obj.Total = int.Parse(row["Total"].ToString());
+                List<ProductModel> lista = new List<ProductModel>(); 
 
-                obj.Productos = lista;
-
-
-                foreach (var item in lista)
+                for(int i = 0;   dt.Rows.Count -1>= i ; i++)
                 {
-                    
-                    item.Id_product = int.Parse(row["producto_id"].ToString());    
+                    item = new ProductModel();
+                    item.Id_product = int.Parse(dt.Rows[i]["id_producto"].ToString());    
                     item.Category = new CategoryModel();
-                    item.Category.Id_category = int.Parse(row["id_category"].ToString());
-                    item.Pdto_description = row["name_product"].ToString();
+                    item.Category.Id_category = int.Parse(dt.Rows[i]["id_category"].ToString());
+                    item.Name_product = dt.Rows[i]["name_product"].ToString();
                     item.Brand = new BrandModel();
-                    item.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
-                    item.Price = int.Parse(row["price"].ToString());
-                    item.Pdto_description = row["pdto_description"].ToString();
-                    item.Imagen = row["imagen"].ToString();
-
+                    item.Brand.Id_marca = int.Parse(dt.Rows[i]["id_brand"].ToString());
+                    item.Price = int.Parse(dt.Rows[i]["price"].ToString());
+                    item.Pdto_description = dt.Rows[i]["pdto_description"].ToString();
+                    item.Price = int.Parse(dt.Rows[i]["precio_lleva"].ToString());
+                    item.Cantidad = int.Parse(dt.Rows[i]["cantidad_lleva"].ToString());
+                    item.Talla = dt.Rows[i]["size"].ToString();
+                    item.Imagen = dt.Rows[i]["imagen"].ToString();
+              
                     lista.Add(item);
                 }
+
+                obj.Productos = lista;
 
                 lista_obj.Add(obj);
 
             }
+
             return obj;
         }
 

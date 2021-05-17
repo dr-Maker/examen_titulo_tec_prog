@@ -7,7 +7,7 @@
 <h1 class="txt-center">Bienvenido a las Categorias de Productos</h1>
 
 
-    @Html.ActionLink("Nueva Categoria", "Register", "Category", new { @class= "mg-10 btn_new" } )
+    @Html.ActionLink("Nueva Categoria", "Register", "Category", null, new { @class= "mg-10 btn_new" } )
 
     <table class="tab">
         <thead class="txt-center">
@@ -26,8 +26,8 @@
                 <td>@item.Category</td>
                 <!--Implementar Editar y Eliminar categoria-->
                 <td>
-                    @Html.ActionLink("Editar", "FormCategory", "Category", new { id = item.Id_category }, null); 
-                    @Html.ActionLink("Eliminar", "FormCategory", "Category", new {id = item.Id_category}, null );
+                    @Html.ActionLink("Editar", "FormCategory", "Category",  new { id = item.Id_category,  accion = "Editar"  }, null) 
+                    @Html.ActionLink("Eliminar", "FormCategory", "Category", new { id = item.Id_category, accion = "Eliminar"  }, null)
 
                 </td>
             </tr>

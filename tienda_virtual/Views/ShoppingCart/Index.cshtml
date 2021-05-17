@@ -2,7 +2,9 @@
     @model ShoppingCartModel
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
-
+    ShoppingCartModel Shopping = ViewBag.Shopping;
+    List<ProductModel> ProductoList = ViewBag.ProductList;
+ 
 }
 
 
@@ -14,42 +16,46 @@
     <table class="tab">
         <thead class="txt-center">
             <tr>
-                <th>Id producto</th>
+
+
                 <th>Producto</th>
-                <th>nombre producto</th>
-                <th>precio</th>
+                <th>Talla</th>
+                <th>Precio</th>
                 <th>Cantidad</th>
                 <th>Sub Total</th>
+
                 <th>Acción</th>
 
             </tr>
         </thead>
         <tbody class="txt-center">
-            @foreach (var item in Model.Productos)
-            {
-
-                <tr>
-                    <td><a href="@Url.Action("Product","Product", new { id = item.Id_product })">@item.Id_product</a></td>
-                    <td><div class="w-80px mg-auto"><img src="~/Assets/uploads/@item.Imagen" /></div></td>
-                    <td>@item.Name_product</td>
-                    <td>$ 10.000</td>
-                    <td><button> - </button> 10 <a href="@Url.Action("AddShoppingCart","ShoppingCart", new { id = item.Id_product })"> + </a></td>
-                    <td>$ 200.000</td>
-                    <td><a href="@Url.Action("DeleteProductShoppingCart","ShoppingCart",new { id = item.Id_product })">Eliminar</a></td>
-                </tr>
-
-            }
+            @{
+                
+                foreach (var item in Shopping.Productos)
+                {
             <tr>
-                <td colspan="2">Total</td>
 
-                <td colspan="5">$20.000</td>
+                <td>@item.Name_product</td>
+                <td>@item.Talla</td>
+                <td>@item.Price</td>
+                <td><butto>-</butto> @item.Cantidad <butto>+</butto></td>
+                <td>@item.TotalProducto(item.Price, item.Cantidad)</td>
+
+
+                <td>Eliminar</td>
             </tr>
+                }
+                
+            }
         </tbody>
     </table>
 
+    <br />
+    <h3>Total a Pagar $ @Shopping.Total</h3>
+    
     <hr />
 
-   
+
 
     <div class="d-flex dflex-s-around ">
         <a href="@Url.Action("Index","Product")">Continuar Comprando</a>

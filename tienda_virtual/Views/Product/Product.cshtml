@@ -3,47 +3,63 @@
     @model ProductModel
     ViewBag.Title = "Productos Destacados";
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
+    List<StockModel> ListStock = ViewBag.ListStock;
     Layout = "~/Views/Shared/_layout.cshtml";
+    int selected =  0 ;
 }
 
 <div class="w-100 height">
 
     <h1 class="txt-center">Producto</h1>
 
+    
     <div class="getProduct" >
         <div class="getProduct_container">
             <img src="~/Assets/uploads/@Model.Imagen.ToString()" />
             <div>
-               <h2 class="txt-center">@Model.Brand.Id_marca</h2>
+               <h2 class="txt-center">@Model.Brand.Brand</h2>
             </div>
         </div>
         <div class="getProduct_container_info">
             <h1 class="txt-center">@Model.Name_product</h1>
+
+            <div>
+               <label>Talla</label>
+               <select id="tallas">
+                   <option class="talla">seleccione su talla </option>
+                   @foreach (var talla in ListStock)
+                   {
+                    <option value="@talla.Id_stock">@talla.Size.Size</option>
+                   }
+
+               </select>         
+            </div>
+            <div>
+                @if (@Model.Cantidad > 0)
+                {
+                    <p>Stock Disponible</p>
+                }
+                else
+                {
+                    <p>Stock No disponible actualmente </p>
+                }
+            </div>
+
             <div>
                 <p>Descripción:  @Model.Pdto_description</p>
             </div>
-            <div>
-                <p>Talla:  Talla</p>
-            </div>
+
             <div>
                 <p>Precio: $ @Model.Price</p>
             </div>
+    
             <div>
-                <p>Disponible: stock</p>
-            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
 
+                <a id="btn_add_carrito" href="#">Añadir al Carro</a>
 
-            
-            <div>
-                <button class="btn_sum_product" type="button">-</button><input class="" type="number" min="0" value="1" /><button class="btn_rest_product" type="button">+</button>
-
-                @Html.ActionLink("Añadir al Carro", "AddShoppingCart", "ShoppingCart", new { id = Model.Id_product}, null )
-                <button class="btn_shopping_cart"></button>
+                @Html.ActionLink("Añadir al Carro", "AddShoppingCart", "ShoppingCart", new { id = @selected }, null)
+                <br />
+                <button class="btn_shopping_cart">Atras</button>
             </div>
         </div>
     </div>

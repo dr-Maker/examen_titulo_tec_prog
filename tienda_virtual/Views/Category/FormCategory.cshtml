@@ -1,28 +1,49 @@
-﻿
-
-@{
+﻿@{
     @model List<ProductModel>
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     CategoryModel Category = ViewBag.Category;
+
+    string action = ViewBag.action;
+    string optReadonly;
+    string btn_enviar;
+    int idCategory = ViewBag.idCategory;
 
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
 <div class="w-100 height">
-    <h1 class="txt-center">Modificar Categoria</h1>
+    <h1 class="txt-center">@action Categoria</h1>
 
-    <form class="form" method="post">
-        <div class="d-flex">
-            <label class="f-label">Categoria</label>
-            <input class="f-input" type="text" name="category" value="@Category.Category"/>
-        </div>
-        <div>
-            <input class="btn_new mg-top-30" type="submit" value="Modificar categoria" />
-        </div>
-        <div>
-            <button>Cancelar</button>
-        </div>
+    @if (@action.Equals("Eliminar"))
+    {
+        optReadonly = "readonly";
+        btn_enviar = "Eliminar Categoria";
+    }
+    else
+    {
+        optReadonly = string.Empty;
+        btn_enviar = "Modificar Categoria";
+    }
 
-    </form>
+    @using (Html.BeginForm(@action, "Category", FormMethod.Post))
+    {
+        <form class="form" method="post">
+
+            <input type="hidden" name="id_category" value="@idCategory"/>
+            <div class="d-flex">
+                <label class="f-label">Categoria</label>
+                <input class="f-input" type="text" name="category" @optReadonly value="@Category.Category" />
+            </div>
+
+            <div>
+
+                <input class="btn_new mg-top-30" type="submit" value="@btn_enviar" />
+            </div>
+            <div>
+                <button>Cancelar</button>
+            </div>
+
+        </form>
+    }
 
 </div>
