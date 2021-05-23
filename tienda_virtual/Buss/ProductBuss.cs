@@ -45,6 +45,37 @@ namespace tienda_virtual
             return lista;
         }
 
+        public static List<ProductModel> ProductsOutStock()
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_list_products_out_stock";
+
+            DataTable dt = db.GetQuery(cmd);
+
+            List<ProductModel> lista = new List<ProductModel>();
+
+            ProductModel obj;
+
+            foreach (DataRow row in dt.Rows)
+            {
+
+                obj = new ProductModel();
+                obj.Id_product = int.Parse(row["id_product"].ToString());
+                obj.Category = new CategoryModel();
+                obj.Category.Id_category = int.Parse(row["id_category"].ToString());
+                obj.Name_product = row["name_product"].ToString();
+                obj.Brand = new BrandModel();
+                obj.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
+                obj.Pdto_description = row["pdto_description"].ToString();
+                obj.Imagen = row["imagen"].ToString();
+                lista.Add(obj);
+
+            }
+
+            return lista;
+        }
+
         public static List<ProductModel> ProductsByAleatory()
         {
             SqlCommand cmd = new SqlCommand();
@@ -71,7 +102,6 @@ namespace tienda_virtual
                 obj.Brand.Brand = row["brand"].ToString();
                 obj.Pdto_description = row["pdto_description"].ToString();
                 obj.Imagen = row["imagen"].ToString();
-                obj.Cantidad = int.Parse(row["cantidad"].ToString());
                 obj.Price = int.Parse(row["price"].ToString());
                 lista.Add(obj);
 
@@ -94,16 +124,19 @@ namespace tienda_virtual
 
             foreach (DataRow row in dt.Rows)
             {
-                
+
                 obj = new ProductModel();
                 obj.Id_product = int.Parse(row["id_product"].ToString());
                 obj.Category = new CategoryModel();
                 obj.Category.Id_category = int.Parse(row["id_category"].ToString());
+                obj.Category.Category = row["name_category"].ToString();
                 obj.Name_product = row["name_product"].ToString();
                 obj.Brand = new BrandModel();
                 obj.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
+                obj.Brand.Brand = row["brand"].ToString();
                 obj.Pdto_description = row["pdto_description"].ToString();
                 obj.Imagen = row["imagen"].ToString();
+                obj.Price = int.Parse(row["price"].ToString());
                 lista.Add(obj);
                 
             }
@@ -130,6 +163,7 @@ namespace tienda_virtual
                 obj.Brand.Id_marca = int.Parse(dt.Rows[0]["id_brand"].ToString());
                 obj.Brand.Brand = dt.Rows[0]["brand"].ToString();
                 obj.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
+                obj.Price = int.Parse(dt.Rows[0]["price"].ToString());
                 obj.Imagen = dt.Rows[0]["imagen"].ToString();
             }
             return obj;

@@ -71,23 +71,23 @@ namespace tienda_virtual
 
                 obj.Producto = new ProductModel();
                 obj.Producto.Id_product= int.Parse(dt.Rows[0]["id_product"].ToString());
+                obj.Producto.Name_product = dt.Rows[0]["name_product"].ToString();
+                obj.Producto.Price = int.Parse(dt.Rows[0]["price"].ToString());
+                obj.Producto.Cantidad = int.Parse(dt.Rows[0]["cantidad"].ToString());
+                obj.Producto.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
+                obj.Producto.Imagen = dt.Rows[0]["imagen"].ToString();
 
                 // Categoria
                 obj.Producto.Category = new CategoryModel();
                 obj.Producto.Category.Id_category = int.Parse(dt.Rows[0]["id_category"].ToString());
 
-                obj.Producto.Name_product = dt.Rows[0]["name_product"].ToString();
+                
                 //brand
                 obj.Producto.Brand = new BrandModel();
                 obj.Producto.Brand.Id_marca = int.Parse(dt.Rows[0]["id_brand"].ToString());
                 obj.Producto.Brand.Brand = dt.Rows[0]["brand"].ToString();
 
 
-                obj.Producto.Price = int.Parse(dt.Rows[0]["price"].ToString());
-
-                obj.Producto.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
-
-                obj.Producto.Imagen = dt.Rows[0]["imagen"].ToString();
 
              
 
@@ -142,6 +142,25 @@ namespace tienda_virtual
             return lista;
         }
 
+        public static bool InsertStock(StockModel obj)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_insert_product_stock";
+            cmd.Parameters.Add("@id_producto", SqlDbType.Int).Value = obj.Producto.Id_product;
+            cmd.Parameters.Add("@id_size", SqlDbType.VarChar, 255).Value = obj.Size.Id_size;
+            return db.Onlyquery(cmd);
+        }
 
+        public static bool UpdatetStock(StockModel obj)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_update_product_stock";
+            cmd.Parameters.Add("@id_producto", SqlDbType.Int).Value = obj.Id_stock;
+            cmd.Parameters.Add("@price", SqlDbType.Int).Value = obj.Producto.Price;
+            cmd.Parameters.Add("@stock", SqlDbType.Int).Value = obj.Producto.Cantidad;
+            return db.Onlyquery(cmd);
+        }
     }
 }

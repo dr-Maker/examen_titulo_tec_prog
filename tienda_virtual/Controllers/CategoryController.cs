@@ -40,7 +40,6 @@ namespace tienda_virtual
         }
 
 
-
         public ActionResult Register()
         {
             List<CategoryModel> list = CategoryBuss.Categories();

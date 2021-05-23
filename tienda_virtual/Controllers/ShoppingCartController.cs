@@ -11,9 +11,11 @@ namespace tienda_virtual
         // GET: ShoppingCart
         public ActionResult Index()
         {
+            string token = Session["token"].ToString();
+
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            ShoppingCartModel obj = ShoppingCartBuss.GetShoppingCart();
+            ShoppingCartModel obj = ShoppingCartBuss.GetShoppingCart(token);
             ViewBag.Shopping = obj;
             ViewBag.ProductList = obj.Productos;
             return View();
@@ -21,8 +23,12 @@ namespace tienda_virtual
 
         public ActionResult AddShoppingCart(int id)
         {
+
+            string token = Session["token"].ToString();
+
             ShoppingCartModel obj = new ShoppingCartModel();
             obj.Id_cart = id;
+            obj.Token = token;
             ShoppingCartBuss.AddShoppingCart(obj);
             //return RedirectToAction("Product","Product", new { id = id });
             return RedirectToAction("Index", "ShoppingCart");
@@ -36,21 +42,27 @@ namespace tienda_virtual
             return RedirectToAction("Index", "ShoppingCart");
         }
 
-
         public ActionResult DoShopping()
         {
             //validar que el cliente haya realizado el log para continuar
-
+            UserModel usuario = new UserModel();
+            usuario.Iduser = int.Parse(Session["iduser"].ToString());
+            usuario.Token = Session["token"].ToString();
+            OrderBuss.UpdateOrder(usuario);
+            OrderBuss.MakeOrder(usuario);
             //recibir los datos del formulario por post
 
             return RedirectToAction("Order", "ShoppingCart");
         }
 
-
         public ActionResult Order()
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
+            string token = Session["token"].ToString();
+            ShoppingCartModel Orden = OrderBuss.GetOrder(token);
+            ViewBag.Orden = Orden;
+
             return View();
         }
 
@@ -58,8 +70,37 @@ namespace tienda_virtual
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
+
+            string user = Session["user"].ToString();
+
+            List<ShoppingCartModel> ListOrdenes = OrderBuss.GetOrders(user);
+            ViewBag.ListOrdenes = ListOrdenes;
+
+            List<ProductModel> ListProduct = new List<ProductModel>();
+
+            foreach (var orden in ListOrdenes)
+            {
+                ListProduct = orden.Productos;
+            }
+
+            ViewBag.ListProduct = ListProduct;
+
             return View();
         }
 
+        public ActionResult MakeChange()
+        {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            List<ShoppingCartModel> ListOrdenes = OrderBuss.GetOrdersPending();
+            ViewBag.OrdersList = ListOrdenes;
+
+            List<EstadoOrden> ListEstado = Tools.EstadoOrden();
+            ViewBag.EstadoList = ListEstado;
+
+
+            return View();
+        }
     }
 }

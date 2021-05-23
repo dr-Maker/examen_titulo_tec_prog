@@ -3,7 +3,10 @@
     @model List<ProductModel>
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
- 
+    List<ProductModel> ListProduct = ViewBag.ProductList;
+    List<SizeModel> TallaList = ViewBag.TallaList;
+    List<TipoTallaModel> TipoTallalist = ViewBag.TipoTallaList;
+
 }
 
 <div class="w-100 height">
@@ -12,57 +15,49 @@
     <form class="form" method="post">
         <div class="d-flex">
             <label class="f-label">Producto</label>
-            <input class="f-input" type="text" name="category"  value="" />
+            <select class="f-input" name="product_id">
+                <option>seleccione...</option>
+                @foreach (var producto in ListProduct)
+                {
+                    <option value="@producto.Id_product">@producto.nombreProductId()</option>
+                }
+            </select>
+
         </div>
-        <div class="d-flex">
-            <label class="f-label">Nombre Producto</label>
-            <input class="f-input" type="text" name="category"  value="" />
-        </div>
+
 
         <div class="d-flex">
             <label class="f-label">Tipo de Talla</label>
-            <select class="f-input">
+            <select class="f-input" name="tipo_talla">
                 <option>seleccione...</option>
-                <option>tipo talla 1</option>
-                <option>tipo talla 2</option>
+                @foreach (var tipotalla in TipoTallalist)
+                {
+                    <option value="@tipotalla.Id_tipo">@tipotalla.Tipo_talla</option>
+                }
             </select>
         </div>
         <div class="d-flex">
             <label class="f-label">Talla</label>
         </div>
+
         <div class="f-label">
-            <div>
-                <input type="checkbox" value="S" />
-                <label> S</label>
-            </div>
-            <br />
-            <div>
-                <input type="checkbox" value="L" />
-                <label> L</label>
-            </div>
-            <input type="checkbox" value="M" />
-            <label> M</label>
-            <div>
-                <input type="checkbox" value="xxl" />
-                <label> XL</label>
-            </div>
-            <div>
-                <input type="checkbox" value="xxl" />
-                <label> XXL</label>
-            </div>
+            @foreach (var talla in TallaList)
+            {
+             <div>
+                    <input type="checkbox" value="@talla.Id_size" name="talla"/>
+                    <label> @talla.Size</label>
+             </div>
+
+            }
         </div>
 
-                <div class="d-flex">
-                    <label class="f-label">Stock</label>
-                    <input class="f-input" type="number" name="category" />
-                </div>
-                <div>
-                    <input class="btn_new mg-top-30" type="submit" value="Agregar Talla Producto" />
-                </div>
-                <div>
-                    <button>Cancelar</button>
-                </div>
+            <div>
+                <input class="btn_new mg-top-30" type="submit" value="Agregar Talla Producto" />
+            </div>
+            <div>
+                <button>Cancelar</button>
+            </div>
 
-</form>
+    </form>
 
 </div>

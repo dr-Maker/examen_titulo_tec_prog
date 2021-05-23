@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
+
 using System.Web.Mvc;
 
 namespace tienda_virtual
@@ -11,6 +14,21 @@ namespace tienda_virtual
         // GET: Producto
         public ActionResult Index()
         {
+            if (Session["token"] != "")
+            {
+                Session["token"] = Session["token"].ToString();
+            }
+            else
+            {
+                System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                string date = DateTime.Now.ToString();
+                byte[] data = System.Text.Encoding.ASCII.GetBytes(date);
+                data = md5.ComputeHash(data);
+                Session["token"] = date + System.Text.Encoding.ASCII.GetString(data);
+            }
+   
+
+
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<ProductModel> productos = ProductBuss.ProductsByAleatory();
@@ -28,6 +46,7 @@ namespace tienda_virtual
 
         public ActionResult ProductsByCategory(int id)
         {
+
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<ProductModel> productos = ProductBuss.ProductsByCategory(id);
@@ -35,6 +54,8 @@ namespace tienda_virtual
         }  
 
         public ActionResult Product(int id) {
+
+
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             ProductModel producto = ProductBuss.GetProduct(id);
@@ -77,7 +98,6 @@ namespace tienda_virtual
             obj.Name_product = frm["product"].ToString();
             obj.Brand = new BrandModel();
             obj.Brand.Id_marca = int.Parse(frm["brand"].ToString());
-            obj.Price= int.Parse(frm["price"].ToString()); 
             obj.Pdto_description = frm["desciption"].ToString();
             if (file != null)
             {
@@ -111,7 +131,31 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
 
+            List<TipoTallaModel> listTipoTalla = Tools.TipoTalla();
+            ViewBag.TipoTallaList = listTipoTalla;
+
+            List<SizeModel> listTalla = Tools.talla(1);
+            ViewBag.TallaList = listTalla;
+
+            List<ProductModel> ProductList = ProductBuss.ProductsOutStock();
+            ViewBag.ProductList = ProductList;
+
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddStock(FormCollection frm)
+        {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            StockModel obj = new StockModel();
+            obj.Producto = new ProductModel();
+            obj.Producto.Id_product = int.Parse(frm["product_id"].ToString());
+            obj.Size = new SizeModel();
+            obj.Size.Id_size = int.Parse(frm["talla"].ToString());
+            StockBuss.InsertStock(obj);
+            return RedirectToAction("Stock", "Product");
         }
 
         public ActionResult FormStock(int id)
@@ -119,11 +163,27 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
 
+            ViewBag.Stockid = id;
+
             StockModel stock = StockBuss.getStock(id);
             ViewBag.Stock = stock;
 
-
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult FormStock(FormCollection frm)
+        {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            StockModel obj = new StockModel();
+            obj.Id_stock = int.Parse(frm["id_stock"].ToString());
+            obj.Producto = new ProductModel();
+            obj.Producto.Price = int.Parse(frm["precio"].ToString());
+            obj.Producto.Cantidad = int.Parse(frm["stock"].ToString());
+            StockBuss.UpdatetStock(obj);    
+            return RedirectToAction("Stock", "Product");
         }
 
         [HttpPost]

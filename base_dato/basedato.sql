@@ -47,6 +47,7 @@ CREATE TABLE usuario(
  pass VARCHAR(500) NOT NULL,
  username VARCHAR(255) NOT NULL UNIQUE,
  email VARCHAR(255) NOT NULL UNIQUE,
+ --telefono
  user_role VARCHAR(255) DEFAULT('user') NOT NULL,
  birthday DATETIME NOT NULL,
  sex_id int NOT NULL,
@@ -97,6 +98,8 @@ FOREIGN KEY (id_brand) REFERENCES marca(id_marca),
 )
 
 DROP TABLE stocks_and_price
+----------------------------------------------------------------------------
+
 
 CREATE TABLE stocks_and_price(
 id_pdto_stock  INT IDENTITY(1,1) PRIMARY KEY,
@@ -118,20 +121,84 @@ precio_lleva INT,
 token VARCHAR(500) DEFAULT 'user001' NOT NULL,
 Sub_total INT DEFAULT 0 NOT NULL,
 Total INT DEFAULT 0 NOT NULL,
+id_usuario INT,
 FOREIGN KEY (id_pdto_stock) REFERENCES stocks_and_price(id_pdto_stock)
 )
 
 
-
-CREATE TABLE carrito(
-id_carrito
-id_persona
-Total 
+--------------------------------------------- PEDIDO -------------------------------------------
+DROP TABLE orden_usuario;
+CREATE TABLE orden_usuario(
+id INT IDENTITY(1, 1) PRIMARY KEY,
+--id usuario
+Nombre VARCHAR(255) NOT NULL,
+Apellido VARCHAR(255) NOT NULL,
+username VARCHAR(255) NOT NULL,
+fechaNacimiento DATETIME NOT NULL,
+email VARCHAR(255) NOT NULL,
+genero VARCHAR(255),
+id_region INT,
+id_comuna INT NOT NULL,
+direccion VARCHAR(250) NOT NULL
 )
 
-CREATE TABLE pedidos (
+DROP TABLE orden_medio_pago;
+CREATE TABLE orden_medio_pago(
+id_tipo_medio_pago INT IDENTITY(1, 1) PRIMARY KEY,
+medio_pago VARCHAR(255)
+)
+
+DROP TABLE orden_id_estado_pago;
+CREATE TABLE orden_id_estado_pago(
+id_estado_pago INT IDENTITY(1, 1) PRIMARY KEY,
+estado_pago VARCHAR(255)
+)
+
+DROP TABLE orden_estado_pedido;
+CREATE TABLE orden_estado_pedido(
+id_envio INT IDENTITY(1, 1) PRIMARY KEY,
+estado_pedido VARCHAR(255)
+)
+
+DROP TABLE orden_carrito;
+CREATE TABLE orden_carrito(
+id_cesta INT IDENTITY(1, 1) PRIMARY KEY,
+id_persona INT NOT NULL,
+fecha_pedido DATETIME NOT NULL,
+fecha_entrega DATETIME ,
+id_tipo_medio_pago INT DEFAULT 1 NOT NULL,
+id_estado_pago INT DEFAULT 1 NOT NULL,
+id_envio INT DEFAULT 1 NOT NULL,
+token VARCHAR(255) NOT NULL,
+--direccion envio
+-- id comuna
+Total INT NOT NULL,
+FOREIGN KEY (id_persona) REFERENCES orden_usuario(id),
+FOREIGN KEY (id_tipo_medio_pago) REFERENCES orden_medio_pago(id_tipo_medio_pago),
+FOREIGN KEY (id_estado_pago) REFERENCES orden_id_estado_pago(id_estado_pago),
+FOREIGN KEY (id_envio) REFERENCES orden_estado_pedido(id_envio)
+)
+
+DROP TABLE orden_carrito_compra;
+CREATE TABLE orden_carrito_compra(
+id INT IDENTITY(1, 1) PRIMARY KEY,
+id_carrito INT NOT NULL,
+id_producto INT NOT NULL,
+id_stock INT NOT NULL,
+nombre_producto VARCHAR(255) NOT NULL,
+descripcion VARCHAR(500) NOT NULL,
+categoria VARCHAR(255) NOT NULL,
+marca VARCHAR(500) NOT NULL,
+talla VARCHAR(500) NOT NULL,
+cantidad INT NOT NULL,
+precio INT NOT NULL,
+subTotal INT NOT NULL,
+FOREIGN KEY (id_carrito) REFERENCES orden_carrito(id_cesta)
 )
 
 
-select * from usuario
-update usuario set user_role = 'admin' Where id = 10001
+
+
+
+
+

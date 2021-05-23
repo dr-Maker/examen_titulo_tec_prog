@@ -18,6 +18,7 @@ namespace tienda_virtual
         private string pdto_description;
         private DateTime arrabal_date;
         private string imagen;
+ 
 
         public ProductModel()
         {
@@ -34,13 +35,17 @@ namespace tienda_virtual
         public string Imagen { get => imagen; set => imagen = value; }
         public string Talla { get => talla; set => talla = value; }
 
+
         public int TotalProducto(int precio, int cantidad)
         {
 
             return precio * cantidad;
         }
 
-
+        public string nombreProductId()
+        {
+            return this.Id_product + " - " + this.Name_product; 
+        }
     }
 
 

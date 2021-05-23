@@ -485,7 +485,7 @@ INSERT INTO marca(brand) values ('Brooks');
 INSERT INTO tipo_talla(tipo) values ('talla en letras');
 INSERT INTO tipo_talla(tipo) values ('talla de zapatillas');
 
-SELECT * from tipo_talla
+
 
 INSERT INTO sizesProduct(id_tipo, size) values(1, 'XXS')
 INSERT INTO sizesProduct(id_tipo, size) values(1, 'XS')
@@ -495,6 +495,21 @@ INSERT INTO sizesProduct(id_tipo, size) values(1, 'L')
 INSERT INTO sizesProduct(id_tipo, size) values(1, 'XL')
 INSERT INTO sizesProduct(id_tipo, size) values(1, 'XXL')
 INSERT INTO sizesProduct(id_tipo, size) values(1, 'N/A')
+
+
+INSERT INTO sizesProduct(id_tipo, size) values(2, '34')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '35')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '36')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '37')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '38')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '39')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '40')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '41')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '42')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '43')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '44')
+INSERT INTO sizesProduct(id_tipo, size) values(2, '45')
+
 
 select * from sizesProduct
 
@@ -516,3 +531,28 @@ UPDATE stocks_and_price SET stock = 20 WHERE id_stock_price = 1
 SELECT * From producto 
 UPDATE producto SET cantidad = 15 WHERE id_product = 1000003
 
+SELECT * FROM lista_productos
+UPDATE lista_productos SET id_usuario = 10001
+
+
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+
+INSERT INTO orden_medio_pago(medio_pago) VALUES('tarjeta debito');
+INSERT INTO orden_medio_pago(medio_pago) VALUES('tarjeta crédito');
+
+
+INSERT INTO orden_id_estado_pago(estado_pago) VALUES('Pendiente de Pago');
+INSERT INTO orden_id_estado_pago(estado_pago) VALUES('Pagado');
+INSERT INTO orden_id_estado_pago(estado_pago) VALUES('Pago Rechazado');
+
+INSERT INTO orden_estado_pedido(estado_pedido) VALUES('En validación de orden');
+INSERT INTO orden_estado_pedido(estado_pedido) VALUES('orden aceptada. Pendiente de envío');
+INSERT INTO orden_estado_pedido(estado_pedido) VALUES('Envío en transito');
+INSERT INTO orden_estado_pedido(estado_pedido) VALUES('Recepcionado por cliente');
+INSERT INTO orden_estado_pedido(estado_pedido) VALUES('Devolución por parte de cliente');
+INSERT INTO orden_estado_pedido(estado_pedido) VALUES('Compra Finalizada');
+
+
+
+)

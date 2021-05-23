@@ -30,13 +30,18 @@ DROP PROCEDURE sp_get_product
 CREATE PROCEDURE sp_get_product
 @id_product INT
 AS
-	SELECT * FROM producto
+	SELECT  DISTINCT id_product, producto.id_category, name_product, id_brand, brand,pdto_description, imagen, price FROM producto
 	INNER JOIN categoria
 	ON producto.id_category = categoria.id_category
 	INNER JOIN marca
 	ON producto.id_brand = marca.id_marca
-	WHERE id_product = @id_product
+	INNER JOIN stocks_and_price
+	ON producto.id_product = stocks_and_price.id_producto
+	WHERE id_product =  @id_product
 GO
+
+SELECT * FROM stocks_and_price
+SELECT * FROM producto
 
 /***  Actualiza un Producto  ***/
 DROP PROCEDURE sp_update_product

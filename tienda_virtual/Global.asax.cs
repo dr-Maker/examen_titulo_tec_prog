@@ -14,19 +14,26 @@ namespace tienda_virtual
         {
             AreaRegistration.RegisterAllAreas();     
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-    
+
+
         }
 
         protected void Session_Start(object sender, EventArgs e)
         {
+            Session["iduser"] = "";
             Session["user"] = "";
             Session["role"] = "";
+            Session["token"] = "";
+            
         }
 
         protected void Session_End(object sender, EventArgs e)
         {
+            Session["iduser"] = "";
             Session["user"] = "";
             Session["role"] = "";
+            Session["token"] = "";
         }
+
     }
 }

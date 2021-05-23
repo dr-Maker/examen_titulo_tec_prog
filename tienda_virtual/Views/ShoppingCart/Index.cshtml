@@ -1,18 +1,16 @@
 ﻿@{
     @model ShoppingCartModel
+
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
     ShoppingCartModel Shopping = ViewBag.Shopping;
     List<ProductModel> ProductoList = ViewBag.ProductList;
- 
-}
-
+ }
 
 
 <div class="w-100 height">
 
     <h1 class="txt-center">Mi Canasta de Productos</h1>
-
     <table class="tab">
         <thead class="txt-center">
             <tr>
@@ -28,39 +26,48 @@
 
             </tr>
         </thead>
-        <tbody class="txt-center">
-            @{
-                
-                foreach (var item in Shopping.Productos)
+        <tbody class="txt-center cesta">
+
+
+            @{if (Shopping.Productos != null)
                 {
-            <tr>
 
-                <td>@item.Name_product</td>
-                <td>@item.Talla</td>
-                <td>@item.Price</td>
-                <td><butto>-</butto> @item.Cantidad <butto>+</butto></td>
-                <td>@item.TotalProducto(item.Price, item.Cantidad)</td>
+                    foreach (var item in Shopping.Productos)
+                    {
+                        <tr>
 
+                            <td>@item.Name_product</td>
+                            <td>@item.Talla</td>
+                            <td>@item.Price</td>
+                            <td><butto href="#">-</butto> @item.Cantidad <butto href="#">+</butto></td>
+                            <td class="total_producto">@item.TotalProducto(item.Price, item.Cantidad)</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    }
 
-                <td>Eliminar</td>
-            </tr>
                 }
-                
             }
         </tbody>
     </table>
 
     <br />
-    <h3>Total a Pagar $ @Shopping.Total</h3>
-    
+    <div style="margin-left:80%;">
+        <h3>Total a Pagar $ <span id="total_cesta"></span></h3>
+    </div>
+
     <hr />
 
 
 
     <div class="d-flex dflex-s-around ">
-        <a href="@Url.Action("Index","Product")">Continuar Comprando</a>
+
+        <a href="@Url.Action("Index", "Product")">Continuar Comprando</a>
+
         <a href="@Url.Action("","")">Borrar todo</a>
-        <a href="@Url.Action("DoShopping","ShoppingCart")">Hacer Pedido</a>
+        @if (@Session["user"] != "")
+        {
+            <a href="@Url.Action("DoShopping","ShoppingCart")">Hacer Pedido</a>
+        }
     </div>
 
 </div>

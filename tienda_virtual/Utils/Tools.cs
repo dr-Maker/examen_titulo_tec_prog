@@ -50,8 +50,6 @@ namespace tienda_virtual
             return lista;
         }
 
-
-
         public static List<ComunaModel> Comuna()
         {
             SqlCommand cmd = new SqlCommand();
@@ -109,11 +107,11 @@ namespace tienda_virtual
             return lista;
         }
 
-        public static List<SizeModel> talla()
+        public static List<SizeModel> talla(int id)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT * from sizesProduct";
+            cmd.CommandText = "SELECT * from sizesProduct where id_tipo =" +id;
 
             DataTable dt = db.GetQuery(cmd);
             List<SizeModel> lista = new List<SizeModel>();
@@ -127,5 +125,44 @@ namespace tienda_virtual
             }
             return lista;
         }
+
+        public static List<TipoTallaModel> TipoTalla()
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT* from tipo_talla";
+
+            DataTable dt = db.GetQuery(cmd);
+            List<TipoTallaModel> lista = new List<TipoTallaModel>();
+            TipoTallaModel obj;
+            foreach (DataRow row in dt.Rows)
+            {
+                obj = new TipoTallaModel();
+                obj.Id_tipo = int.Parse(row["id"].ToString());
+                obj.Tipo_talla = row["tipo"].ToString();
+                lista.Add(obj);
+            }
+            return lista;
+        }
+
+        public static List<EstadoOrden> EstadoOrden()
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT* from orden_estado_pedido";
+
+            DataTable dt = db.GetQuery(cmd);
+            List<EstadoOrden> lista = new List<EstadoOrden>();
+            EstadoOrden obj;
+            foreach (DataRow row in dt.Rows)
+            {
+                obj = new EstadoOrden();
+                obj.Id_estado = int.Parse(row["id_envio"].ToString());
+                obj.Estado_orden = row["estado_pedido"].ToString();
+                lista.Add(obj);
+            }
+            return lista;
+        }
+
     }
 }

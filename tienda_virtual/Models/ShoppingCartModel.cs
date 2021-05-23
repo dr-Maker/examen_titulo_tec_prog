@@ -11,6 +11,10 @@ namespace tienda_virtual
         private int id_cart;
         private string token;
         private int cantidad;
+        private DateTime fechaPedido;
+        private DateTime fechaEntrega;
+        private string estadoPedido;
+        private string estadoPago;
         private int precio;
         private int subtotal;
         private int total;
@@ -30,9 +34,10 @@ namespace tienda_virtual
         public int Subtotal { get => subtotal; set => subtotal = value; }
         public int Precio { get => precio; set => precio = value; }
         public int Total { get => total; set => total = value; }
-
-      
-
+        public DateTime FechaPedido { get => fechaPedido; set => fechaPedido = value; }
+        public DateTime FechaEntrega { get => fechaEntrega; set => fechaEntrega = value; }
+        public string EstadoPedido { get => estadoPedido; set => estadoPedido = value; }
+        public string EstadoPago { get => estadoPago; set => estadoPago = value; }
     }
 
 }

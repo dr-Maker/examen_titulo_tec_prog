@@ -4,29 +4,32 @@
     ViewBag.Title = "Productos Destacados";
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
+    string token = ViewBag.token;
 }
 
 <main class="w-100 height">
     <h1 class="txt-center">Venta de producto </h1>
+    <input id="token" type="hidden" readonly value="@token" />
+
 
     <div class="products">
 
         @foreach (var pdto in Model)
         {
-        <div class="product">
-            <a href="@Url.Action("Product","Product", new { id = pdto.Id_product })">
+            <div class="product">
 
-                <div class="pdto_img">
-                    <img src="~/Assets/uploads/@pdto.Imagen.ToString()" />
-                </div>
 
-                <h2 class="txt-center">@pdto.Name_product</h2>
-                <p class="txt-center">@pdto.Price</p>
-            </a>
-                <div class="d-flex">
-                    @Html.ActionLink("Añadir al Carro", "AddShoppingCart", "ShoppingCart", new { id = pdto.Id_product }, null)
-                </div>
-        </div>
+                <a href="@Url.Action("Product","Product", new { id = pdto.Id_product })">
+
+                    <div class="pdto_img">
+                        <img src="~/Assets/uploads/@pdto.Imagen.ToString()" />
+                    </div>
+                    <h3 class="txt-center mg-1px">@pdto.Brand.Brand</h3>
+                    <h2 class="txt-center mg-1px">@pdto.Name_product</h2>
+                    <p class="txt-center mg-1px">$ @pdto.Price</p>
+                    <br />
+                </a>
+            </div>
         }
 
 

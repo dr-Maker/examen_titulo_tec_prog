@@ -13,17 +13,37 @@ AS
 	ON marca.id_marca = producto.id_brand
 GO
 
+/*** MUESTRA LISTA DE PRODUCTOS QUE NO ESTAN EN STOCK ***/
 DROP PROCEDURE sp_list_products_out_stock
 CREATE PROCEDURE sp_list_products_out_stock
 AS
-	SELECT * FROM producto 
+	SELECT DISTINCT id_product, id_category, name_product, id_brand, pdto_description, imagen FROM producto 
 	LEFT JOIN stocks_and_price
 	ON producto.id_product = stocks_and_price.id_producto 
-	WHERE id_size = 8 or id_size IS NULL
+	
 GO
 
 
+DROP PROCEDURE sp_insert_product_stock
+CREATE PROCEDURE sp_insert_product_stock
+@id_producto INT,
+@id_size INT
+AS
+	INSERT INTO stocks_and_price(id_producto,price ,cantidad, id_size)  VALUES ( @id_producto , 0 , 0 ,@id_size)
+GO
 
+
+DROP PROCEDURE sp_update_product_stock
+CREATE PROCEDURE sp_update_product_stock
+@id_producto INT,
+@price INT,
+@stock INT
+AS
+	UPDATE stocks_and_price SET price = @price , cantidad = @stock WHERE id_pdto_stock = @id_producto
+GO
+
+SELECT * FROM stocks_and_price
+sp_update_product_stock 1, 10000, 2 
 
 
 /***TRIGER QUE INSERTA UN PRODUCTO AL STOCK***/

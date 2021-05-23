@@ -17,6 +17,7 @@ namespace tienda_virtual
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_add_product_to_buy";
             cmd.Parameters.Add("@id_pdto", SqlDbType.Int).Value = obj.Id_cart;
+            cmd.Parameters.Add("@token", SqlDbType.VarChar, 255).Value = obj.Token;
 
             return db.Onlyquery(cmd);
         }
@@ -31,12 +32,12 @@ namespace tienda_virtual
             return db.Onlyquery(cmd);
         }
 
-        public static ShoppingCartModel GetShoppingCart()
+        public static ShoppingCartModel GetShoppingCart(string token)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_product_to_buy";
-            cmd.Parameters.Add("@token", SqlDbType.VarChar,255).Value = "user001";
+            cmd.Parameters.Add("@token", SqlDbType.VarChar,255).Value = token;
 
             DataTable dt = db.GetQuery(cmd);
 
@@ -79,6 +80,7 @@ namespace tienda_virtual
 
             return obj;
         }
+
 
 
 

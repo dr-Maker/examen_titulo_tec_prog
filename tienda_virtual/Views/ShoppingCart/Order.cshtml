@@ -1,44 +1,98 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_layout.cshtml";
+    ShoppingCartModel Oden = ViewBag.Orden;
 }
 
 
-<div class="w-100 height">
-    <h1 class="txt-center">Mi pedido</h1>
-    <p>---------------------</p>
-    <p>Detalles del pedido</p>
-    <p>---------------------</p>
-    <p>Detalles del Cliente</p>
+<div class="w-100 ">
+    <h1 class="txt-center">Mi pedido N º @Oden.Id_cart</h1>
+    <hr />
+    <h2 class="txt-center">Datos de Cliente </h2>
+
+    <p>Nombre:<span>@Oden.Usuario.Firstname</span></p>
+    <p>Apellido:<span>@Oden.Usuario.Fatherlastname</span></p>
+    <p>Teléfono:<span>9 779 779 44</span></p>
+    <p>email:<span> Jonathanvenegas@correo.cl</span></p>
+    <hr />
+
+    <h2 class="txt-center">Datos Del Pedido </h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>id_producto</th>
+                <th> Producto </th>
+                <th> Marca </th>
+                <th> Talla </th>
+                <th> Cantidad</th>
+                <th> Precio </th>
+                <th> Sub Total </th>
 
 
-    <h2 class="txt-center">Ingrese los datos de Envío antes de pagar</h2>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Oden.Productos)
+            {
+                <tr>
+                    <td>@product.Id_product</td>
+                    <td>@product.Name_product</td>
+                    <td>@product.Brand.Brand</td>
+                    <td>@product.Talla</td>
+                    <td>@product.Cantidad</td>
+                    <td>@product.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h3>Total a pagar <span>@Oden.Total</span></h3>
 
+    <hr />
+    <h2 class="txt-center">Dirección de Envío</h2>
+    <p>Región: <span> @Oden.Usuario.Region.Nombre_region</span></p>
+    <p>Comuna: <span>@Oden.Usuario.Comuna.Nombre_comuna</span></p>
+    <p>Direccion: <span>@Oden.Usuario.Addres</span></p>
+
+    <h2 class="txt-center">Desea Ingresar una direccion distinta</h2>
+
+    <div class="d-flex">
+        <input type="radio" value="1" name="type_tc" />
+        <label for="">SI</label>
+        <br>
+        <input type="radio" value="1" name="type_tc" />
+        <label for="">NO</label>
+        <br>
+    </div>
+
+    <hr />
+    <h2 class="txt-center">Ingresar Nueva dirección de envío</h2>
     <div class="d-flex">
         <form class="form">
             <div class="d-flex">
                 <label class="f-label">Región</label>
-                <input class="f-input" type="text" />
+                <input class="f-input" type="text" disabled />
             </div>
             <div class="d-flex">
                 <label class="f-label">Provincia</label>
-                <input class="f-input" type="text" />
+                <input class="f-input" type="text" disabled />
             </div>
             <div class="d-flex">
                 <label class="f-label">Comuna</label>
-                <input class="f-input" type="text" />
+                <input class="f-input" type="text" disabled />
             </div>
             <div class="d-flex">
                 <label class="f-label">Dirección</label>
-                <input class="f-input" type="text" />
+                <input class="f-input" type="text" disabled />
             </div>
-
+            <hr />
+            <h2 class="txt-center">Ingrese Medio de pago</h2>
             <div class="d-flex">
                 <label class="f-label">Seleccione Medio de pago</label>
                 <input type="radio" value="1" name="type_tc" />
                 <label for="">Tarjeta debito</label>
                 <br>
-                <input type="radio" value="1" name="type_tc"/>
+                <input type="radio" value="1" name="type_tc" />
                 <label for="">Tarjeta credito</label>
                 <br>
             </div>
@@ -51,7 +105,7 @@
     <div class="d-flex dflex-s-around ">
         <a href=@Url.Action("Orders","ShoppingCart")>Pagar</a>
         <br />
-        <button>Cancelar</button>
+        <button>Cancelar Pedido</button>
     </div>
 </div>
 

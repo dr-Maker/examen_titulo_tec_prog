@@ -14,12 +14,12 @@ namespace tienda_virtual
         private string fatherlastname;
         private string motherlastname;
         private string username;
+        private string token;
         private DateTime birthday;
         private int sex;
         private string email;
-        private string region;
-        private string provincia;
-        private string comuna;
+        private RegionModel region;
+        private ComunaModel comuna;
         private string addres;
         private string password;
         private DateTime dateregister;
@@ -57,13 +57,13 @@ namespace tienda_virtual
         public string Username { get => username; set => username = value; }
         public DateTime Birthday { get => birthday; set => birthday = value; }
         public string Email { get => email; set => email = value; }
-        public string Region { get => region; set => region = value; }
-        public string Provincia { get => provincia; set => provincia = value; }
-        public string Comuna { get => comuna; set => comuna = value; }
         public string Addres { get => addres; set => addres = value; }
         public string Password { get => password; set => password = value; }
         public DateTime Dateregister { get => dateregister; set => dateregister = value; }
         public string Role { get => role; set => role = value; }
         public int Sex { get => sex; set => sex = value; }
+        public RegionModel Region { get => region; set => region = value; }
+        public ComunaModel Comuna { get => comuna; set => comuna = value; }
+        public string Token { get => token; set => token = value; }
     }
 }

@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Buss\CategoryBuss.cs" />
+    <Compile Include="Buss\OrderBuss.cs" />
     <Compile Include="Buss\ProductBuss.cs" />
     <Compile Include="Buss\ShoppingCartBuss.cs" />
     <Compile Include="Buss\StockBuss.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\ComunaModel.cs" />
+    <Compile Include="Models\EstadoOrden.cs" />
     <Compile Include="Models\ParamsComuna.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProvinciaModel.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Models\ShoppingCartModel.cs" />
     <Compile Include="Models\SizeModel.cs" />
     <Compile Include="Models\StockModel.cs" />
+    <Compile Include="Models\TipoTallaModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Tools.cs" />
@@ -189,6 +192,7 @@
     <Content Include="Views\Category\FormCategory.cshtml" />
     <Content Include="Views\Product\FormStock.cshtml" />
     <Content Include="Views\Product\AddStock.cshtml" />
+    <Content Include="Views\ShoppingCart\MakeChange.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

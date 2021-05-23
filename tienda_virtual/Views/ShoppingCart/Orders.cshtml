@@ -1,11 +1,60 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_layout.cshtml";
+    List<ShoppingCartModel> ListOrdenes = ViewBag.ListOrdenes;
+    List<ProductModel> ListProduct = ViewBag.ListProduct;
+
 }
 
-<div class="w-100 height">
-    <h1>Mis Pedidos</h1>
-    <p>Detalle de Mis Pedido</p>
-    <p>Ordenados de mas recientes</p>
-    <p>y Por estado</p>
-</div>
+    <div class="w-100 height">
+        <h1>Mis Pedidos</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Id Pedido</th>
+                    <th>Id Producto</th>
+                    <th>Nombre producto</th>
+                    <th>descripción </th>
+                    <th>Talla </th>
+                    <th>marca </th>
+                    <th>cantidad </th>
+                    <th>Precio </th>
+                    <th>Total </th>
+                    <th>Fecha Pedido </th>
+                    <th>Estado Pago </th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var ordenes in ListOrdenes)
+                {
+                <tr>
+                    <td>@ordenes.Id_cart</td>
+                    @foreach (var producto in ordenes.Productos)
+                    {
+
+
+                        <td>@producto.Id_product</td>
+                        <td>@producto.Name_product</td>
+                        <td>@producto.Pdto_description</td>
+                        <td>@producto.Talla</td>
+                        <td>@producto.Brand.Brand</td>
+                        <td>@producto.Cantidad</td>
+                        <td>@producto.Price</td>
+                    }
+                    <td>@ordenes.Total</td>
+                    <td>@ordenes.FechaPedido</td>
+                    <td>@ordenes.EstadoPago</td>
+                    <td>@ordenes.EstadoPedido</td>
+                </tr>
+               
+                }
+
+            </tbody>
+        </table>
+
+
+
+    </div>

@@ -21,7 +21,6 @@ namespace tienda_virtual
             return db.Onlyquery(cmd);
         }
 
-
         public static List<CategoryModel> Categories()
         {
             SqlCommand cmd = new SqlCommand();
@@ -43,7 +42,6 @@ namespace tienda_virtual
 
             return lista;
         }
-
 
         public static CategoryModel getCategory(int id)
         {
@@ -67,7 +65,6 @@ namespace tienda_virtual
 
             return obj;
         }
-
 
         public static bool EditCategory(CategoryModel obj)
         {

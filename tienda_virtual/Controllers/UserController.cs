@@ -51,8 +51,9 @@ namespace tienda_virtual
             obj.Username = frm["user"].ToString();
             obj.Email = frm["email"].ToString();
             obj.Sex = int.Parse(frm["sexo"].ToString());
-            obj.Birthday = DateTime.Parse(frm["datebirth"].ToString());      
-            obj.Comuna = frm["comuna"].ToString();
+            obj.Birthday = DateTime.Parse(frm["datebirth"].ToString());
+            obj.Comuna = new ComunaModel();
+            obj.Comuna.Nombre_comuna = frm["comuna"].ToString();
             obj.Addres = frm["direccion"].ToString();
 
             UserBuss.UserRegister(obj);
@@ -71,8 +72,6 @@ namespace tienda_virtual
             return View();
         }
 
-
-
         [HttpPost]
         public ActionResult Login(FormCollection frm)
         {
@@ -83,6 +82,7 @@ namespace tienda_virtual
 
             if (dt != null && dt.Rows.Count>0)
             {
+                Session["iduser"] = dt.Rows[0]["id_user"].ToString(); ;
                 Session["user"] = dt.Rows[0]["username"].ToString();
                 Session["role"] = dt.Rows[0]["rol"].ToString();
 

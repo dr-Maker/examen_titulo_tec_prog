@@ -4,44 +4,47 @@
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
     Layout = "~/Views/Shared/_layout.cshtml";
     StockModel stock = ViewBag.Stock;
+
+    int id_stock = ViewBag.Stockid;
 }
 
 <div class="w-100 height">
     <h1 class="txt-center">Modificar Stock</h1>
 
     <form class="form" method="post">
+        <input type="hidden" name="id_stock" readonly value="@id_stock" />
         <div class="d-flex">
-            <label class="f-label">Producto</label>
-            <input class="f-input" type="text" name="category" readonly value="@stock.Id_stock" />
+            <label class="f-label">Id Producto Stock</label>
+            <input class="f-input" type="text" name="stock_id" readonly value="@stock.Id_stock" />
         </div>
         <div class="d-flex">
-            <label class="f-label">Producto</label>
-            <input class="f-input" type="text" name="category" readonly value="@stock.Producto.Name_product" />
+            <label class="f-label">Nombre de Producto</label>
+            <input class="f-input" type="text" name="name_product" readonly value="@stock.Producto.Name_product" />
         </div>
 
         <div class="d-flex">
             <label class="f-label">Talla</label>
-            <input class="f-input" type="text" name="category" readonly value="@stock.Size.Size" />
+            <input class="f-input" type="text" name="talla" readonly value="@stock.Size.Size" />
         </div>
 
         <div class="d-flex">
             <label class="f-label">Stock Actual</label>
-            <input class="f-input" type="number" name="category" readonly value="@stock.Stock" />
+            <input class="f-input" type="number" name="stock_actual" readonly value="@stock.Producto.Cantidad" />
         </div>
 
         <div class="d-flex">
-            <label class="f-label">Nevo Stock</label>
-            <input class="f-input" type="number" name="category" />
+            <label class="f-label">Nuevo Stock</label>
+            <input class="f-input" type="number" name="stock" />
         </div>
 
         <div class="d-flex">
             <label class="f-label">Precio Actual</label>
-            <input class="f-input" type="number" name="category" readonly value="@stock.Price" />
+            <input class="f-input" type="number" name="precio_actual" readonly value="@stock.Producto.Price" />
         </div>
 
         <div class="d-flex">
             <label class="f-label">Nuevo Precio</label>
-            <input class="f-input" type="number" name="category"  />
+            <input class="f-input" type="number" name="precio" />
         </div>
 
         <div>

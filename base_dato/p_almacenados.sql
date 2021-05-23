@@ -36,7 +36,7 @@ CREATE PROCEDURE sp_validate_user
 @pass VARCHAR(255)
 
 AS
-	SELECT first_name as nombre, second_name as nombre_dos, father_lastname as apellido_pat, mother_lastname as apellido_mat, username, email, user_role as rol, '*********' as pass FROM usuario WHERE  username = @username   AND pass = CONVERT(varchar(255),HASHBYTES('MD5',@pass),2)  ; 
+	SELECT id as id_user, first_name as nombre, second_name as nombre_dos, father_lastname as apellido_pat, mother_lastname as apellido_mat, username, email, user_role as rol, '*********' as pass FROM usuario WHERE  username = @username   AND pass = CONVERT(varchar(255),HASHBYTES('MD5',@pass),2)  ; 
 	
 GO
 
@@ -71,3 +71,6 @@ select * from provincia
 select * from provincia
 select * from comuna
 
+
+SELECT * from sizesProduct
+SELECT * from tipo_talla

@@ -5,6 +5,7 @@ use db_tienda_virtual;
 DROP PROCEDURE sp_add_product_to_buy;
 CREATE PROCEDURE sp_add_product_to_buy
 @id_pdto INT,
+@token VARCHAR(255),
 @in_cantidad INT
 
 AS
@@ -32,7 +33,7 @@ BEGIN
 							BEGIN
 								SELECT 'son iguales ' + CONVERT(varchar, @id_producto)					
 								SELECT @cantidad +=1;
-								UPDATE lista_productos SET cantidad = @cantidad  WHERE producto_id = @id_producto AND token = 'user001' AND id_cesta = @id_cesta;
+								UPDATE lista_productos SET cantidad = @cantidad  WHERE producto_id = @id_producto AND token = @token AND id_cesta = @id_cesta;
 								/*restar otra cantiadd del stock*/					
 							END
 						ELSE
@@ -51,8 +52,8 @@ BEGIN
 	IF( @contador >= @nro_row)
 	BEGIN
 		SELECT 'EL CONTADOR ES : ' + CONVERT(VARCHAR, @contador)
-		INSERT INTO lista_productos(producto_id, cantidad) values(@id_pdto, 1)
-
+		INSERT INTO lista_productos(id_pdto_stock, cantidad_lleva, token) values(@id_pdto, 1, @token)
+	
 	END
 END
 GO
@@ -61,31 +62,45 @@ GO
 
 DROP PROCEDURE sp_add_product_to_buy;
 CREATE PROCEDURE sp_add_product_to_buy
-@id_pdto INT
+@id_pdto INT,
+@token VARCHAR(255)
 AS
 BEGIN
 DECLARE  @prdto_canasta INT,
 		 @cantidad_lleva INT,
 		 @precio_lleva INT
 
-select @prdto_canasta = id_pdto_stock,@cantidad_lleva = cantidad_lleva, @precio_lleva = precio_lleva from lista_productos WHERE id_pdto_stock =  @id_pdto 
+SELECT @precio_lleva = price FROM stocks_and_price WHERE id_pdto_stock = @id_pdto;
+select @prdto_canasta = id_pdto_stock,@cantidad_lleva = cantidad_lleva from lista_productos WHERE id_pdto_stock =  @id_pdto 
 IF(@prdto_canasta>0)
 	BEGIN
 	SET @cantidad_lleva = @cantidad_lleva +1;
-	UPDATE lista_productos SET cantidad_lleva = @cantidad_lleva, Sub_total =(@cantidad_lleva*@precio_lleva)  Where id_pdto_stock =  @prdto_canasta
+	UPDATE lista_productos SET cantidad_lleva = @cantidad_lleva, Sub_total =(@cantidad_lleva*@precio_lleva), precio_lleva = @precio_lleva Where id_pdto_stock =  @prdto_canasta
 	END
 	ELSE
 	BEGIN
-	SELECT *																				 FROM  stocks_and_price WHERE id_pdto_stock = 2
-	SELECT @prdto_canasta = id_pdto_stock, @precio_lleva = price, @cantidad_lleva = cantidad from  stocks_and_price Where id_pdto_stock = @id_pdto
-	
+	SET @precio_lleva = 0;
+	SELECT @precio_lleva = price from stocks_and_price Where id_pdto_stock =  @id_pdto;
 	INSERT INTO lista_productos(id_pdto_stock, cantidad_lleva, precio_lleva, token, Sub_total, total)
-	VALUES(@id_pdto,1,@precio_lleva,'user001', @precio_lleva, @precio_lleva)
+	VALUES(@id_pdto,1,@precio_lleva,@token, @precio_lleva, @precio_lleva);
 	END
 END
 GO
 
+select * from stocks_and_price
 
+sp_add_product_to_buy 4 ,'23/05/2021 2:24:43??.??d?u?R???'
+sp_add_product_to_buy 4 ,'23/05/2021 16:17:35??%17%13D??????%1fXv%0d?'
+
+
+
+
+
+
+
+ 
+select *, SUM(Sub_total)  from lista_productos
+GROUP BY token ,id_pdto_stock, id_cesta, cantidad_lleva, precio_lleva ,Sub_total, Total
 sp_add_product_to_buy 1
 
 Select * from lista_productos
