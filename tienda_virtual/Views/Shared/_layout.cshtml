@@ -29,7 +29,7 @@
                 <ul class="d-flex option_menu">
 
                     <li>
-                        @Html.ActionLink("Inicio", "Index", "Product")
+                        @Html.ActionLink("Inicio", "Index", "Product",  new { id=1 }, null)
                     </li>
                     @RenderPage("~/Views/Category/Menu.cshtml")
                 </ul>

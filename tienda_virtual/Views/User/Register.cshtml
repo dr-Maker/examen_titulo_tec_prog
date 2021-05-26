@@ -4,12 +4,13 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 
     List<RegionModel> ListRegion = ViewBag.RegionList;
-    List<ProvinciaModel> ListProvincia = ViewBag.ProvinciaList;
-    List<ComunaModel> ListComuna = ViewBag.ComunaList;
 
-    if (TempData["id_region"] == null)
+
+    List<SelectListItem> itemsRegion = new List<SelectListItem>();
+    itemsRegion.Add(new SelectListItem() { Text = "Seleccione Región", Value = "NONE" });
+    foreach (var region in ListRegion)
     {
-        TempData["id_region"] = 0;
+        itemsRegion.Add(new SelectListItem() { Text = region.Nombre_region, Value = region.Id_region.ToString() });
     }
 
 }
@@ -53,7 +54,7 @@
             <br />
             <div class="d-flex">
                 <label class="f-label">Password</label>
-                <input class="f-input" type="password" name="pass" placeholder="Ingrese una Contraseña" />
+                <input class="f-input" type="password" name="pass" autocomplete="on" placeholder="Ingrese una Contraseña" />
             </div>
             <br />
             <div class="d-flex">
@@ -71,56 +72,23 @@
                 <input class="f-input" type="date" name="datebirth" placeholder="Ingrese su fecha de nacimiento" />
             </div>
             <br />
-            
-            <div class="d-flex address">
+
+
+            <div class="d-flex">
                 <label class="f-label">Región</label>
-                <select class="f-input" name="region" onchange="goChange();" placeholder="Seleccione su region">
-
-                    <option>Seleccione Región...</option>
-                    @foreach (var region in ListRegion)
-                    {
-                        if(TempData["id_region"].ToString() == region.Id_region.ToString())
-                        {
-                            <option selected value="@region.Id_region">@region.Nombre_region</option>
-
-                            TempData["id_region"] = region.Id_region.ToString();
-                        }
-                        else
-                        {
-                            <option value="@region.Id_region">@region.Nombre_region</option>
-                           
-                        }
-
-                    }
-                </select>
-            </div>       
-
+                @Html.DropDownList("RegionSelect", itemsRegion, new { @class = "f-input", id = "RegionSelect" })
+            </div>
             <br />
-            <div class="d-flex address">
+            <div class="d-flex">
                 <label class="f-label">Provincia</label>
-                <select class="f-input" name="provincia" placeholder="Seleccione su provincia">
-                    <option>Seleccione Provincia...</option>
-
-                    
-                    @foreach (var provincia in ListProvincia)
-                    {
-                        <option value="@provincia.Id_provincia">@provincia.Nombre_provincia</option>
-                    }
-                </select>
-
-               
+                <select class="optionProvincia f-input" id="optionProvincia"></select>
             </div>
             <br />
-            <div class="d-flex address">
+            <div class="d-flex">
                 <label class="f-label">Comuna</label>
-                <select class="f-input" name="comuna" placeholder="Seleccione su comuna">
-                    <option>Seleccione comuna...</option>
-                    @foreach (var comuna in ListComuna)
-                    {
-                    <option value="@comuna.Id_comuna">@comuna.Nombre_comuna</option>
-                    }
-                </select>
+                <select class="optionComuna f-input"></select>
             </div>
+
             <br />
             <div class="d-flex">
                 <label class="f-label">Direccion</label>

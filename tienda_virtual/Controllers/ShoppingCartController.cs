@@ -96,7 +96,7 @@ namespace tienda_virtual
             List<ShoppingCartModel> ListOrdenes = OrderBuss.GetOrdersPending();
             ViewBag.OrdersList = ListOrdenes;
 
-            List<EstadoOrden> ListEstado = Tools.EstadoOrden();
+            List<EstadoOrdenModel> ListEstado = Tools.EstadoOrden();
             ViewBag.EstadoList = ListEstado;
 
 

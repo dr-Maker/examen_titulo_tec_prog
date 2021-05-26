@@ -5,13 +5,13 @@ using System.Web;
 
 namespace tienda_virtual
 {
-    public class EstadoOrden
+    public class EstadoOrdenModel
     {
 
         private int id_estado;
         private string estado_orden;
 
-        public EstadoOrden()
+        public EstadoOrdenModel()
         {
         }
 

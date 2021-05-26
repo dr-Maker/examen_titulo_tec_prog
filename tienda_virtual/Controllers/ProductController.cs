@@ -12,8 +12,12 @@ namespace tienda_virtual
     public class ProductController : Controller
     {
         // GET: Producto
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
+            ViewBag.actual = id;
+            PaginacionModel paginador = Tools.paginacionInicio();
+            ViewBag.countProduct = paginador;
+
             if (Session["token"] != "")
             {
                 Session["token"] = Session["token"].ToString();
@@ -26,12 +30,17 @@ namespace tienda_virtual
                 data = md5.ComputeHash(data);
                 Session["token"] = date + System.Text.Encoding.ASCII.GetString(data);
             }
-   
 
+            id = id - 1;
+            if (id>0)
+            {
+                id = id * paginador.Cantidad_por_hoja;
+            }
+ 
 
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            List<ProductModel> productos = ProductBuss.ProductsByAleatory();
+            List<ProductModel> productos = ProductBuss.ProductsByAleatory(id);
             return View(productos);
         }
                 
@@ -44,12 +53,23 @@ namespace tienda_virtual
             return View();
         }
 
-        public ActionResult ProductsByCategory(int id)
+        public ActionResult ProductsByCategory(int id, int pag)
         {
+            ViewBag.category = id;
+            ViewBag.actual = pag;
+            PaginacionModel paginador = Tools.paginacionAleatory(id);
+            ViewBag.countProduct = paginador;
+
+
+            pag = pag - 1;
+            if (pag > 0)
+            {
+                pag = pag * paginador.Cantidad_por_hoja;
+            }
 
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            List<ProductModel> productos = ProductBuss.ProductsByCategory(id);
+            List<ProductModel> productos = ProductBuss.ProductsByCategory(id, pag);
             return View(productos);
         }  
 
@@ -151,7 +171,7 @@ namespace tienda_virtual
 
             StockModel obj = new StockModel();
             obj.Producto = new ProductModel();
-            obj.Producto.Id_product = int.Parse(frm["product_id"].ToString());
+            obj.Producto.Id_product = int.Parse(frm["ProductSelect"].ToString());
             obj.Size = new SizeModel();
             obj.Size.Id_size = int.Parse(frm["talla"].ToString());
             StockBuss.InsertStock(obj);
@@ -187,7 +207,7 @@ namespace tienda_virtual
         }
 
         [HttpPost]
-        public ActionResult Editar(FormCollection frm)
+        public ActionResult Editar(FormCollection frm, HttpPostedFileBase file)
         {
             ProductModel obj = new ProductModel();
             obj.Id_product = int.Parse(frm["idProduct"].ToString());
@@ -197,6 +217,20 @@ namespace tienda_virtual
             obj.Brand = new BrandModel(); 
             obj.Brand.Id_marca = int.Parse(frm["idbrand"].ToString());
             obj.Pdto_description =  frm["desciption"].ToString();
+
+            if (file != null )
+            {
+                string name_file = (DateTime.Now.ToString("yyyyMMddHHmmss") + "-" + file.FileName).ToLower();
+                String route = Server.MapPath("~/Assets/uploads/");
+                route += name_file;
+                ProductBuss.UploadFile(route, file);
+                obj.Imagen = name_file;
+            }
+            else
+            {
+                obj.Imagen = frm["img_old"].ToString();
+            }
+
             ProductBuss.Update(obj);
             return RedirectToAction("Products", "Product");
         }
@@ -208,6 +242,20 @@ namespace tienda_virtual
             int idProduct = int.Parse(frm["idProduct"].ToString());
             ProductBuss.Eliminar(idProduct);
             return RedirectToAction("Products", "Product"); 
+        }
+
+        [HttpGet]
+        public JsonResult Tallas(int id) 
+        {
+            List<SizeModel> ListTalla = Tools.talla(id);
+            return Json(ListTalla, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult Provincia(int id)
+        {
+            List<ProductModel> ListProducts = ProductBuss.GetProductWhitStocks(id);
+            return Json(ListProducts, JsonRequestBehavior.AllowGet);
         }
 
     }

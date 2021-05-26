@@ -16,7 +16,7 @@ namespace tienda_virtual
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select * from region Where id_region = 7";
+            cmd.CommandText = "select * from region";
 
             DataTable dt = db.GetQuery(cmd);
             List<RegionModel> lista = new List<RegionModel>();
@@ -31,11 +31,11 @@ namespace tienda_virtual
             return lista;
         }
 
-        public static List<ProvinciaModel> provincia()
+        public static List<ProvinciaModel> provincia(int id)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select * from provincia Where id_region = 7 ";
+            cmd.CommandText = "select * from provincia Where id_region = "+ id;
 
             DataTable dt = db.GetQuery(cmd);
             List<ProvinciaModel> lista = new List<ProvinciaModel>();
@@ -50,11 +50,11 @@ namespace tienda_virtual
             return lista;
         }
 
-        public static List<ComunaModel> Comuna()
+        public static List<ComunaModel> Comuna(int id)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select * from comuna where id_provincia = 23";
+            cmd.CommandText = "select * from comuna where id_provincia = "+ id;
 
             DataTable dt = db.GetQuery(cmd);
             List<ComunaModel> lista = new List<ComunaModel>();
@@ -145,18 +145,18 @@ namespace tienda_virtual
             return lista;
         }
 
-        public static List<EstadoOrden> EstadoOrden()
+        public static List<EstadoOrdenModel> EstadoOrden()
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = "SELECT* from orden_estado_pedido";
 
             DataTable dt = db.GetQuery(cmd);
-            List<EstadoOrden> lista = new List<EstadoOrden>();
-            EstadoOrden obj;
+            List<EstadoOrdenModel> lista = new List<EstadoOrdenModel>();
+            EstadoOrdenModel obj;
             foreach (DataRow row in dt.Rows)
             {
-                obj = new EstadoOrden();
+                obj = new EstadoOrdenModel();
                 obj.Id_estado = int.Parse(row["id_envio"].ToString());
                 obj.Estado_orden = row["estado_pedido"].ToString();
                 lista.Add(obj);
@@ -164,5 +164,44 @@ namespace tienda_virtual
             return lista;
         }
 
+        public static PaginacionModel paginacionInicio()
+        {
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_count_product_inicio";
+
+            DataTable dt = db.GetQuery(cmd);
+
+            PaginacionModel obj = new PaginacionModel();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    obj.Cantidad_pag = int.Parse(dt.Rows[0]["cantidad_product"].ToString());
+                }
+                  
+            return obj;
+        }
+
+        public static PaginacionModel paginacionAleatory(int categoria)
+        {
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_count_products_by_category";
+            cmd.Parameters.Add("@category", SqlDbType.Int).Value = categoria;
+
+            DataTable dt = db.GetQuery(cmd);
+
+            PaginacionModel obj = new PaginacionModel();
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                obj.Cantidad_pag = int.Parse(dt.Rows[0]["cantidad_product"].ToString());
+            }
+
+            return obj;
+        }
     }
+
 }

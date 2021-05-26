@@ -7,7 +7,7 @@
 {
 <li>
 
-    @Html.ActionLink(@item.Category, "ProductsByCategory","Product", new {  id = item.Id_category}, null)
+    @Html.ActionLink(@item.Category, "ProductsByCategory","Product", new {  id = item.Id_category, pag=1}, null)
 </li>
 }
 

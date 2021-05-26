@@ -35,10 +35,32 @@ AS
 	ON producto.id_category = categoria.id_category
 	INNER JOIN marca
 	ON producto.id_brand = marca.id_marca
-	INNER JOIN stocks_and_price
+	LEFT JOIN stocks_and_price
 	ON producto.id_product = stocks_and_price.id_producto
 	WHERE id_product =  @id_product
 GO
+
+sp_get_product 1000010
+
+/***************************************************/
+DROP PROCEDURE sp_get_product_whit_stocks
+CREATE PROCEDURE sp_get_product_whit_stocks
+@id_producto INT
+AS
+	SELECT  * FROM producto
+	INNER JOIN categoria
+	ON producto.id_category = categoria.id_category
+	INNER JOIN marca
+	ON producto.id_brand = marca.id_marca
+	LEFT JOIN stocks_and_price
+	ON producto.id_product = stocks_and_price.id_producto
+	INNER JOIN sizesProduct
+	ON stocks_and_price.id_size = sizesProduct.id_size
+	WHERE producto.id_product = @id_producto
+GO
+
+
+sp_get_product_whit_stocks 1000001
 
 SELECT * FROM stocks_and_price
 SELECT * FROM producto
@@ -53,9 +75,11 @@ CREATE PROCEDURE sp_update_product
 @pdto_description VARCHAR(255),
 @imagen VARCHAR(255)
 AS
-	UPDATE producto SET id_category = @id_Category, name_product = @name_product,
-	id_brand = @id_Brand, pdto_description = @pdto_description WHERE id_product = @id_product
+	UPDATE producto SET id_category = @id_Category, name_product = @name_product, 
+	id_brand = @id_Brand, pdto_description = @pdto_description, imagen = @imagen WHERE id_product = @id_product
 GO
+
+sp_update_product 1000010,105,'Zapatilla Deportiva', 1,'modificacion de la zapatilla'
 
 /***  Elimina un Producto  ***/
 DROP PROCEDURE sp_delete_product
@@ -65,8 +89,11 @@ AS
 	DELETE FROM producto WHERE id_product =  @id_product 	
 GO
 
+select * from provincia Where id_region = 1 
 
 
+
+select * from region
 
 
 

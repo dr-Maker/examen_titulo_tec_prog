@@ -1,13 +1,29 @@
 ﻿
 @{
-    @model List<ProductModel>
-    List<CategoryModel> ListCategory = ViewBag.CategoryList;
-    Layout = "~/Views/Shared/_layout.cshtml";
-    List<ProductModel> ListProduct = ViewBag.ProductList;
-    List<SizeModel> TallaList = ViewBag.TallaList;
-    List<TipoTallaModel> TipoTallalist = ViewBag.TipoTallaList;
+        @model List<ProductModel>
 
-}
+        List<CategoryModel> ListCategory = ViewBag.CategoryList;
+        Layout = "~/Views/Shared/_layout.cshtml";
+        List<ProductModel> ListProduct = ViewBag.ProductList;
+        List<SizeModel> TallaList = ViewBag.TallaList;
+        List<TipoTallaModel> TipoTallalist = ViewBag.TipoTallaList;
+
+
+        List<SelectListItem> itemsListProduct = new List<SelectListItem>();
+        itemsListProduct.Add(new SelectListItem() { Text = "Seleccione Producto", Value = "1000001" });
+        foreach (var itemproduct in ListProduct)
+        {
+            itemsListProduct.Add(new SelectListItem() { Text = itemproduct.nombreProductId(), Value = itemproduct.Id_product.ToString() });
+        }
+
+
+        List<SelectListItem> itemsTipoTalla = new List<SelectListItem>();
+        itemsTipoTalla.Add(new SelectListItem() { Text = "Seleccione tipo de Talla", Value = "1" });
+        foreach (var itemTalla in TipoTallalist)
+        {
+            itemsTipoTalla.Add(new SelectListItem() { Text = itemTalla.Tipo_talla, Value = itemTalla.Id_tipo.ToString() });
+        }
+    }
 
 <div class="w-100 height">
     <h1 class="txt-center">Agregar Talla</h1>
@@ -15,48 +31,31 @@
     <form class="form" method="post">
         <div class="d-flex">
             <label class="f-label">Producto</label>
-            <select class="f-input" name="product_id">
-                <option>seleccione...</option>
-                @foreach (var producto in ListProduct)
-                {
-                    <option value="@producto.Id_product">@producto.nombreProductId()</option>
-                }
-            </select>
-
+            @Html.DropDownList("ProductSelect", itemsListProduct, new { @class = "f-input", id = "ProductSelect", name="product_id" })
         </div>
-
-
+        
         <div class="d-flex">
-            <label class="f-label">Tipo de Talla</label>
-            <select class="f-input" name="tipo_talla">
-                <option>seleccione...</option>
-                @foreach (var tipotalla in TipoTallalist)
-                {
-                    <option value="@tipotalla.Id_tipo">@tipotalla.Tipo_talla</option>
-                }
-            </select>
+            <label class="f-label">Tipo de Talla</label>   
+                @Html.DropDownList("TipoTalla", itemsTipoTalla, new { @class = "f-input", id="TipoTalla" })
         </div>
+
+
         <div class="d-flex">
             <label class="f-label">Talla</label>
         </div>
 
         <div class="f-label">
-            @foreach (var talla in TallaList)
-            {
-             <div>
-                    <input type="checkbox" value="@talla.Id_size" name="talla"/>
-                    <label> @talla.Size</label>
-             </div>
-
-            }
+            <div class="containerChekbox">
+            </div>
         </div>
 
-            <div>
-                <input class="btn_new mg-top-30" type="submit" value="Agregar Talla Producto" />
-            </div>
-            <div>
-                <button>Cancelar</button>
-            </div>
+        <div>
+            <input class="btn_new mg-top-30" type="submit" value="Agregar Talla Producto" />
+        </div>
+
+        <div>
+            <button>Cancelar</button>
+        </div>
 
     </form>
 

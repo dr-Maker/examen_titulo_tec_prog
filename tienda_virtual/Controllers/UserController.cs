@@ -18,23 +18,12 @@ namespace tienda_virtual
             return View();
         }
 
-
         public ActionResult Register()
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<RegionModel> listRegion = Tools.Region();
             ViewBag.RegionList = listRegion;
-            List<ProvinciaModel> listProvincia = Tools.provincia();
-            ViewBag.ProvinciaList = listProvincia;
-            List<ComunaModel> listComuna = Tools.Comuna();
-            ViewBag.ComunaList = listComuna;
-            if (TempData["id_region"] == null) {
-                TempData["id_region"] = 0;
-            }
-
-
-
             return View();
         }
 
@@ -90,17 +79,30 @@ namespace tienda_virtual
             }
 
 
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Product", new { id =1});
         }
-
 
         public ActionResult Logout() {
 
             Session["user"] = "";
             Session["role"] = "";
 
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Product", new { id=1});
         }
 
+
+        [HttpGet]
+        public JsonResult Provincias(int id)
+        {
+            List<ProvinciaModel> ListProvincia = Tools.provincia(id);
+            return Json(ListProvincia, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult Comuna(int id)
+        {
+            List<ComunaModel> ListComunas = Tools.Comuna(id);
+            return Json(ListComunas, JsonRequestBehavior.AllowGet);
+        }
     }
 }

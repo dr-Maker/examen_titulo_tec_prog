@@ -31,7 +31,7 @@ else
 <div class="w-100 height">
     <h1 class="txt-center">@action productos</h1>
 
-    @using (Html.BeginForm(@action, "Product", FormMethod.Post))
+    @using (Html.BeginForm(@action, "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
     <form class="form" method="post" enctype="multipart/form-data">
 
@@ -45,17 +45,24 @@ else
                 <label class="f-label">Category</label>
                 <select class="f-input" name="category_id">
                     <option>seleccione...</option>
-                    @foreach (var item in ListCategory)
+                    @try
                     {
-                        if (producto.Category.Id_category == item.Id_category)
+                        foreach (var item in ListCategory)
                         {
-                            selected = "selected";
+                            if (producto.Category.Id_category == item.Id_category)
+                            {
+                                selected = "selected";
+                            }
+                            else
+                            {
+                                selected = string.Empty;
+                            }
+                            <option @selected value="@item.Id_category">@item.Category</option>
                         }
-                        else
-                        {
-                            selected = string.Empty;
-                        }
-                        <option @selected value="@item.Id_category">@item.Category</option>
+                    }
+                    catch (Exception exe)
+                    {
+
                     }
                 </select>
             </div>
@@ -79,17 +86,25 @@ else
                 <label class="f-label">Marca</label>
                 <select class="f-input" name="idbrand">
                     <option>seleccione...</option>
-                    @foreach (var marca in ListMarca)
+                    @try
                     {
-                        if (producto.Brand.Id_marca == marca.Id_marca)
-                        {
-                            selectedMarca = "selected";
-                        }
-                        else
-                        {
-                            selectedMarca = string.Empty;
-                        }
-                        <option @selectedMarca value="@marca.Id_marca">@marca.Brand</option>
+                         foreach (var marca in ListMarca)
+                         {
+                            if (producto.Brand.Id_marca == marca.Id_marca)
+                            {
+                                selectedMarca = "selected";
+                            }
+                            else
+                            {
+                                selectedMarca = string.Empty;
+                            }
+                            <option @selectedMarca value="@marca.Id_marca">@marca.Brand</option>
+                          }
+                    }
+                    catch (Exception exe)
+                    {
+ 
+
                     }
                 </select>
             </div>
@@ -104,7 +119,7 @@ else
 
         <div class="d-flex">
             <label class="f-label">Descripción</label>
-            <textarea class="f-input" name="desciption" @optReadonly>@producto.Pdto_description </textarea>
+            <textarea class="f-input" name="desciption" @optReadonly>@producto.Pdto_description</textarea>
         </div>
         <div style="width:20%;">
             <img src="~/Assets/uploads/@producto.Imagen.ToString()" />
@@ -117,6 +132,8 @@ else
             </div>
 
         }
+
+        <input type="hidden" readonly name="img_old" value="@producto.Imagen" />
         <div>
             <input class="btn_new mg-top-30" type="submit" value="@btn_enviar" />
         </div>

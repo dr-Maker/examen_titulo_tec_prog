@@ -5,6 +5,7 @@ use db_tienda_virtual;
 
 DROP PROCEDURE sp_list_products_aleatory
 CREATE PROCEDURE sp_list_products_aleatory
+@page INT
 AS
 /*hacer inner join con la categoria para poder llenar el objeto en la instacia del objeton negoccio Producto*/
 	SELECT DISTINCT id_product ,categoria.id_category , name_category, name_product, id_brand, brand,pdto_description, imagen, price FROM producto
@@ -14,8 +15,26 @@ AS
 	ON producto.id_product = stocks_and_price.id_producto
 	INNER JOIN marca
 	ON producto.id_brand = marca.id_marca
-	ORDER BY id_product ASC OFFSET 0 ROWS FETCH NEXT 6 ROWS ONLY
+	ORDER BY id_product ASC OFFSET @page ROWS FETCH NEXT 6 ROWS ONLY
 GO
+
+
+
+/***************************************************************************/
+
+DROP PROCEDURE sp_count_product_inicio
+CREATE PROCEDURE sp_count_product_inicio
+AS
+	Select  COUNT(DISTINCT producto.id_product) as cantidad_product FROM producto
+	INNER JOIN categoria
+	ON producto.id_category = categoria.id_category
+	INNER JOIN stocks_and_price
+	ON producto.id_product = stocks_and_price.id_producto
+	INNER JOIN marca
+	ON producto.id_brand = marca.id_marca
+GO
+
+sp_count_product_inicio
 
 SELECT * FROM lista_productos
 
@@ -23,7 +42,8 @@ SELECT * FROM lista_productos
 
 DROP PROCEDURE sp_list_products_by_category
 CREATE PROCEDURE sp_list_products_by_category
-@category INT
+@category INT,
+@page INT
 AS
 /*hacer inner join con la categoria para poder llenar el objeto en la instacia del objeton negoccio Producto*/
 	
@@ -35,13 +55,30 @@ AS
 	INNER JOIN marca
 	ON producto.id_brand = marca.id_marca
 	WHERE producto.id_category = @category
-	ORDER BY id_product ASC OFFSET 0 ROWS FETCH NEXT 6 ROWS ONLY
+	ORDER BY id_product ASC OFFSET @page ROWS FETCH NEXT 6 ROWS ONLY
+GO
+
+
+sp_list_products_by_category
+
+DROP PROCEDURE sp_count_products_by_category
+CREATE PROCEDURE sp_count_products_by_category
+@category INT
+AS
+
+	SELECT COUNT(DISTINCT producto.id_product) as cantidad_product FROM producto
+	INNER JOIN categoria
+	ON producto.id_category = categoria.id_category
+	INNER JOIN stocks_and_price
+	ON producto.id_product = stocks_and_price.id_producto
+	INNER JOIN marca
+	ON producto.id_brand = marca.id_marca
+	WHERE producto.id_category = @category
 GO
 
 
 
-
-sp_get_product 1000001
+sp_get_product 1000001 
 
 
 /*** TRAE UN PRODUCTO  ***/

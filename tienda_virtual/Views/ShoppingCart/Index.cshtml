@@ -61,7 +61,7 @@
 
     <div class="d-flex dflex-s-around ">
 
-        <a href="@Url.Action("Index", "Product")">Continuar Comprando</a>
+        <a href="@Url.Action("Index", "Product" ,  new { id=1 })">Continuar Comprando</a>
 
         <a href="@Url.Action("","")">Borrar todo</a>
         @if (@Session["user"] != "")

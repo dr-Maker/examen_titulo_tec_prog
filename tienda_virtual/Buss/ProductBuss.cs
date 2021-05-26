@@ -76,11 +76,12 @@ namespace tienda_virtual
             return lista;
         }
 
-        public static List<ProductModel> ProductsByAleatory()
+        public static List<ProductModel> ProductsByAleatory(int page)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_list_products_aleatory";
+            cmd.Parameters.Add("@page", SqlDbType.Int).Value = page;
 
             DataTable dt = db.GetQuery(cmd);
 
@@ -110,12 +111,13 @@ namespace tienda_virtual
             return lista;
         }
 
-        public static List<ProductModel> ProductsByCategory(int id)
+        public static List<ProductModel> ProductsByCategory(int id, int page)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_list_products_by_category";
             cmd.Parameters.Add("@category", SqlDbType.Int).Value = id;
+            cmd.Parameters.Add("@page", SqlDbType.Int).Value = page;
             DataTable dt = db.GetQuery(cmd);
 
             List<ProductModel> lista = new List<ProductModel>();
@@ -151,7 +153,7 @@ namespace tienda_virtual
             cmd.CommandText = "sp_get_product";
             cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = id;
             DataTable dt = db.GetQuery(cmd);
-            ProductModel obj = new ProductModel(); ;
+            ProductModel obj = new ProductModel();
             if (dt != null && dt.Rows.Count > 0)
             {
 
@@ -163,7 +165,7 @@ namespace tienda_virtual
                 obj.Brand.Id_marca = int.Parse(dt.Rows[0]["id_brand"].ToString());
                 obj.Brand.Brand = dt.Rows[0]["brand"].ToString();
                 obj.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
-                obj.Price = int.Parse(dt.Rows[0]["price"].ToString());
+                //obj.Price = int.Parse(dt.Rows[0]["price"].ToString());
                 obj.Imagen = dt.Rows[0]["imagen"].ToString();
             }
             return obj;
@@ -196,7 +198,7 @@ namespace tienda_virtual
             cmd.Parameters.Add("@name_product", SqlDbType.VarChar, 255).Value = obj.Name_product;
             cmd.Parameters.Add("@id_Brand", SqlDbType.Int).Value = obj.Brand.Id_marca;
             cmd.Parameters.Add("@pdto_description", SqlDbType.VarChar, 255).Value = obj.Pdto_description;
-            cmd.Parameters.Add("@imagen", SqlDbType.VarChar, 500).Value = "not_photo.jpg";
+            cmd.Parameters.Add("@imagen", SqlDbType.VarChar, 500).Value = obj.Imagen;
             return db.Onlyquery(cmd);
         }
 
@@ -208,6 +210,36 @@ namespace tienda_virtual
             cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = id;
            
             return db.Onlyquery(cmd);
+        }
+
+        public static List<ProductModel> GetProductWhitStocks(int id)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_get_product_whit_stocks";
+            cmd.Parameters.Add("@id_producto", SqlDbType.Int).Value = id;
+            DataTable dt = db.GetQuery(cmd);
+            List<ProductModel> lista = new List<ProductModel>();
+            ProductModel obj;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                obj = new ProductModel();
+                obj.Id_product = int.Parse(row["id_product"].ToString());
+                obj.Category = new CategoryModel();
+                obj.Category.Id_category = int.Parse(row["id_category"].ToString());
+                obj.Category.Category = row["name_category"].ToString();
+                obj.Name_product = row["name_product"].ToString();
+                obj.Brand = new BrandModel();
+                obj.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
+                obj.Brand.Brand = row["brand"].ToString();
+                obj.Talla = row["size"].ToString();
+
+                lista.Add(obj);
+
+            }
+
+            return lista;
         }
 
 

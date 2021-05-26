@@ -136,7 +136,8 @@
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\ComunaModel.cs" />
-    <Compile Include="Models\EstadoOrden.cs" />
+    <Compile Include="Models\EstadoOrdenModel.cs" />
+    <Compile Include="Models\PaginacionModel.cs" />
     <Compile Include="Models\ParamsComuna.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProvinciaModel.cs" />
