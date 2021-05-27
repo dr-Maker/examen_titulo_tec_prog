@@ -135,7 +135,6 @@ namespace tienda_virtual
             return RedirectToAction("Products", "Product");
         }
 
-
         public ActionResult Stock()
         {
             List<CategoryModel> list = CategoryBuss.Categories();
@@ -144,7 +143,6 @@ namespace tienda_virtual
             ViewBag.StockList = Stocklist;
             return View();
         }
-
 
         public ActionResult AddStock()
         {
@@ -169,12 +167,28 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
 
-            StockModel obj = new StockModel();
-            obj.Producto = new ProductModel();
-            obj.Producto.Id_product = int.Parse(frm["ProductSelect"].ToString());
-            obj.Size = new SizeModel();
-            obj.Size.Id_size = int.Parse(frm["talla"].ToString());
-            StockBuss.InsertStock(obj);
+            string talla = frm["talla"].ToString();
+            List<int> tallas = new List<int>();
+
+            for (int i = 0; i < talla.Length; i++)
+            {
+                if (talla[i] != ',' && talla[i] != '"')
+                {
+                    int l = int.Parse(talla[i].ToString());
+                    tallas.Add(l);
+                }
+            }
+
+            foreach (var addStock in tallas)
+            {
+                StockModel obj = new StockModel();
+                obj.Producto = new ProductModel();
+                obj.Producto.Id_product = int.Parse(frm["ProductSelect"].ToString());
+                obj.Size = new SizeModel();
+                obj.Size.Id_size = addStock;
+                StockBuss.InsertStock(obj);
+            }
+
             return RedirectToAction("Stock", "Product");
         }
 
@@ -242,6 +256,14 @@ namespace tienda_virtual
             int idProduct = int.Parse(frm["idProduct"].ToString());
             ProductBuss.Eliminar(idProduct);
             return RedirectToAction("Products", "Product"); 
+        }
+
+
+        [HttpGet]
+        public JsonResult ProductWhitStocks(int id)
+        {
+            List<ProductModel> Listproduct = ProductBuss.GetProductWhitStocks(id);
+            return Json(Listproduct, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

@@ -60,7 +60,8 @@ namespace tienda_virtual
                     item.Price = int.Parse(dt.Rows[i]["precio"].ToString());
                     item.Pdto_description = dt.Rows[i]["descripcion"].ToString();
                     item.Cantidad = int.Parse(dt.Rows[i]["cantidad"].ToString());
-                    item.Talla = dt.Rows[i]["talla"].ToString();
+                    item.Talla = new SizeModel();
+                    item.Talla.Size = dt.Rows[i]["talla"].ToString();
 
                     lista.Add(item);
                 }
@@ -116,7 +117,8 @@ namespace tienda_virtual
                     item.Price = int.Parse(row["precio"].ToString());
                     item.Pdto_description = row["descripcion"].ToString();
                     item.Cantidad = int.Parse(row["cantidad"].ToString());
-                    item.Talla = row["talla"].ToString();
+                    item.Talla = new SizeModel();
+                    item.Talla.Size= row["talla"].ToString();
 
                     obj.Subtotal = int.Parse(row["subTotal"].ToString());
                     obj.Total = int.Parse(row["Total"].ToString());
@@ -192,7 +194,8 @@ namespace tienda_virtual
                 item.Price = int.Parse(row["precio"].ToString());
                 item.Pdto_description = row["descripcion"].ToString();
                 item.Cantidad = int.Parse(row["cantidad"].ToString());
-                item.Talla = row["talla"].ToString();
+                item.Talla = new SizeModel();
+                item.Talla.Size = row["talla"].ToString();
 
                 obj.Subtotal = int.Parse(row["subTotal"].ToString());
                 obj.Total = int.Parse(row["Total"].ToString());

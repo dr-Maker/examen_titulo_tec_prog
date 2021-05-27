@@ -7,14 +7,14 @@ namespace tienda_virtual
 {
     public class ProductModel
     {
-
+        private int id_cesta;
         private int id_product;
         private CategoryModel category;
         private string name_product;
         private BrandModel brand;
         private int price;
         private int cantidad;
-        private string talla;
+        private SizeModel talla;
         private string pdto_description;
         private DateTime arrabal_date;
         private string imagen;
@@ -33,8 +33,8 @@ namespace tienda_virtual
         public string Pdto_description { get => pdto_description; set => pdto_description = value; }
         public DateTime Arrabal_date { get => arrabal_date; set => arrabal_date = value; }
         public string Imagen { get => imagen; set => imagen = value; }
-        public string Talla { get => talla; set => talla = value; }
-
+        public SizeModel Talla { get => talla; set => talla = value; }
+        public int Id_cesta { get => id_cesta; set => id_cesta = value; }
 
         public int TotalProducto(int precio, int cantidad)
         {

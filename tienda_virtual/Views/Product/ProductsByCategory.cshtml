@@ -41,20 +41,12 @@
 
     </div>
     <div class="indicator_page">
-        @if (pag_actual != 1)
-        {
-            <button class="btn_numero_pag" ;"><</button>
-            <button class="btn_numero_pag" ;"><<</button>
-        }
+
 
         @for (int i = 1; i < @cantidad_pag + 1; i++)
         {
             <button class="btn_numero_pag" onclick="goPageCategory(@categoria, @i);">@i.ToString()</button>
         }
-        @if (pag_actual != cantidad_pag)
-        {
-            <button class="btn_numero_pag" ;">></button>
-            <button class="btn_numero_pag" ;">>></button>
-        }
+
     </div>
 </main>

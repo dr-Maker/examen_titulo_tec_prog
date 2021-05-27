@@ -55,7 +55,9 @@ namespace tienda_virtual
 
                 for(int i = 0;   dt.Rows.Count -1>= i ; i++)
                 {
+           
                     item = new ProductModel();
+                    item.Id_cesta = int.Parse(dt.Rows[i]["id_pdto_stock"].ToString());
                     item.Id_product = int.Parse(dt.Rows[i]["id_producto"].ToString());    
                     item.Category = new CategoryModel();
                     item.Category.Id_category = int.Parse(dt.Rows[i]["id_category"].ToString());
@@ -66,7 +68,8 @@ namespace tienda_virtual
                     item.Pdto_description = dt.Rows[i]["pdto_description"].ToString();
                     item.Price = int.Parse(dt.Rows[i]["precio_lleva"].ToString());
                     item.Cantidad = int.Parse(dt.Rows[i]["cantidad_lleva"].ToString());
-                    item.Talla = dt.Rows[i]["size"].ToString();
+                    item.Talla = new SizeModel();
+                    item.Talla.Size = dt.Rows[i]["size"].ToString();
                     item.Imagen = dt.Rows[i]["imagen"].ToString();
               
                     lista.Add(item);

@@ -102,5 +102,28 @@ namespace tienda_virtual
 
             return View();
         }
+
+        public ActionResult DeleteAllCart() {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            string session = Session["token"].ToString();
+            ProductBuss.DeleteAllProductCart(session);
+            return RedirectToAction("Index", "ShoppingCart");
+
+        }
+
+        public ActionResult DeleteOneKindProductCart(int id)
+        {
+            List<CategoryModel> list = CategoryBuss.Categories();
+            ViewBag.CategoryList = list;
+
+            string session = Session["token"].ToString();
+
+            ProductBuss.DeleteOneKindProductCart(session, id);
+            return RedirectToAction("Index", "ShoppingCart");
+
+        }
+
     }
 }

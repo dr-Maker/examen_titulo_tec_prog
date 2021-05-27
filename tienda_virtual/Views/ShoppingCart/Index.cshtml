@@ -11,44 +11,56 @@
 <div class="w-100 height">
 
     <h1 class="txt-center">Mi Canasta de Productos</h1>
-    <table class="tab">
-        <thead class="txt-center">
-            <tr>
+    @if (ProductoList != null)
+    {
+        <table class="tab">
+            <thead class="txt-center">
+                <tr>
+                    <th>Enlace</th>
+                    <th>Imagen</th>
+                    <th>Producto</th>
+                    <th>Talla</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Sub Total</th>
+
+                    <th>Acción</th>
+
+                </tr>
+            </thead>
+            <tbody class="txt-center cesta">
 
 
-                <th>Producto</th>
-                <th>Talla</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Sub Total</th>
-
-                <th>Acción</th>
-
-            </tr>
-        </thead>
-        <tbody class="txt-center cesta">
-
-
-            @{if (Shopping.Productos != null)
+                @foreach (var item in ProductoList)
                 {
 
-                    foreach (var item in Shopping.Productos)
-                    {
-                        <tr>
-
-                            <td>@item.Name_product</td>
-                            <td>@item.Talla</td>
-                            <td>@item.Price</td>
-                            <td><butto href="#">-</butto> @item.Cantidad <butto href="#">+</butto></td>
-                            <td class="total_producto">@item.TotalProducto(item.Price, item.Cantidad)</td>
-                            <td>Eliminar</td>
-                        </tr>
-                    }
-
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("Product", "Product", new { id = @item.Id_product }, null)">Ir al producto</a>
+                        </td>
+                        <td>
+                            <div style="height:15%; max-width:65px; margin:0 auto;">
+                                <img src="~/Assets/uploads/@item.Imagen.ToString()" />
+                            </div>
+                        </td>
+                        <td>@item.Name_product</td>
+                        <td>@item.Talla.Size</td>
+                        <td>@item.Price</td>
+                        <td> <a href="@Url.Action("", "")">-</a> @item.Cantidad <a href="@Url.Action("", "")">+</a></td>
+                        <td class="total_producto">@item.TotalProducto(item.Price, item.Cantidad)</td>
+                        <td>
+                            <a href="@Url.Action("DeleteOneKindProductCart", "ShoppingCart", new {id = @item.Id_cesta }, null )">Eliminar</a>
+                        </td>
+                    </tr>
                 }
-            }
-        </tbody>
-    </table>
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h2 class="txt-center">Su Canasta de Compra esta Vacía </h2>
+    }
 
     <br />
     <div style="margin-left:80%;">
@@ -63,10 +75,19 @@
 
         <a href="@Url.Action("Index", "Product" ,  new { id=1 })">Continuar Comprando</a>
 
-        <a href="@Url.Action("","")">Borrar todo</a>
+        <a href="@Url.Action("DeleteAllCart","ShoppingCart")">Borrar todo</a>
+
         @if (@Session["user"] != "")
         {
-            <a href="@Url.Action("DoShopping","ShoppingCart")">Hacer Pedido</a>
+            <a href="@Url.Action("DoShopping", "ShoppingCart")">Hacer Pedido</a>
+
+        }
+        else
+        {
+
+            <div style="display:block;">
+                <h3 class="txt-center">Para Continuar la Orden de compra en necesario estar Registrado y Logeado</h3>
+            </div>
         }
     </div>
 

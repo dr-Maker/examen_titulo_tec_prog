@@ -9,7 +9,6 @@ namespace tienda_virtual
 {
     public class ProductBuss
     {
-
         static Database db = new Database();
 
         public static List<ProductModel> Products()
@@ -165,7 +164,7 @@ namespace tienda_virtual
                 obj.Brand.Id_marca = int.Parse(dt.Rows[0]["id_brand"].ToString());
                 obj.Brand.Brand = dt.Rows[0]["brand"].ToString();
                 obj.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
-                //obj.Price = int.Parse(dt.Rows[0]["price"].ToString());
+                obj.Price = int.Parse(dt.Rows[0]["price"].ToString());
                 obj.Imagen = dt.Rows[0]["imagen"].ToString();
             }
             return obj;
@@ -233,7 +232,9 @@ namespace tienda_virtual
                 obj.Brand = new BrandModel();
                 obj.Brand.Id_marca = int.Parse(row["id_brand"].ToString());
                 obj.Brand.Brand = row["brand"].ToString();
-                obj.Talla = row["size"].ToString();
+                obj.Talla = new SizeModel();
+                obj.Talla.Id_size = int.Parse(row["id_size"].ToString());
+                obj.Talla.Size = row["size"].ToString();
 
                 lista.Add(obj);
 
@@ -242,6 +243,24 @@ namespace tienda_virtual
             return lista;
         }
 
+        public static bool DeleteAllProductCart(string token)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_delete_all_product_cart";
+            cmd.Parameters.Add("@token", SqlDbType.VarChar, 255).Value = token;
+            return db.Onlyquery(cmd);
+        }
+
+        public static bool DeleteOneKindProductCart(string token, int id_product)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_delete_one_kind_product_cart";
+            cmd.Parameters.Add("@token", SqlDbType.VarChar, 255).Value = token;
+            cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = id_product;
+            return db.Onlyquery(cmd);
+        }
 
     }
 }

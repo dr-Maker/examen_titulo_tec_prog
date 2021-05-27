@@ -89,6 +89,40 @@ AS
 	DELETE FROM producto WHERE id_product =  @id_product 	
 GO
 
+DROP PROCEDURE sp_delete_all_product_cart
+CREATE PROCEDURE sp_delete_all_product_cart
+@token VARCHAR(255)
+AS
+DELETE lista_productos WHERE token = @token
+GO
+
+
+DROP PROCEDURE sp_delete_one_kind_product_cart
+CREATE PROCEDURE sp_delete_one_kind_product_cart
+@token VARCHAR(255),
+@id_product INT
+AS
+select * from lista_productos
+DELETE lista_productos WHERE token = @token AND id_pdto_stock = @id_product
+GO
+
+DROP PROCEDURE sp_rest_a_prodct_of_list
+CREATE PROCEDURE sp_rest_a_prodct_of_list
+AS
+
+GO
+
+truncate table lista_productos
+select * from lista_productos
+
+
+
+
+	
+select * from lista_productos
+
+
+
 select * from provincia Where id_region = 1 
 
 
@@ -96,6 +130,10 @@ select * from provincia Where id_region = 1
 select * from region
 
 
+sp_get_product 1000001
+
+select * from usuario
 
 
+sp_product_to_buy '26/05/2021 23:09:23??(?Ta9b?????'
 

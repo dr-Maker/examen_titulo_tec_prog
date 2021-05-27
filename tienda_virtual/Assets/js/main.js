@@ -32,11 +32,15 @@
     })
 
     $('#ProductSelect').change(function () {
-        fillandCheckSize();
-    })
+        $("input[type=checkbox]").prop("checked", false);
+        $("input[type=checkbox]").attr("disabled", false);
+
+       
+        verifyAndCheak();
+    });
 
     $('#TipoTalla').change(function () {
-        fillandCheckSize();
+        getTallaSelect();
     })
 
     $('#RegionSelect').change(function () {
@@ -53,8 +57,6 @@
                 })
             });
     })
-
-
 
     $('#RegionSelect').change(function () {
         var id = $("#optionProvincia").val();
@@ -101,13 +103,11 @@
             .then(function (comunas) {
                 $(".optionComuna").children().remove();
                 comunas.forEach(function (option) {
-                    $('.optionComuna').append("<option value='" + option.Id_comuna + "'>" + option.Nombre_comuna + "</option>");
+                    $('.optionComuna').append("<option value='" + option.Id_comuna + "' >" + option.Nombre_comuna + "</option>");
                 })
                 
             });
     })
-
-
 
     var sum = 0;
     $(".cesta tr").each(function() {
@@ -116,31 +116,16 @@
         $("#total_cesta").html("<p>" +sum+"</p>");   
     })
     
-    var token = $("#token").val();
-    if (token == isNaN)
-    {
-        var tokenget = localStorage.getItem("token");
-        $("#token").val(tokenget);
-        console.log("entro en el no es un numero")
-    }
-    localStorage.setItem("token", token);
+
 });
 
 function goPage(page) {
     window.location.href = '/Product/Index/' + page;
-}
+};
 
 function goPageCategory(categoria, page) {
     window.location.href = '/Product/ProductsByCategory/' + categoria +'?pag=' +page;
-}
-
-function fillandCheckSize() {
-    var tallas = getTipoTalla();
-    tallas.forEach(function (element) {
-        $(".containerChekbox").append("<input type='checkbox' value='" + element.id + "' name='talla'/>")
-            .append("<label>" + element.size + "</label>").append("<br/>");
-    });
-}
+};
 
 function getProducSelect()
 {
@@ -153,13 +138,27 @@ function getProducSelect()
         })
         .then(function (productos) {
             productos.forEach(function (element) {
-                products.push({ "talla": element.Talla });
+                $("input[type=checkbox]").each(function () {
+                    var input = $(this).val();
+                    console.log(input);
+                    console.log(element.Talla.Id_size);
+                    
+                    if ($(".tallaCheckBox").length) {
+                        if (input == element.Talla.Id_size) { 
+                            $(this).prop("checked", true);
+                            $(this).attr("disabled", true);
+                            console.log("checked");
+                        }
+                    }    
+                    
+                });
+              
             })
         });
-    return products;
-}
+};
 
-function getTipoTalla() {
+function getTallaSelect()
+{
     var Sizest = [];
     var id = $('#TipoTalla').val();
     fetch("/Product/Tallas/?id=" + id)
@@ -171,7 +170,24 @@ function getTipoTalla() {
             tallas.forEach(function (element) {
                 Sizest.push({ "id": element.Id_size, "size": element.Size });
             })
-        })
-    return Sizest;
-}
+            $(".containerChekbox").children().remove();
+            Sizest.forEach(function (element) {
+                $(".containerChekbox").append("<input type='checkbox' value='" + element.id + "' name='talla'/>")
+                    .append("<label  class='tallaCheckBox' >" + element.size + "</label>").append("<br/>");
+                
+            });
+            verifyAndCheak();
+    });   
+};
 
+function verifyAndCheak() {
+    if ($(".tallaCheckBox").length)
+    {
+        getProducSelect();
+    }
+    else
+    {
+        console.log("No existe el dato");
+    }
+    
+};
