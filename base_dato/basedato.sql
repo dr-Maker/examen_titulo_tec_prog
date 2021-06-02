@@ -142,6 +142,8 @@ id_comuna INT NOT NULL,
 direccion VARCHAR(250) NOT NULL
 )
 
+
+
 DROP TABLE orden_medio_pago;
 CREATE TABLE orden_medio_pago(
 id_tipo_medio_pago INT IDENTITY(1, 1) PRIMARY KEY,

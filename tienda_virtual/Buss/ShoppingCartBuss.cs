@@ -84,8 +84,30 @@ namespace tienda_virtual
             return obj;
         }
 
+        public static bool UpdateAddressOrder(UserModel obj)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_update_address_user_order";
+            cmd.Parameters.Add("@id", SqlDbType.Int).Value = obj.Iduser;
+            cmd.Parameters.Add("@id_region", SqlDbType.Int).Value = obj.Region.Id_region;
+            cmd.Parameters.Add("@id_comuna", SqlDbType.Int).Value = obj.Comuna.Id_comuna;
+            cmd.Parameters.Add("@direccion", SqlDbType.VarChar, 255).Value = obj.Addres;
 
+            return db.Onlyquery(cmd);
+        }
 
+        public static bool UpdateStateSend(int cesta, int estado)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_update_state_send";
+            cmd.Parameters.Add("@cesta", SqlDbType.Int).Value = cesta;
+            cmd.Parameters.Add("@id_envio", SqlDbType.Int).Value = estado;
+          
+
+            return db.Onlyquery(cmd);
+        }
 
     }
 }

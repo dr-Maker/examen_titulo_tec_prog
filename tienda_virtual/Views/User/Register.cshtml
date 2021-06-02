@@ -5,14 +5,12 @@
 
     List<RegionModel> ListRegion = ViewBag.RegionList;
 
-
     List<SelectListItem> itemsRegion = new List<SelectListItem>();
     itemsRegion.Add(new SelectListItem() { Text = "Seleccione Región", Value = "NONE" });
     foreach (var region in ListRegion)
     {
         itemsRegion.Add(new SelectListItem() { Text = region.Nombre_region, Value = region.Id_region.ToString() });
     }
-
 }
 
 

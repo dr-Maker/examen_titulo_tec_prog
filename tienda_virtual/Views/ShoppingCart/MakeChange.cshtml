@@ -6,6 +6,10 @@
     List<ShoppingCartModel> ListOrdenes = ViewBag.OrdersList;
 
     List<EstadoOrdenModel> ListEstado = ViewBag.EstadoList;
+
+    int id = 0;
+    int contador = 1;
+
 }
 
 <div class="w-100 height">
@@ -33,37 +37,45 @@
 
             @foreach (var ordenes in ListOrdenes)
             {
-                <tr>
-                    <td>@ordenes.Id_cart</td>
-                    @foreach (var producto in ordenes.Productos)
-                    {
+            <tr>
 
+                @if (@id != @ordenes.Id_cart)
+                {
 
-                        <td>@producto.Id_product</td>
-                        <td>@producto.Name_product</td>
-                        <td>@producto.Pdto_description</td>
-                        <td>@producto.Talla</td>
-                        <td>@producto.Brand.Brand</td>
-                        <td>@producto.Cantidad</td>
-                        <td>@producto.Price</td>
-                    }
-                    <td>@ordenes.Total</td>
-                    <td>@ordenes.FechaPedido</td>
-                    <td>@ordenes.EstadoPago</td>
-                    <td>@ordenes.EstadoPedido</td>
-                    <td>
-                        <select>
-                            <option>seleccione...</option>
+                    <td rowspan="3" class="idcesta">@ordenes.Id_cart</td>
+                    contador = 1;
+                }
+                @foreach (var producto in ordenes.Productos)
+                {
 
-                            @foreach (var estado in ListEstado)
-                            {
+                    <td>@producto.Id_product</td>
+                    <td>@producto.Name_product</td>
+                    <td>@producto.Pdto_description</td>
+                    <td>@producto.Talla</td>
+                    <td>@producto.Brand.Brand</td>
+                    <td>@producto.Cantidad</td>
+                    <td>@producto.Price</td>
+                }
+                <td>@ordenes.Total</td>
+                <td>@ordenes.FechaPedido</td>
+                <td>@ordenes.EstadoPago</td>
+                <td>@ordenes.EstadoPedido</td>
+                <td>
+                    <select class="ChangeState">
+                        <option>seleccione...</option>
+
+                        @foreach (var estado in ListEstado)
+                        {
                             <option value="@estado.Id_estado">@estado.Estado_orden</option>
-                            }
-                        </select>
-                    </td>
-                </tr>
+                        }
+                    </select>
+                </td>
+                @{id = @ordenes.Id_cart;
+                    contador++;
+                }
+            </tr>
 
-            }
+                    }
 
         </tbody>
     </table>

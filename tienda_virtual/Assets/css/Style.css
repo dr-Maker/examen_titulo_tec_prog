@@ -7,8 +7,11 @@
     display: flex;
 }
 
+.diplayNone {
+display:none;
+}
 .mg-10 {
-margin-left:10%;
+    margin-left: 10%;
 }
 .w-100 {
     width: 100%;

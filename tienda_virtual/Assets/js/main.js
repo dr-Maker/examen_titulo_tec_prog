@@ -115,7 +115,32 @@
         sum += total;
         $("#total_cesta").html("<p>" +sum+"</p>");   
     })
-    
+
+    $(".correct_address").change(function (e) {
+        e.preventDefault();
+        var valor = $(".correct_address input:checked").val();
+        console.log(valor);
+        if (valor == 1)
+        {
+            $(".container_new_address").removeClass("diplayNone");
+        }
+        else
+        {
+            $(".container_new_address").addClass("diplayNone");
+                      
+        }
+        
+    });
+
+    $(".ChangeState").change(function () {
+
+        var estado = $(this).val();
+        var idcesta = $(this).parent().parent().find(".idcesta").html();
+        console.log(estado);
+        console.log(idcesta);
+
+        window.location.href = '/ShoppingCart/Update/?estado=' + estado + '&cesta=' + idcesta;
+    });
 
 });
 

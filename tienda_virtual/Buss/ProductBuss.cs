@@ -262,5 +262,14 @@ namespace tienda_virtual
             return db.Onlyquery(cmd);
         }
 
+        public static bool DeleteOneProdutCart(ShoppingCartModel obj)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_del_product_to_buy";
+            cmd.Parameters.Add("@id_pdto", SqlDbType.Int).Value = obj.Id_cart;
+            cmd.Parameters.Add("@token", SqlDbType.VarChar, 255).Value = obj.Token;
+            return db.Onlyquery(cmd);
+        }
     }
 }

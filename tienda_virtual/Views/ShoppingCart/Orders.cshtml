@@ -31,7 +31,7 @@
                 @foreach (var ordenes in ListOrdenes)
                 {
                 <tr>
-                    <td>@ordenes.Id_cart</td>
+                    <td >@ordenes.Id_cart</td>
                     @foreach (var producto in ordenes.Productos)
                     {
 
@@ -39,7 +39,7 @@
                         <td>@producto.Id_product</td>
                         <td>@producto.Name_product</td>
                         <td>@producto.Pdto_description</td>
-                        <td>@producto.Talla</td>
+                        <td>@producto.Talla.Size</td>
                         <td>@producto.Brand.Brand</td>
                         <td>@producto.Cantidad</td>
                         <td>@producto.Price</td>

@@ -26,7 +26,10 @@ namespace tienda_virtual
 
             foreach (DataRow row in dt.Rows)
             {
+
+                obj.Id_cart = int.Parse(row["id_cesta"].ToString());
                 obj.Usuario = new UserModel();
+                obj.Usuario.Iduser = int.Parse(row["id_persona"].ToString());
                 obj.Usuario.Firstname = row["Nombre"].ToString();
                 obj.Usuario.Fatherlastname = row["Apellido"].ToString();
                 obj.Usuario.Email = row["email"].ToString();
@@ -208,5 +211,16 @@ namespace tienda_virtual
             return lista_obj;
         }
 
+        public static bool PayMethod(int idcesta, int typepay, int pay)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_payment_method";
+            cmd.Parameters.Add("@cesta", SqlDbType.Int).Value = idcesta;
+            cmd.Parameters.Add("@id_tipo_medio_pago", SqlDbType.Int).Value = typepay;
+            cmd.Parameters.Add("@id_estado_pago", SqlDbType.Int).Value = pay;
+
+            return db.Onlyquery(cmd);
+        }
     }
 }

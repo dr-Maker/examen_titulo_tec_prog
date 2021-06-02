@@ -18,7 +18,6 @@ namespace tienda_virtual
             return View();      
         }
 
-
         public ActionResult Categories()
         {
             List<CategoryModel> list = CategoryBuss.Categories();
@@ -26,7 +25,6 @@ namespace tienda_virtual
             return View();
 
         }
-
 
         public ActionResult FormCategory(int id, string accion)
         {
@@ -38,7 +36,6 @@ namespace tienda_virtual
             ViewBag.Category = category;
             return View();
         }
-
 
         public ActionResult Register()
         {
@@ -75,7 +72,6 @@ namespace tienda_virtual
             CategoryBuss.DeletedCategory(idCategory);
             return RedirectToAction( "Categories");
         }
-
 
         public ActionResult Menu()
         {  

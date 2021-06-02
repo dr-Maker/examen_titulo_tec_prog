@@ -46,7 +46,12 @@
                         <td>@item.Name_product</td>
                         <td>@item.Talla.Size</td>
                         <td>@item.Price</td>
-                        <td> <a href="@Url.Action("", "")">-</a> @item.Cantidad <a href="@Url.Action("", "")">+</a></td>
+                        <td>
+                            <div class="d-flex">
+                                <a  style="width:33%; margin:0 auto; padding-top: 15%;" href="@Url.Action("RestProduct", "ShoppingCart" , new {id = @item.Id_cesta }, null)">-</a> <p  style="width:33%;">@item.Cantidad</p> <a  style="width:33%; padding-top:15%;" href="@Url.Action("AddShoppingCart", "ShoppingCart" , new {id = @item.Id_cesta }, null)">+</a>
+                            </div>
+                        </td>
+                        
                         <td class="total_producto">@item.TotalProducto(item.Price, item.Cantidad)</td>
                         <td>
                             <a href="@Url.Action("DeleteOneKindProductCart", "ShoppingCart", new {id = @item.Id_cesta }, null )">Eliminar</a>

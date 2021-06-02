@@ -90,7 +90,6 @@ namespace tienda_virtual
             return RedirectToAction("Index", "Product", new { id=1});
         }
 
-
         [HttpGet]
         public JsonResult Provincias(int id)
         {

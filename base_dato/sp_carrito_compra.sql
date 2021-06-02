@@ -87,6 +87,26 @@ IF(@prdto_canasta>0)
 END
 GO
 
+DROP PROCEDURE sp_del_product_to_buy;
+CREATE PROCEDURE sp_del_product_to_buy
+@id_pdto INT,
+@token VARCHAR(255)
+AS
+BEGIN
+DECLARE  @prdto_canasta INT,
+		 @cantidad_lleva INT,
+		 @precio_lleva INT
+
+SELECT @precio_lleva = price FROM stocks_and_price WHERE id_pdto_stock = @id_pdto;
+SELECT @prdto_canasta = id_pdto_stock,@cantidad_lleva = cantidad_lleva from lista_productos WHERE id_pdto_stock =  @id_pdto 
+	SET @cantidad_lleva = @cantidad_lleva -1;
+	UPDATE lista_productos SET cantidad_lleva = @cantidad_lleva, Sub_total =(@cantidad_lleva*@precio_lleva), precio_lleva = @precio_lleva Where id_pdto_stock =  @prdto_canasta
+END
+GO
+
+
+
+
 select * from stocks_and_price
 
 sp_add_product_to_buy 4 ,'23/05/2021 2:24:43??.??d?u?R???'

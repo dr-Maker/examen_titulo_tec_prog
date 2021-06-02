@@ -29,26 +29,6 @@ namespace tienda_virtual
         {
         }
 
-        public UserModel(int iduser, string firstname, string secondname, string fatherlastname, string motherlastname)
-        {
-            this.iduser = iduser;
-            this.firstname = firstname;
-            this.secondname = secondname;
-            this.fatherlastname = fatherlastname;
-            this.motherlastname = motherlastname;
-            /*
-            this.username = username;
-            this.birthday = birthday;
-            this.region = region;
-            this.provincia = provincia;
-            this.comuna = comuna;
-            this.addres = addres;
-            this.password = password;
-            this.dateregister = dateregister;
-            this.role = role;
-            */
-        }
-
         public int Iduser { get => iduser; set => iduser = value; }
         public string Firstname { get => firstname; set => firstname = value; }
         public string Secondname { get => secondname; set => secondname = value; }

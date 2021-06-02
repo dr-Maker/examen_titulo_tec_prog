@@ -1,4 +1,4 @@
-use db_tienda_virtual;
+use db_tienda_virtual; 
 
 DROP PROCEDURE sp_make_order
 CREATE PROCEDURE sp_make_order
@@ -285,7 +285,13 @@ GO
 DROP PROCEDURE sp_list_orders_pending
 CREATE PROCEDURE sp_list_orders_pending
 AS
-SELECT * FROM orden_carrito
+DECLARE @contador INT, 
+@id_carrito INT
+SELECT @contador = COUNT(orden_carrito_compra.id_carrito) as cantidad_id, orden_carrito_compra.id_carrito from orden_carrito_compra GROUP BY id_carrito
+SELECT @contador, orden_carrito_compra.id_carrito,
+id_producto, categoria, nombre_producto, marca, precio, descripcion, cantidad, talla, subTotal, Total,
+Nombre, Apellido, email, fecha_pedido, estado_pago, estado_pedido
+FROM orden_carrito
 INNER JOIN orden_carrito_compra
 ON orden_carrito.id_cesta = orden_carrito_compra.id_carrito
 INNER JOIN orden_usuario
@@ -297,8 +303,11 @@ ON orden_id_estado_pago.id_estado_pago = orden_carrito.id_estado_pago
 INNER JOIN orden_estado_pedido
 ON orden_estado_pedido.id_envio = orden_carrito.id_envio
 WHERE orden_estado_pedido.id_envio <> 6
+
 -- order by id_cesta , mas reciente y por estado
 GO
+
+sp_list_orders_pending
 
 select * from orden_estado_pedido
 
@@ -308,3 +317,72 @@ sp_list_order 'admin'
 sp_list_order 'admin'
 
 select * from usuario
+
+
+
+SELECT * FROM orden_carrito
+INNER JOIN orden_carrito_compra
+ON orden_carrito.id_cesta = orden_carrito_compra.id_carrito
+INNER JOIN orden_usuario
+ON orden_carrito.id_persona = orden_usuario.id
+INNER JOIN comuna
+ON orden_usuario.id_comuna = comuna.id_comuna
+INNER JOIN provincia
+ON comuna.id_provincia = provincia.id_provincia
+INNER JOIN region
+ON provincia.id_region = region.id_region
+WHERE token = '28/05/2021 13:22:38???@ ?????L'
+
+
+
+select * from lista_productos
+sp_get_order '28/05/2021 13:22:38???@ ?????L'
+
+======================================================
+
+DROP PROCEDURE sp_update_address_user_order
+CREATE PROCEDURE sp_update_address_user_order
+@id INT,
+@id_region INT,
+@id_comuna INT,
+@direccion VARCHAR(255)
+AS
+UPDATE orden_usuario
+SET id_region = @id_region,
+id_comuna =@id_comuna,
+direccion = @direccion
+WHERE id = @id
+GO
+
+
+======================================
+DROP PROCEDURE sp_payment_method 
+CREATE PROCEDURE sp_payment_method
+@cesta INT,
+@id_tipo_medio_pago INT,
+@id_estado_pago INT
+AS
+UPDATE orden_carrito
+SET id_tipo_medio_pago = @id_tipo_medio_pago,
+id_estado_pago = @id_estado_pago
+WHERE id_cesta = @cesta
+GO
+
+DROP PROCEDURE sp_update_state_send 
+CREATE PROCEDURE sp_update_state_send
+@cesta INT,
+@id_envio INT
+AS
+UPDATE orden_carrito
+SET id_envio = @id_envio
+WHERE id_cesta = @cesta
+GO
+
+sp_update_state_send 1, 3
+
+SELECT * FROM orden_usuario;
+SELECT * FROM orden_carrito
+select * from comuna
+SELECT * FROM orden_medio_pago
+SELECT * FROM orden_id_estado_pago
+

@@ -2,11 +2,20 @@
 @{
     Layout = "~/Views/Shared/_layout.cshtml";
     ShoppingCartModel Oden = ViewBag.Orden;
+    List<RegionModel> ListRegion = ViewBag.Region;
+
+
+    List<SelectListItem> itemsRegion = new List<SelectListItem>();
+    itemsRegion.Add(new SelectListItem() { Text = "Seleccione Región", Value = "NONE" });
+    foreach (var region in ListRegion)
+    {
+        itemsRegion.Add(new SelectListItem() { Text = region.Nombre_region, Value = region.Id_region.ToString() });
+    }
 }
 
 
 <div class="w-100 ">
-    <h1 class="txt-center">Mi pedido N º @Oden.Id_cart</h1>
+    <h1 class="txt-center">Mi pedido N º @Oden.Id_cart.ToString()</h1>
     <hr />
     <h2 class="txt-center">Datos de Cliente </h2>
 
@@ -39,7 +48,7 @@
                     <td>@product.Id_product</td>
                     <td>@product.Name_product</td>
                     <td>@product.Brand.Brand</td>
-                    <td>@product.Talla</td>
+                    <td>@product.Talla.Size</td>
                     <td>@product.Cantidad</td>
                     <td>@product.Price</td>
                 </tr>
@@ -54,58 +63,73 @@
     <p>Comuna: <span>@Oden.Usuario.Comuna.Nombre_comuna</span></p>
     <p>Direccion: <span>@Oden.Usuario.Addres</span></p>
 
-    <h2 class="txt-center">Desea Ingresar una direccion distinta</h2>
 
-    <div class="d-flex">
-        <input type="radio" value="1" name="type_tc" />
-        <label for="">SI</label>
-        <br>
-        <input type="radio" value="1" name="type_tc" />
-        <label for="">NO</label>
-        <br>
-    </div>
 
-    <hr />
-    <h2 class="txt-center">Ingresar Nueva dirección de envío</h2>
-    <div class="d-flex">
-        <form class="form">
+    <h2 class="txt-center">¿Desea Ingresar una direccion distinta?</h2>
+
+    @using (Html.BeginForm("Pagar", "ShoppingCart", FormMethod.Post))
+    {
+
+        <div class="d-flex correct_address">
+            <input type="radio" value="1" name="new_address" />
+            <label for="">SI</label>
+            <br>
+            <input type="radio" value="2" name="new_address" checked />
+            <label for="">NO</label>
+            <br>
+        </div>
+
+
+        <hr />
+
+        <div class="container_new_address diplayNone">
             <div class="d-flex">
                 <label class="f-label">Región</label>
-                <input class="f-input" type="text" disabled />
+                @Html.DropDownList("RegionSelect", itemsRegion, new { @class = "f-input", id = "RegionSelect" })
             </div>
+            <br />
             <div class="d-flex">
                 <label class="f-label">Provincia</label>
-                <input class="f-input" type="text" disabled />
+                <select class="optionProvincia f-input" id="optionProvincia"></select>
             </div>
+            <br />
             <div class="d-flex">
                 <label class="f-label">Comuna</label>
-                <input class="f-input" type="text" disabled />
+                <select class="optionComuna f-input" name="comuna"></select>
             </div>
+
+            <br />
             <div class="d-flex">
-                <label class="f-label">Dirección</label>
-                <input class="f-input" type="text" disabled />
+                <label class="f-label">Direccion de envío</label>
+                <input class="f-input" type="text" name="direccion" placeholder="Ingrese la dirección de envío" />
             </div>
-            <hr />
-            <h2 class="txt-center">Ingrese Medio de pago</h2>
-            <div class="d-flex">
-                <label class="f-label">Seleccione Medio de pago</label>
-                <input type="radio" value="1" name="type_tc" />
-                <label for="">Tarjeta debito</label>
-                <br>
-                <input type="radio" value="1" name="type_tc" />
-                <label for="">Tarjeta credito</label>
-                <br>
-            </div>
+        </div>
 
-        </form>
-    </div>
+        <hr />
+        <h2 class="txt-center">Ingresar medio de pago</h2>
 
+        <div class="d-flex">
 
+            <label class="f-label">Seleccione Medio de pago</label>
+            <input type="radio" value="1" name="type_tc" checked />
+            <label for="">Tarjeta debito</label>
+            <br>
+            <input type="radio" value="1" name="type_tc" />
+            <label for="">Tarjeta credito</label>
+            <br>
 
-    <div class="d-flex dflex-s-around ">
-        <a href=@Url.Action("Orders","ShoppingCart")>Pagar</a>
-        <br />
-        <button>Cancelar Pedido</button>
-    </div>
+        </div>
+
+        <input type="hidden" readonly value="@Oden.Usuario.Iduser.ToString()" name="idusuario" />
+        <input type="hidden" readonly value=" @Oden.Id_cart.ToString()" name="idcesta" />
+
+        <div class="d-flex dflex-s-around ">
+            <input type="submit" value="pagar" />
+
+            <br />
+            <button>Cancelar Pedido</button>
+        </div>
+
+    }
 </div>
 
