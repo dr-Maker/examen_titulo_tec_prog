@@ -24,7 +24,9 @@ namespace tienda_virtual
             Session["user"] = "";
             Session["role"] = "";
             Session["token"] = "";
-            
+            Session["mensage"] = "";
+            Session["tipoMensaje"] = "";
+
         }
 
         protected void Session_End(object sender, EventArgs e)
@@ -33,6 +35,8 @@ namespace tienda_virtual
             Session["user"] = "";
             Session["role"] = "";
             Session["token"] = "";
+            Session["mensage"] = "";
+            Session["tipoMensaje"] = "";
         }
 
     }

@@ -9,27 +9,29 @@
 <div class="w-100 height">
 
     <h1 class="txt-center">Ingresar un nuevo Producto </h1>
-
-    <form class="form" method="post" enctype="multipart/form-data">
+    <br />
+    <form class="form" method="post" id="form-insert-product" enctype="multipart/form-data">
         <div class="d-flex">
-            <label class="f-label">Category</label>
-            <select class="f-input" name="category_id" >
-                <option>seleccione...</option>
+            <label for="category_id" class="f-label">Category</label>
+            <select class="f-input" id="select-category" name="category_id" required>
+                <option value="none">seleccione...</option>
                 @foreach (var item in ListCategory)
                 {
                     <option value="@item.Id_category">@item.Category</option>
-                 }
-                </select>
+                }
+            </select>
 
         </div>
+        <br />
         <div class="d-flex">
             <label class="f-label">Nombre del producto</label>
-            <input class="f-input" type="text" name="product"/>
+            <input class="f-input" type="text" name="product" required placeholder="Ingrese el nombre del producto" />
         </div>
+        <br />
         <div class="d-flex">
-            <label class="f-label" >Marca</label>
-            <select class="f-input" name="brand">
-                <option>seleccione...</option>
+            <label for="brand" class="f-label">Marca</label>
+            <select class="f-input" name="brand" id="select-brand" required>
+                <option value="none">seleccione...</option>
                 @foreach (var item in ListBrand)
                 {
                     <option value="@item.Id_marca">@item.Brand</option>
@@ -37,18 +39,21 @@
                 }
             </select>
         </div>
+        <br />
 
-       
         <div class="d-flex">
-            <label    class="f-label">Descripción</label>
-            <textarea class="f-input" name="desciption"></textarea>
+            <label for="desciption" class="f-label">Descripción</label>
+            <textarea class="f-input" name="desciption" placeholder="ingrese la descripción del producto"></textarea>
         </div>
+        <br />
         <div class="d-flex">
             <label class="f-label">Imagen</label>
             <input class="f-input" type="file" name="file" />
         </div>
-        <div>
-            <input class="btn_new mg-top-30" type="submit" value="Ingresar Producto" />
+        <br />
+        <div class="d-flex space-between">
+            <input class="btn_new mg-top-30" id="btn-insert-product" type="submit" value="Ingresar Producto" disabled />
+            @Html.ActionLink("volver", "Products", "Product",null, new { @class = "btn-cancelar mg-top-30" })
         </div>
     </form>
 </div>

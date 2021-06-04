@@ -36,8 +36,6 @@ nombre_sexo VARCHAR(50) NOT NULL
 
 
 DROP TABLE usuario
-
-
 CREATE TABLE usuario(
  id INT IDENTITY(10001,1) PRIMARY KEY, 
  first_name VARCHAR(255) NOT NULL,
@@ -47,7 +45,7 @@ CREATE TABLE usuario(
  pass VARCHAR(500) NOT NULL,
  username VARCHAR(255) NOT NULL UNIQUE,
  email VARCHAR(255) NOT NULL UNIQUE,
- --telefono
+ telefono VARCHAR(255) NOT NULL DEFAULT '1',
  user_role VARCHAR(255) DEFAULT('user') NOT NULL,
  birthday DATETIME NOT NULL,
  sex_id int NOT NULL,
@@ -57,6 +55,20 @@ CREATE TABLE usuario(
  FOREIGN KEY (sex_id) REFERENCES sexo(id_sexo),
  FOREIGN KEY (comuna_id) REFERENCES comuna(id_comuna)
  )
+
+ ALTER TABLE usuario
+ALTER COLUMN telefono VARCHAR(255);
+
+ ALTER TABLE usuario
+DROP COLUMN telefono;
+
+ ALTER TABLE usuario
+ADD telefono INT NOT NULL DEFAULT '1';
+
+
+ SELECT * from usuario
+
+
 
 
  CREATE TABLE categoria(

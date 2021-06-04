@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Registro";
     Layout = "~/Views/Shared/_layout.cshtml";
-
+    string msg = ViewBag.mensaje;
+    string tipoResponse = ViewBag.TipoMensaje;
     List<RegionModel> ListRegion = ViewBag.RegionList;
 
     List<SelectListItem> itemsRegion = new List<SelectListItem>();
@@ -19,55 +20,71 @@
 
     <div class="d-flex">
 
+
         <form class="form" method="post">
+
+            @if (msg != null && msg != " ")
+            {
+                <div class="container-msg">
+                    <p class="txt-center @tipoResponse">@msg</p>
+                </div>
+                Session["mensage"] = string.Empty;
+                Session["tipoMensaje"] = string.Empty;
+
+            }
             <div class="d-flex">
-                <label class="f-label">Primer Nombre</label>
-                <input class="f-input" type="text" name="first_name" placeholder="Ingrese su primer Nombre" />
+                <label for="first_name" class="f-label">Primer Nombre</label>
+                <input class="f-input" type="text" name="first_name" pattern="[A-Za-z]{1,37}" placeholder="Ingrese su primer Nombre" required />
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Segundo Nombre</label>
-                <input class="f-input" type="text" name="second_name" placeholder="Ingrese su segundo Nombre" />
+                <label for="second_name" class="f-label">Segundo Nombre</label>
+                <input class="f-input" type="text" name="second_name" pattern="[A-Za-z]{1,37}" placeholder="Ingrese su segundo Nombre" />
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Apellido Paterno</label>
-                <input class="f-input" type="text" name="father_lastname" placeholder="Ingrese su Apellido Paterno" />
+                <label for="father_lastname" class="f-label">Apellido Paterno</label>
+                <input class="f-input" type="text" name="father_lastname" pattern="[A-Za-z]{1,37}" placeholder="Ingrese su Apellido Paterno" required />
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Apellido Materno</label>
-                <input class="f-input" type="text" name="mother_lastname" placeholder="Ingrese su Apellido Materno" />
+                <label for="mother_lastname" class="f-label">Apellido Materno</label>
+                <input class="f-input" type="text" name="mother_lastname" pattern="[A-Za-z]{1,37}" placeholder="Ingrese su Apellido Materno" />
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Sexo</label>
+                <label for="sexo" class="f-label">Genero</label>
                 <div class="f-radio">
                     <input type="radio" name="sexo" value="0" />
                     <label class="f-label">Femenino</label>
-                    <input type="radio" name="sexo" value="1" />
+                    <input type="radio" name="sexo" value="1" checked />
                     <label class="f-label">Masculino</label>
                 </div>
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Password</label>
-                <input class="f-input" type="password" name="pass" autocomplete="on" placeholder="Ingrese una Contraseña" />
+                <label for="user" class="f-label">Nombre Usuario</label>
+                <input class="f-input" type="text" name="user" pattern="[A-Za-z0-9]{1,120}" required placeholder="Elija un nombre de usuario solo letras y numeros" />
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Nombre Usuario</label>
-                <input class="f-input" type="text" name="user" placeholder="Ingrese un nombre de usuario" />
+                <label for="pass" class="f-label">Contraseña</label>
+                <input class="f-input" type="password" name="pass" minlength="5" pattern=".{5,}" autocomplete="on" required placeholder="Ingrese una Contraseña" />
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Correo</label>
-                <input class="f-input" type="email" name="email" placeholder="Ingrese su correo" />
+                <label for="telefono" class="f-label">Teléfono</label>
+                <input class="f-input" type="tel" name="telefono" pattern="[5]{1}[6]{1}[0-9]{1}[0-9]{4}[0-9]{4}" required placeholder="Ingrese su número de teléfono formato 56912345678" />
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Fecha de Nacimiento</label>
-                <input class="f-input" type="date" name="datebirth" placeholder="Ingrese su fecha de nacimiento" />
+                <label for="email" class="f-label">Correo</label>
+                <input class="f-input" type="email" name="email" required placeholder="Ingrese su correo" />
+            </div>
+            <br />
+            <div class="d-flex">
+                <label for="datebirth" class="f-label">Fecha de Nacimiento</label>
+                <input class="f-input" type="date" name="datebirth" max="@DateTime.Now.ToString("yyyy-MM-dd")" required placeholder="Ingrese su fecha de nacimiento" />
             </div>
             <br />
 
@@ -78,23 +95,24 @@
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Provincia</label>
-                <select class="optionProvincia f-input" id="optionProvincia"></select>
+                <label for="provincia" class="f-label">Provincia</label>
+                <select class="optionProvincia f-input" id="optionProvincia" name="provincia" required></select>
             </div>
             <br />
             <div class="d-flex">
-                <label class="f-label">Comuna</label>
-                <select class="optionComuna f-input" name="comuna"></select>
+                <label for="comuna" class="f-label">Comuna</label>
+                <select class="optionComuna f-input" name="comuna" required></select>
             </div>
 
             <br />
             <div class="d-flex">
-                <label class="f-label">Direccion</label>
-                <input class="f-input" type="text" name="direccion" placeholder="Ingrese su dirección" />
+                <label for="direccion" class="f-label">Direccion</label>
+                <input class="f-input" type="text" name="direccion" required placeholder="Ingrese su dirección" />
             </div>
 
-            <div class="d-flex">
-                <input class="btn_new mg-top-30" type="submit" value="Ingresar" />
+            <div class="d-flex space-between">
+                <input class="btn_new mg-top-30" type="submit" value="Ingresar Registro" />
+                @Html.ActionLink("volver", "Index", "Product", new { id=1  }, new { @class = "btn-cancelar mg-top-30" })
             </div>
         </form>
     </div>

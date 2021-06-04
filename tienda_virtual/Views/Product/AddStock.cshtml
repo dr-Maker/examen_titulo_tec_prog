@@ -31,30 +31,28 @@
     <form class="form" method="post">
         <div class="d-flex">
             <label class="f-label">Producto</label>
-            @Html.DropDownList("ProductSelect", itemsListProduct, new { @class = "f-input", id = "ProductSelect", name="product_id" })
+            @Html.DropDownList("ProductSelect", itemsListProduct, new { @class = "f-input", id = "ProductSelect", name = "product_id" })
         </div>
-        
+        <br />
         <div class="d-flex">
-            <label class="f-label">Tipo de Talla</label>   
-                @Html.DropDownList("TipoTalla", itemsTipoTalla, new { @class = "f-input", id="TipoTalla" })
+            <label class="f-label">Tipo de Talla</label>
+            @Html.DropDownList("TipoTalla", itemsTipoTalla, new { @class = "f-input", id = "TipoTalla" })
         </div>
-
+        <br />
 
         <div class="d-flex">
             <label class="f-label">Talla</label>
         </div>
-
+        <br />
         <div class="f-label">
             <div class="containerChekbox">
             </div>
         </div>
 
-        <div>
+        <div class="d-flex space-between">
             <input class="btn_new mg-top-30" type="submit" value="Agregar Talla Producto" />
-        </div>
 
-        <div>
-            <button>Cancelar</button>
+            @Html.ActionLink("volver", "Stock", "Product",null, new { @class = "btn-cancelar mg-top-30" })
         </div>
 
     </form>

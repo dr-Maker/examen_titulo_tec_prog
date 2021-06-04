@@ -1,13 +1,27 @@
 ﻿@{
     List<CategoryModel> ListCategory = ViewBag.CategoryList;
+    string msg = ViewBag.mensaje;
+    string tipoResponse = ViewBag.TipoMensaje;
 }
 
 <div class="w-100 height">
 
-<h1 class="txt-center">Bienvenido a las Categorias de Productos</h1>
+    @if (msg != null && msg != " ")
+    {
+        <div class="container-categories-msg">
+            <p class="txt-center @tipoResponse">@msg</p>
+        </div>
+
+        Session["mensage"] = string.Empty;
+        Session["tipoMensaje"] = string.Empty;
+     
+
+    }
 
 
-    @Html.ActionLink("Nueva Categoria", "Register", "Category", null, new { @class= "mg-10 btn_new" } )
+    @Html.ActionLink("Nueva Categoria", "Register", "Category", null, new { @class = "mg-10 btn_new" })
+
+
 
     <table class="tab">
         <thead class="txt-center">
@@ -21,16 +35,16 @@
             @foreach (var item in ListCategory)
             {
 
-            <tr>
-                <td>@item.Id_category</td>
-                <td>@item.Category</td>
-                <!--Implementar Editar y Eliminar categoria-->
-                <td>
-                    @Html.ActionLink("Editar", "FormCategory", "Category",  new { id = item.Id_category,  accion = "Editar"  }, null) 
-                    @Html.ActionLink("Eliminar", "FormCategory", "Category", new { id = item.Id_category, accion = "Eliminar"  }, null)
+                <tr>
+                    <td>@item.Id_category</td>
+                    <td>@item.Category</td>
+                    <!--Implementar Editar y Eliminar categoria-->
+                    <td>
+                        @Html.ActionLink("Editar", "FormCategory", "Category", new { id = item.Id_category, accion = "Editar" }, null)
+                        @Html.ActionLink("Eliminar", "FormCategory", "Category", new { id = item.Id_category, accion = "Eliminar" }, null)
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

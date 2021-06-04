@@ -27,23 +27,20 @@
 
     @using (Html.BeginForm(@action, "Category", FormMethod.Post))
     {
-        <form class="form" method="post">
+        <div class="form">
 
             <input type="hidden" name="id_category" value="@idCategory"/>
             <div class="d-flex">
-                <label class="f-label">Categoria</label>
-                <input class="f-input" type="text" name="category" @optReadonly value="@Category.Category" />
+                <label for="category" class="f-label">Categoria</label>
+                <input class="f-input" type="text" name="category" required pattern="[A-Za-z]{1,37}"  @optReadonly value="@Category.Category" />
             </div>
 
-            <div>
-
+            <div class="d-flex space-between">
                 <input class="btn_new mg-top-30" type="submit" value="@btn_enviar" />
-            </div>
-            <div>
-                <button>Cancelar</button>
+                @Html.ActionLink("volver", "Categories", "Category", null, new { @class = "btn-cancelar mg-top-30" })
             </div>
 
-        </form>
+        </div>
     }
 
 </div>

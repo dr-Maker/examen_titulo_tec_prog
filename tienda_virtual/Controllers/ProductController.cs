@@ -14,6 +14,7 @@ namespace tienda_virtual
         // GET: Producto
         public ActionResult Index(int id)
         {
+
             ViewBag.actual = id;
             PaginacionModel paginador = Tools.paginacionInicio();
             ViewBag.countProduct = paginador;
@@ -55,7 +56,7 @@ namespace tienda_virtual
 
         public ActionResult ProductsByCategory(int id, int pag)
         {
-            ViewBag.category = id;
+
             ViewBag.actual = pag;
             PaginacionModel paginador = Tools.paginacionAleatory(id);
             ViewBag.countProduct = paginador;
@@ -68,8 +69,18 @@ namespace tienda_virtual
             }
 
             List<CategoryModel> list = CategoryBuss.Categories();
-            ViewBag.CategoryList = list;
+            CategoryModel categoriaGet = CategoryBuss.getCategory(id);
             List<ProductModel> productos = ProductBuss.ProductsByCategory(id, pag);
+            if(list.Count==0 || productos.Count == 0)
+            {
+
+                return RedirectToAction("Index", "Product", new { id=1});
+            }
+
+            ViewBag.CategoryList = list;
+            ViewBag.category = id;
+            ViewBag.Categoria = categoriaGet;
+            
             return View(productos);
         }  
 
@@ -77,10 +88,16 @@ namespace tienda_virtual
 
 
             List<CategoryModel> list = CategoryBuss.Categories();
-            ViewBag.CategoryList = list;
             ProductModel producto = ProductBuss.GetProduct(id);
             List<StockModel> ListStock = StockBuss.get_list_size(id);
+            ViewBag.CategoryList = list;           
             ViewBag.ListStock = ListStock;
+            if (producto == null || ListStock.Count == 0)
+            {
+
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
+
             return View(producto);
         }
 
@@ -91,7 +108,7 @@ namespace tienda_virtual
 
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
-            ProductModel producto = ProductBuss.GetProduct(id);
+            ProductModel producto = ProductBuss.GetProductOffPrice(id);
             ViewBag.Producto = producto;
 
             List<BrandModel> listMarcas = Tools.marcas();

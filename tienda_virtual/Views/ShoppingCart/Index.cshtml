@@ -8,11 +8,13 @@
  }
 
 
-<div class="w-100 height">
+<div class="w-100 height background-color">
 
-    <h1 class="txt-center">Mi Canasta de Productos</h1>
+    <h1 class="txt-center oferta">Mi Canasta de Productos <i class="fas fa-shopping-cart"></i></h1>
+    <br>
     @if (ProductoList != null)
     {
+        <div class="contenedor-lista-compra">
         <table class="tab">
             <thead class="txt-center">
                 <tr>
@@ -36,7 +38,7 @@
 
                     <tr>
                         <td>
-                            <a href="@Url.Action("Product", "Product", new { id = @item.Id_product }, null)">Ir al producto</a>
+                            <a href="@Url.Action("Product", "Product", new { id = @item.Id_product }, null)"><i class="fas fa-search"></i> Ver producto</a>
                         </td>
                         <td>
                             <div style="height:15%; max-width:65px; margin:0 auto;">
@@ -54,22 +56,23 @@
                         
                         <td class="total_producto">@item.TotalProducto(item.Price, item.Cantidad)</td>
                         <td>
-                            <a href="@Url.Action("DeleteOneKindProductCart", "ShoppingCart", new {id = @item.Id_cesta }, null )">Eliminar</a>
+                            <a href="@Url.Action("DeleteOneKindProductCart", "ShoppingCart", new {id = @item.Id_cesta }, null )"><i class="fas fa-trash-alt"></i> Eliminar</a>
                         </td>
                     </tr>
                 }
 
             </tbody>
         </table>
+        </div>
     }
     else
     {
-        <h2 class="txt-center">Su Canasta de Compra esta Vacía </h2>
+    <h2 class="txt-center">Su Canasta de Compra esta Vacía </h2>
     }
 
     <br />
-    <div style="margin-left:80%;">
-        <h3>Total a Pagar $ <span id="total_cesta"></span></h3>
+    <div class="cont-total-a-pagar">
+        <h3>Total a Pagar $  <span id="total_cesta"></span></h3>
     </div>
 
     <hr />
@@ -77,23 +80,25 @@
 
 
     <div class="d-flex dflex-s-around ">
+                <div class="opt-cart-shopping-product">
+                    <a class="txt-center btn-shopping-cart" href="@Url.Action("Index", "Product" ,  new { id=1 })"><i class="fas fa-store"></i> Continuar Comprando</a>
+                </div>
+                <div class="opt-cart-shopping-product">
+                    <a class="txt-center btn-shopping-cart" href="@Url.Action("DeleteAllCart","ShoppingCart")"><i class="fas fa-trash"></i> Borrar todo</a>
+                </div>
+                @if (@Session["user"] != "")
+                {
+                <div class="opt-cart-shopping-product">
+                    <a class="txt-center" href="@Url.Action("DoShopping", "ShoppingCart")"><i class="fas fa-cash-register"></i> Hacer Pedido</a>
+                </div>
+                }
+                else
+                {
 
-        <a href="@Url.Action("Index", "Product" ,  new { id=1 })">Continuar Comprando</a>
-
-        <a href="@Url.Action("DeleteAllCart","ShoppingCart")">Borrar todo</a>
-
-        @if (@Session["user"] != "")
-        {
-            <a href="@Url.Action("DoShopping", "ShoppingCart")">Hacer Pedido</a>
-
-        }
-        else
-        {
-
-            <div style="display:block;">
-                <h3 class="txt-center">Para Continuar la Orden de compra en necesario estar Registrado y Logeado</h3>
+                <div class="opt-cart-shopping-product">
+                    <h3 class="txt-center">Para Continuar la Orden de compra en necesario estar Registrado y Logeado</h3>
+                </div>
+                }
             </div>
-        }
-    </div>
 
-</div>
+        </div>

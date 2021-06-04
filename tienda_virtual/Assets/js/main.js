@@ -10,25 +10,33 @@
     })
 
     $(".btn_rest_product").click(function () {
-            console.log("hizo click menos");
-            var value = parseInt($(".count_buy").attr('value'));
+        console.log("hizo click menos");
+        var value = parseInt($(".count_buy").attr('value'));
 
-            console.log("esta aca : " + value);
-            value += 1;
-            console.log(value);
-            $(".count_buy").val(value);
+        console.log("esta aca : " + value);
+        value += 1;
+        console.log(value);
+        $(".count_buy").val(value);
     })
 
     $("#tallas").change(function () {
         var valor = $("#tallas option:selected").val()
-        addCarrito(valor)
+        //addCarrito(valor)
     })
 
     $("#btn_add_carrito").on("click", function (e) {
         e.preventDefault();
         var valor = $("#tallas option:selected").val()
-        console.log("hizo click y el valor es ..." + valor);
-        window.location.href = '/ShoppingCart/AddShoppingCart/' + valor;
+        if (valor == null || valor <= 0 || valor == "seleccione su talla")
+        {
+            $(".cont-error-talla").children().remove();
+            $(".cont-error-talla").append('<p class="msg-error">Debe seleccionar su talla para continuar</p>');
+        } else
+        {
+             window.location.href = '/ShoppingCart/AddShoppingCart/' + valor;
+        }
+     
+       
     })
 
     $('#ProductSelect').change(function () {
@@ -58,23 +66,6 @@
             });
     })
 
-    $('#RegionSelect').change(function () {
-        var id = $("#optionProvincia").val();
-        console.log(id);
-        fetch("/User/Comuna/?id=" + id)
-            .then(function (result) {
-                if (result.ok)
-                    return result.json();
-            })
-            .then(function (comunas) {
-                $(".optionComuna").children().remove();
-                comunas.forEach(function (option) {
-                    $('.optionComuna').append("<option value='" + option.Id_comuna + "'>" + option.Nombre_comuna + "</option>");
-                })
-
-            });
-    })
-
     $('.optionProvincia').change(function () {
         var id = $("#optionProvincia").val();
         console.log(id);
@@ -92,28 +83,12 @@
             });
     })
 
-    $('.optionComuna').click(function () {
-        var id = $("#optionProvincia").val();
-        console.log(id);
-        fetch("/User/Comuna/?id="+id)
-            .then(function (result) {
-                if (result.ok)
-                    return result.json();
-            })
-            .then(function (comunas) {
-                $(".optionComuna").children().remove();
-                comunas.forEach(function (option) {
-                    $('.optionComuna').append("<option value='" + option.Id_comuna + "' >" + option.Nombre_comuna + "</option>");
-                })
-                
-            });
-    })
-
     var sum = 0;
     $(".cesta tr").each(function() {
         var total = parseInt($(this).find(".total_producto").html());
         sum += total;
-        $("#total_cesta").html("<p>" +sum+"</p>");   
+        
+        $("#total_cesta").html("<p>" + numberWithCommas(sum) +"</p>");   
     })
 
     $(".correct_address").change(function (e) {
@@ -141,6 +116,41 @@
 
         window.location.href = '/ShoppingCart/Update/?estado=' + estado + '&cesta=' + idcesta;
     });
+
+    $("#quiteModal").click(function () {
+        $(".modal").remove();
+    });
+
+    $("#select-category").change(function () {
+        var category = $(this).val();
+        var brand = $("#select-brand").val();
+        if (category == "none" || brand == "none") {
+            $("#btn-insert-product").attr("disabled", true);
+            $("#btn-editar-producto").attr("disabled", true);
+            //desabilitar envio 
+        } else
+        {
+            $("#btn-insert-product").attr("disabled", false);
+            $("#btn-editar-producto").attr("disabled", false);
+            //habilitar envío
+        }
+    });
+
+    $("#select-brand").change(function () {
+        var brand = $(this).val();
+        var category = $("#select-category").val();
+        if (brand == "none" || category =="none") {
+            $("#btn-insert-product").attr("disabled", true);
+            $("#btn-editar-producto").attr("disabled", true);
+            
+            //desabilitar envio 
+        } else {
+            $("#btn-insert-product").attr("disabled", false);
+            $("#btn-editar-producto").attr("disabled", false);
+            //habilitar envío
+        }
+    });
+
 
 });
 
@@ -216,3 +226,8 @@ function verifyAndCheak() {
     }
     
 };
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+

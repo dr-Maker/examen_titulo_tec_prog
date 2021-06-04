@@ -9,7 +9,10 @@ imagen VARCHAR(500) DEFAULT 'not_ph
 
 */
 
+
+TRUNCATE TABLE categoria
 SELECT * FROM categoria Where id_category = 101
+UPDATE categoria set name_category='polera' where id_category=110
 
 SELECT * FROM producto
 SELECT * FROM marca

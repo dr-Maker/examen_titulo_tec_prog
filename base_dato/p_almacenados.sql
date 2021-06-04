@@ -16,15 +16,17 @@ CREATE PROCEDURE sp_insert_user
 @birthdate DATETIME,
 @sex INT,
 @comuna INT,
-@direccion VARCHAR(255)
+@direccion VARCHAR(255),
+@telefono VARCHAR(255)
 AS
-INSERT INTO usuario(first_name,second_name,father_lastname,mother_lastname,pass,username,email, birthday,sex_id, comuna_id, home_address, register_date) 
-		     VALUES(@first_name, @second_name, @father_lastname, @mother_lastname, CONVERT(VARCHAR(255),HASHBYTES('MD5', @pass), 2) ,@user, @email,@birthdate, @sex, @comuna, @direccion, GETDATE())
+INSERT INTO usuario(first_name,second_name,father_lastname,mother_lastname,pass,username,email, birthday,sex_id, comuna_id, home_address, register_date, telefono) 
+		     VALUES(@first_name, @second_name, @father_lastname, @mother_lastname, CONVERT(VARCHAR(255),HASHBYTES('MD5', @pass), 2) ,@user, @email,@birthdate, @sex, @comuna, @direccion, GETDATE(), @telefono)
 GO
 
 
 truncate table usuario
 select * from usuario
+UPDATE usuario set username = 'admin', email='jonathanvenegas.dm@gmail.com', user_role='admin' where id=10001
 
 UPDATE usuario SET user_role = 'admin' WHERE id = 10002
 

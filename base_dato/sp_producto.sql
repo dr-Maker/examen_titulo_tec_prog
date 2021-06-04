@@ -25,22 +25,28 @@ AS
 	ON producto.id_brand = marca.id_marca
 GO
 
+select * from categoria
+
 /***  Trae un Producto  ***/
 DROP PROCEDURE sp_get_product
 CREATE PROCEDURE sp_get_product
 @id_product INT
 AS
-	SELECT  DISTINCT id_product, producto.id_category, name_product, id_brand, brand,pdto_description, imagen, price FROM producto
+	SELECT  DISTINCT id_product, producto.id_category, name_category, COUNT(cantidad) as cantidad, name_product, id_brand, brand,pdto_description, imagen, price FROM producto
 	INNER JOIN categoria
 	ON producto.id_category = categoria.id_category
 	INNER JOIN marca
 	ON producto.id_brand = marca.id_marca
 	LEFT JOIN stocks_and_price
 	ON producto.id_product = stocks_and_price.id_producto
-	WHERE id_product =  @id_product
+	WHERE id_product =   @id_product
+	GROUP BY id_product, producto.id_category,id_brand, brand, price, name_category,name_product, pdto_description, imagen
+
 GO
 
-sp_get_product 1000010
+select * from stocks_and_price
+
+sp_get_product 1000001
 
 /***************************************************/
 DROP PROCEDURE sp_get_product_whit_stocks

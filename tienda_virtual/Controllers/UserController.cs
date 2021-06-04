@@ -24,6 +24,8 @@ namespace tienda_virtual
             ViewBag.CategoryList = list;
             List<RegionModel> listRegion = Tools.Region();
             ViewBag.RegionList = listRegion;
+            ViewBag.TipoMensaje = Session["tipoMensaje"];
+            ViewBag.mensaje = Session["mensage"];
             return View();
         }
 
@@ -37,21 +39,38 @@ namespace tienda_virtual
             obj.Fatherlastname = frm["father_lastname"].ToString();
             obj.Motherlastname = frm["mother_lastname"].ToString();
             obj.Password = frm["pass"].ToString();
-            obj.Username = frm["user"].ToString();
-            obj.Email = frm["email"].ToString();
+            obj.Username = frm["user"].ToString().ToLower();
+            obj.Email = frm["email"].ToString().ToLower();
+            obj.Telefono = frm["telefono"].ToString();
             obj.Sex = int.Parse(frm["sexo"].ToString());
             obj.Birthday = DateTime.Parse(frm["datebirth"].ToString());
             obj.Comuna = new ComunaModel();
             obj.Comuna.Nombre_comuna = frm["comuna"].ToString();
             obj.Addres = frm["direccion"].ToString();
 
-            UserBuss.UserRegister(obj);
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
+
+            if (UserBuss.UserRegister(obj))
+            {
+                msg = "Usuario creado Exitosamente";
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error Intente nuevamente";
+                tipoResponse = "error";
+            }
+           
+
 
             if (TempData["id_region"] == null)
             {
                 TempData["id_region"] = 0;
             }
 
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
             return RedirectToAction("Register", "User");
 
         }

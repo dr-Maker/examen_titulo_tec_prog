@@ -22,6 +22,10 @@ namespace tienda_virtual
         {
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
+
+            ViewBag.TipoMensaje = Session["tipoMensaje"];
+            ViewBag.mensaje = Session["mensage"];
+
             return View();
 
         }
@@ -50,7 +54,23 @@ namespace tienda_virtual
             
             CategoryModel obj = new CategoryModel();
             obj.Category = frm["category"].ToString();
-            CategoryBuss.CategoryRegister(obj);
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
+
+            if (CategoryBuss.CategoryRegister(obj))
+            {
+                msg = "Categoria creada Exitosamente";
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error en creación Intente nuevamente";
+                tipoResponse = "error";
+            }
+
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
+
             return RedirectToAction("Categories");
         }
 
@@ -60,7 +80,23 @@ namespace tienda_virtual
             CategoryModel obj = new CategoryModel();
             obj.Id_category = int.Parse(frm["id_category"].ToString());
             obj.Category = frm["category"].ToString();
-            CategoryBuss.EditCategory(obj);
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
+
+            if (CategoryBuss.EditCategory(obj))
+            {
+                msg = "Categoria Editada Exitosamente";
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error Intente nuevamente";
+                tipoResponse = "error";
+            }
+
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
+
             return RedirectToAction("Categories");
         }
 
@@ -69,7 +105,22 @@ namespace tienda_virtual
         {
             
             int idCategory = int.Parse(frm["id_category"].ToString());
-            CategoryBuss.DeletedCategory(idCategory);
+
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
+            if (CategoryBuss.DeletedCategory(idCategory))
+            {
+                msg = "Categoria Eliminada Exitosamente";
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error Intente nuevamente";
+                tipoResponse = "error";
+            }
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
+
             return RedirectToAction( "Categories");
         }
 

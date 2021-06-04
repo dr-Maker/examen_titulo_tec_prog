@@ -9,22 +9,34 @@
 
 }
 
-<div class="w-100 height">
+<div class="w-100 height background-color">
 
-    <h1 class="txt-center">Producto</h1>
-
+    <h1 class="txt-center oferta">los mejores @Model.Category.Category </h1>
+    <br />
+    <br />
+    <h1 class="txt-center tuppercase">Producto @Model.Name_product</h1>
     <div class="getProduct">
+
         <div class="getProduct_container">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <img src="~/Assets/uploads/@Model.Imagen.ToString()" />
             <div>
-                <h2 class="txt-center">@Model.Brand.Brand</h2>
+                <br />
+                <h2 class="txt-center txt-brand">@Model.Brand.Brand</h2>
             </div>
         </div>
         <div class="getProduct_container_info">
-            <h1 class="txt-center">@Model.Name_product</h1>
+
 
             <div>
-                <label>Talla</label>
+                <br />
+                <br />
+                <p class="txt-pdto-size">Para agregar un producto a su canasta debe seleccionar una talla</p>
+                <label class="txt-pdto-size">Talla:</label>
                 <select id="tallas" required>
                     <option class="talla">seleccione su talla </option>
                     @foreach (var talla in ListStock)
@@ -34,32 +46,42 @@
 
                 </select>
             </div>
+            <div class="cont-error-talla">
+
+            </div>
             <div>
                 @if (@Model.Cantidad > 0)
                 {
-                    <p>Stock Disponible</p>
+                    <p class="txt-pdto-size">Stock del producto actualmente disponble</p>
                 }
                 else
                 {
-                    <p>Stock No disponible actualmente </p>
+                    <p class="txt-pdto-size">Stock No disponible actualmente </p>
                 }
             </div>
 
             <div>
-                <p>Descripción:  @Model.Pdto_description</p>
+                <p class="txt-pdto-size">Descripción:  @Model.Pdto_description</p>
             </div>
 
+            <br />
+            <br />
             <div>
-                <p>Precio: $ @Model.Price</p>
+                <p class="txt-pdto-size txt-precio-size">Precio: $ @Model.Price.ToString("N0")</p>
             </div>
 
-            <div>
-
-                <a id="btn_add_carrito" href="#">Añadir al Carro</a>
+            <div class="contenedor-carrito-producto">
+                <a id="btn_add_carrito" href="#"><i class="fas fa-shopping-cart"></i> Añadir al Carrito</a>
 
                 <br />
-                @Html.ActionLink("Volver", "Index", "Product", new { id=1 }, null)
+                <br />
+                <br />
+                <br />
+                <br />
+                @Html.ActionLink("Volver", "Index", "Product", new { id = 1,  }, new { @class = "volver-product" })
             </div>
+            <br />
+            <br />
         </div>
     </div>
 

@@ -29,6 +29,8 @@ namespace tienda_virtual
             cmd.Parameters.Add("@sex", SqlDbType.Int).Value = obj.Sex;
             cmd.Parameters.Add("@comuna", SqlDbType.Int).Value = obj.Comuna.Nombre_comuna;
             cmd.Parameters.Add("@direccion", SqlDbType.VarChar, 255).Value = obj.Addres;
+            cmd.Parameters.Add("@telefono", SqlDbType.VarChar, 255).Value = obj.Telefono;
+            
 
             return db.Onlyquery(cmd);
         }

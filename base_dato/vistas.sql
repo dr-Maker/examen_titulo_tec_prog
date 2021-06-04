@@ -111,6 +111,7 @@ ON stocks_and_price.id_producto = producto.id_product
 INNER JOIN marca
 ON producto.id_brand = marca.id_marca
 WHERE id_producto = @id_product
+ORDER BY sizesProduct.id_size ASC
 GO
 
 

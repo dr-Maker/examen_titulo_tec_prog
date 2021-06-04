@@ -33,18 +33,16 @@ else
 
     @using (Html.BeginForm(@action, "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-    <form class="form" method="post" enctype="multipart/form-data">
+    <div class="form">
 
         <input type="hidden" name="idProduct" value="@id_product" />
 
         @if (action != "Eliminar")
         {
-
-
             <div class="d-flex">
                 <label class="f-label">Category</label>
-                <select class="f-input" name="category_id">
-                    <option>seleccione...</option>
+                <select class="f-input" id="select-category" name="category_id">
+                    <option value="none">seleccione...</option>
                     @try
                     {
                         foreach (var item in ListCategory)
@@ -74,22 +72,24 @@ else
                 <input class="f-input" type="text" name="category_id" @optReadonly value="@producto.Category.Id_category" />
             </div>
         }
+        <br />
         <div class="d-flex">
             <label class="f-label">Nombre del producto</label>
-            <input class="f-input" type="text" name="nameproduct" @optReadonly value="@producto.Name_product" />
+            <input class="f-input" type="text" name="nameproduct" required @optReadonly value="@producto.Name_product" />
         </div>
+        <br />
 
         @if (action != "Eliminar")
         {
 
             <div class="d-flex">
                 <label class="f-label">Marca</label>
-                <select class="f-input" name="idbrand">
-                    <option>seleccione...</option>
+                <select class="f-input" id="select-brand" name="idbrand">
+                    <option value="none">seleccione...</option>
                     @try
                     {
-                         foreach (var marca in ListMarca)
-                         {
+                        foreach (var marca in ListMarca)
+                        {
                             if (producto.Brand.Id_marca == marca.Id_marca)
                             {
                                 selectedMarca = "selected";
@@ -99,11 +99,11 @@ else
                                 selectedMarca = string.Empty;
                             }
                             <option @selectedMarca value="@marca.Id_marca">@marca.Brand</option>
-                          }
+                        }
                     }
                     catch (Exception exe)
                     {
- 
+
 
                     }
                 </select>
@@ -116,7 +116,7 @@ else
                 <input class="f-input" type="text" name="idbrand" @optReadonly value="@producto.Brand.Brand" />
             </div>
         }
-
+        <br />
         <div class="d-flex">
             <label class="f-label">Descripción</label>
             <textarea class="f-input" name="desciption" @optReadonly>@producto.Pdto_description</textarea>
@@ -124,6 +124,7 @@ else
         <div style="width:20%;">
             <img src="~/Assets/uploads/@producto.Imagen.ToString()" />
         </div>
+        <br />
         @if (action != "Eliminar")
         {
             <div class="d-flex">
@@ -132,12 +133,13 @@ else
             </div>
 
         }
-
+        <br />
         <input type="hidden" readonly name="img_old" value="@producto.Imagen" />
-        <div>
-            <input class="btn_new mg-top-30" type="submit" value="@btn_enviar" />
+        <div class="d-flex space-between">
+            <input class="btn_new mg-top-30" id="btn-editar-producto" type="submit" value="@btn_enviar" />
+            @Html.ActionLink("volver", "Products", "Product", null, new { @class = "btn-cancelar mg-top-30" })
         </div>
-    </form>
+    </div>
     }
 </div>
 

@@ -12,11 +12,13 @@
     <link href="~/Assets/css/Style.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/Assets/js/main.js"></script>
+    <script src="~/Assets/js/icons.js"></script>
     <title>@ViewBag.Title</title>
 </head>
 <body>
     <div class="container_all">
-        <header class="div_header d-flex">
+
+            <header class="div_header d-flex">
             <div class="d-flex">
                 <div class="logo">
                     <img src="~/Assets/images/logo.jpg" />
@@ -29,7 +31,7 @@
                 <ul class="d-flex option_menu">
 
                     <li>
-                        @Html.ActionLink("Inicio", "Index", "Product",  new { id=1 }, null)
+                        @Html.ActionLink("Inicio", "Index", "Product", new { id = 1 }, null)
                     </li>
                     @RenderPage("~/Views/Category/Menu.cshtml")
                 </ul>
@@ -38,7 +40,9 @@
 
         <hr />
         <div class="d-flex">
+
             @RenderPage("~/Views/User/Login.cshtml")
+
             @RenderBody()
 
         </div>

@@ -18,6 +18,7 @@ namespace tienda_virtual
         private DateTime birthday;
         private int sex;
         private string email;
+        private string telefono;
         private RegionModel region;
         private ComunaModel comuna;
         private string addres;
@@ -45,5 +46,6 @@ namespace tienda_virtual
         public RegionModel Region { get => region; set => region = value; }
         public ComunaModel Comuna { get => comuna; set => comuna = value; }
         public string Token { get => token; set => token = value; }
+        public string Telefono { get => telefono; set => telefono = value; }
     }
 }

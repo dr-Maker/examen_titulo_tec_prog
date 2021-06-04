@@ -3,13 +3,14 @@
 }
 
 
-@foreach (var item in ListCategory)
-{
-<li>
+    @foreach (var item in ListCategory)
+    {
+        <li>
 
-    @Html.ActionLink(@item.Category, "ProductsByCategory","Product", new {  id = item.Id_category, pag=1}, null)
-</li>
-}
+            @Html.ActionLink(@item.Category, "ProductsByCategory", "Product", new { id = item.Id_category, pag = 1 }, null)
+        </li>
+    }
+
 
 
 

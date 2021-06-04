@@ -145,6 +145,32 @@ namespace tienda_virtual
             return lista;
         }
 
+        public static ProductModel GetProductOffPrice(int id)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_get_product";
+            cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = id;
+            DataTable dt = db.GetQuery(cmd);
+            ProductModel obj = new ProductModel();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+
+                obj.Id_product = int.Parse(dt.Rows[0]["id_product"].ToString());
+                obj.Category = new CategoryModel();
+                obj.Category.Id_category = int.Parse(dt.Rows[0]["id_category"].ToString());
+                obj.Category.Category = dt.Rows[0]["name_category"].ToString();
+                obj.Name_product = dt.Rows[0]["name_product"].ToString();
+                obj.Brand = new BrandModel();
+                obj.Brand.Id_marca = int.Parse(dt.Rows[0]["id_brand"].ToString());
+                obj.Brand.Brand = dt.Rows[0]["brand"].ToString();
+                obj.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
+                obj.Cantidad = int.Parse(dt.Rows[0]["cantidad"].ToString());
+                obj.Imagen = dt.Rows[0]["imagen"].ToString();
+            }
+            return obj;
+        }
+
         public static ProductModel GetProduct(int id)
         {
             SqlCommand cmd = new SqlCommand();
@@ -159,11 +185,13 @@ namespace tienda_virtual
                 obj.Id_product = int.Parse(dt.Rows[0]["id_product"].ToString());
                 obj.Category = new CategoryModel();
                 obj.Category.Id_category = int.Parse(dt.Rows[0]["id_category"].ToString());
+                obj.Category.Category = dt.Rows[0]["name_category"].ToString();
                 obj.Name_product = dt.Rows[0]["name_product"].ToString();
                 obj.Brand = new BrandModel();
                 obj.Brand.Id_marca = int.Parse(dt.Rows[0]["id_brand"].ToString());
                 obj.Brand.Brand = dt.Rows[0]["brand"].ToString();
                 obj.Pdto_description = dt.Rows[0]["pdto_description"].ToString();
+                obj.Cantidad = int.Parse(dt.Rows[0]["cantidad"].ToString());
                 obj.Price = int.Parse(dt.Rows[0]["price"].ToString());
                 obj.Imagen = dt.Rows[0]["imagen"].ToString();
             }

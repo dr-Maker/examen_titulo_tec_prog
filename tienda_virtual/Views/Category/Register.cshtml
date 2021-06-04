@@ -9,11 +9,12 @@
 
     <form class="form" method="post">
         <div class="d-flex">
-            <label class="f-label" >Nombre de la categoria</label>
-            <input class="f-input" type="text" name="category" />
+            <label for="category" class="f-label" >Nombre de la categoria</label>
+            <input class="f-input" type="text" name="category" pattern="[A-Za-z]{1,37}" required placeholder="Ingresar el nombre de la Categoria" />
         </div>
-        <div>
+        <div class="d-flex space-between">
             <input class="btn_new mg-top-30" type="submit" value="Registrar categoria" />
+            @Html.ActionLink("volver", "Categories", "Category", null, new { @class = "btn-cancelar mg-top-30" })
         </div>
 
     </form>
