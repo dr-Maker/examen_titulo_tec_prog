@@ -5,11 +5,24 @@
     Layout = "~/Views/Shared/_layout.cshtml";
     List<StockModel> StockModel = ViewBag.StockList;
 
+    string msg = ViewBag.mensaje;
+    string tipoResponse = ViewBag.TipoMensaje;
+
 }
 
 <div class="w-100 height">
     <h1 class="txt-center">Stock de Productos</h1>
- 
+
+
+    @if (msg != null && msg != " ")
+    {
+        <div class="container-categories-msg">
+            <p class="txt-center @tipoResponse">@msg</p>
+        </div>
+        Session["mensage"] = string.Empty;
+        Session["tipoMensaje"] = string.Empty;
+
+    }
     <div>
         @Html.ActionLink("Agregar Talla", "AddStock", "Product", null, new { @class = "mg-10 btn_new" })
     </div>
@@ -26,9 +39,9 @@
 
             </tr>
         </thead>
-            <tbody class="txt-center">
-                @foreach (var item in StockModel)
-                {
+        <tbody class="txt-center">
+            @foreach (var item in StockModel)
+            {
                 <tr>
                     <td>@item.Producto.Id_product</td>
                     <td>@item.Producto.Name_product</td>
@@ -42,7 +55,7 @@
 
                     </td>
                 </tr>
-                }
-            </tbody>
+            }
+        </tbody>
     </table>
 </div>

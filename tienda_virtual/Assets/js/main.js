@@ -124,34 +124,74 @@
     $("#select-category").change(function () {
         var category = $(this).val();
         var brand = $("#select-brand").val();
-        if (category == "none" || brand == "none") {
+        if (category == "none" || brand == "none" ) {
             $("#btn-insert-product").attr("disabled", true);
             $("#btn-editar-producto").attr("disabled", true);
-            //desabilitar envio 
+            $("#btn-insert-product").addClass("btn_disable");
+            $("#btn-editar-producto").addClass("btn_disable");
+
         } else
         {
             $("#btn-insert-product").attr("disabled", false);
             $("#btn-editar-producto").attr("disabled", false);
-            //habilitar envío
+
+            $("#btn-insert-product").removeClass("btn_disable");
+            $("#btn-editar-producto").removeClass("btn_disable");
         }
     });
 
     $("#select-brand").change(function () {
         var brand = $(this).val();
         var category = $("#select-category").val();
-        if (brand == "none" || category =="none") {
+        if (brand == "none"  || category =="none") {
             $("#btn-insert-product").attr("disabled", true);
             $("#btn-editar-producto").attr("disabled", true);
-            
+            $("#btn-insert-product").addClass("btn_disable");
+            $("#btn-editar-producto").addClass("btn_disable");
             //desabilitar envio 
         } else {
             $("#btn-insert-product").attr("disabled", false);
             $("#btn-editar-producto").attr("disabled", false);
+
             //habilitar envío
+            $("#btn-insert-product").removeClass("btn_disable");
+            $("#btn-editar-producto").removeClass("btn_disable");
         }
     });
 
+    $("#ProductSelect").change(function () {
+        var producto = $("#ProductSelect").val();
+        var tipoTalla = $("#TipoTalla").val();
 
+        if (producto == "none" || tipoTalla == 0)
+        {
+            $("#btn_add_talla_product").attr("disabled", true);
+            $("#btn_add_talla_product").addClass("btn_disable");
+        }
+        else
+        {
+            $("#btn_add_talla_product").attr("disabled", false);
+            $("#btn_add_talla_product").removeClass("btn_disable");
+        }
+
+    });
+
+    $("#TipoTalla").change(function () {
+        var producto = $("#ProductSelect").val();
+        var tipoTalla = $("#TipoTalla").val();
+
+        if (producto == "none" || tipoTalla == 0)
+        {
+            $("#btn_add_talla_product").attr("disabled", true);
+            $("#btn_add_talla_product").addClass("btn_disable");
+        }
+        else
+        {
+            $("#btn_add_talla_product").attr("disabled", false);
+            $("#btn_add_talla_product").removeClass("btn_disable");
+        }
+    });
+   
 });
 
 function goPage(page) {

@@ -109,10 +109,16 @@ FOREIGN KEY (id_category) REFERENCES categoria(id_category),
 FOREIGN KEY (id_brand) REFERENCES marca(id_marca),
 )
 
-DROP TABLE stocks_and_price
+SELECT * FROM lista_productos
+SELECT * FROM stocks_and_price
+TRUNCATE TABLE stocks_and_price
+
+
+SELECT * FROM stocks_and_price
+SELECT * FROM sizesProduct
+
 ----------------------------------------------------------------------------
-
-
+DROP TABLE stocks_and_price
 CREATE TABLE stocks_and_price(
 id_pdto_stock  INT IDENTITY(1,1) PRIMARY KEY,
 id_producto INT NOT NULL,
@@ -122,6 +128,11 @@ id_size INT NOT NULL,
 FOREIGN KEY (id_producto) REFERENCES producto(id_product),
 FOREIGN KEY (id_size) REFERENCES sizesProduct(id_size)
 )
+
+
+Truncate table stocks_and_price
+select * from sizesProduct
+Select * from stocks_and_price
 
 
 DROP TABLE lista_productos;
@@ -136,6 +147,7 @@ Total INT DEFAULT 0 NOT NULL,
 id_usuario INT,
 FOREIGN KEY (id_pdto_stock) REFERENCES stocks_and_price(id_pdto_stock)
 )
+
 
 
 --------------------------------------------- PEDIDO -------------------------------------------

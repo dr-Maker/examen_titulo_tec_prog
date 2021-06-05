@@ -18,7 +18,7 @@
 
 
         List<SelectListItem> itemsTipoTalla = new List<SelectListItem>();
-        itemsTipoTalla.Add(new SelectListItem() { Text = "Seleccione tipo de Talla", Value = "1" });
+        itemsTipoTalla.Add(new SelectListItem() { Text = "Seleccione tipo de Talla", Value = "0" });
         foreach (var itemTalla in TipoTallalist)
         {
             itemsTipoTalla.Add(new SelectListItem() { Text = itemTalla.Tipo_talla, Value = itemTalla.Id_tipo.ToString() });
@@ -50,7 +50,7 @@
         </div>
 
         <div class="d-flex space-between">
-            <input class="btn_new mg-top-30" type="submit" value="Agregar Talla Producto" />
+            <input class="btn_new mg-top-30 btn_disable" disabled id="btn_add_talla_product" type="submit" value="Agregar Talla Producto" />
 
             @Html.ActionLink("volver", "Stock", "Product",null, new { @class = "btn-cancelar mg-top-30" })
         </div>

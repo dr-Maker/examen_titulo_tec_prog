@@ -11,7 +11,10 @@ AS
 	ON stocks_and_price.id_size = sizesProduct.id_size
 	INNER JOIN marca
 	ON marca.id_marca = producto.id_brand
+	ORDER BY producto.id_product, sizesProduct.id_size ASC
 GO
+
+sp_list_stock
 
 /*** MUESTRA LISTA DE PRODUCTOS QUE NO ESTAN EN STOCK ***/
 DROP PROCEDURE sp_list_products_out_stock
@@ -31,6 +34,9 @@ CREATE PROCEDURE sp_insert_product_stock
 AS
 	INSERT INTO stocks_and_price(id_producto,price ,cantidad, id_size)  VALUES ( @id_producto , 0 , 0 ,@id_size)
 GO
+
+sp_insert_product_stock 1000008, 12
+
 
 
 DROP PROCEDURE sp_update_product_stock

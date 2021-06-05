@@ -6,53 +6,56 @@
     StockModel stock = ViewBag.Stock;
 
     int id_stock = ViewBag.Stockid;
+
 }
 
 <div class="w-100 height">
     <h1 class="txt-center">Modificar Stock</h1>
 
+
     <form class="form" method="post">
+
         <input type="hidden" name="id_stock" readonly value="@id_stock" />
         <div class="d-flex">
             <label class="f-label">Id Producto Stock</label>
             <input class="f-input" type="text" name="stock_id" readonly value="@stock.Id_stock" />
         </div>
+        <br>
         <div class="d-flex">
             <label class="f-label">Nombre de Producto</label>
             <input class="f-input" type="text" name="name_product" readonly value="@stock.Producto.Name_product" />
         </div>
-
+        <br>
         <div class="d-flex">
             <label class="f-label">Talla</label>
             <input class="f-input" type="text" name="talla" readonly value="@stock.Size.Size" />
         </div>
-
+        <br>
         <div class="d-flex">
             <label class="f-label">Stock Actual</label>
             <input class="f-input" type="number" name="stock_actual" readonly value="@stock.Producto.Cantidad" />
         </div>
-
+        <br>
         <div class="d-flex">
             <label class="f-label">Nuevo Stock</label>
-            <input class="f-input" type="number" name="stock" />
+            <input class="f-input" type="number" name="stock" min="0" placeholder="Ingrese un nuevo Stock" required />
         </div>
-
+        <br>
         <div class="d-flex">
             <label class="f-label">Precio Actual</label>
             <input class="f-input" type="number" name="precio_actual" readonly value="@stock.Producto.Price" />
         </div>
-
+        <br>
         <div class="d-flex">
             <label class="f-label">Nuevo Precio</label>
-            <input class="f-input" type="number" name="precio" />
+            <input class="f-input" type="number" name="precio" min="0" placeholder="Ingrese el nuevo valor de Precio" required />
+        </div>
+        <br>
+        <div class="d-flex space-between">
+            <input class="btn_new mg-top-30" type="submit" value="Modificar Stock" />
+            @Html.ActionLink("volver", "Stock", "Product", null, new { @class = "btn-cancelar mg-top-30" })
         </div>
 
-        <div>
-            <input class="btn_new mg-top-30" type="submit" value="Modificar Stock" />
-        </div>
-        <div>
-            <button>Cancelar</button>
-        </div>
 
     </form>
 

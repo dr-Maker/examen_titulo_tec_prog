@@ -171,6 +171,10 @@ hr {
     .btn_new:hover {
         background-color: rgba(28,117,191,0.6);
     }
+.btn_disable {
+    background-color: rgba(28,117,191,0.6);
+    cursor:default;
+}
     /***Formulario 1***/
     .label {
         width: 100%;

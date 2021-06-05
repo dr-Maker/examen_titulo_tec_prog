@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -50,7 +51,11 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<ProductModel> productos = ProductBuss.Products();
-            ViewBag.ProductList = productos; 
+            ViewBag.ProductList = productos;
+
+            ViewBag.TipoMensaje = Session["tipoMensaje"];
+            ViewBag.mensaje = Session["mensage"];
+
             return View();
         }
 
@@ -136,19 +141,50 @@ namespace tienda_virtual
             obj.Brand = new BrandModel();
             obj.Brand.Id_marca = int.Parse(frm["brand"].ToString());
             obj.Pdto_description = frm["desciption"].ToString();
+
+            string msgImg = "";
             if (file != null)
             {
-                string name_file = (DateTime.Now.ToString("yyyyMMddHHmmss") + "-" + file.FileName).ToLower();
-                String route = Server.MapPath("~/Assets/uploads/");
-                route += name_file;
-                ProductBuss.UploadFile(route, file);
-                obj.Imagen = name_file;
+               
+                var extencion = Path.GetExtension(file.FileName);
+
+                if (extencion.ToLower() == ".jpeg" || extencion.ToLower() == ".jpg" || extencion.ToLower() == ".png")
+                {
+                    string name_file = (DateTime.Now.ToString("yyyyMMddHHmmss") + "-" + file.FileName).ToLower();
+                    String route = Server.MapPath("~/Assets/uploads/");
+                    route += name_file;
+                    ProductBuss.UploadFile(route, file);
+                    obj.Imagen = name_file;
+                    msgImg = "Imagen Agregada";
+                }
+                else
+                {
+                    msgImg = "Imagen Formato no Corresponde";
+                }
+                           
             }
             else
             {
                 obj.Imagen = "not_photo.jpg";
-            }            
-            ProductBuss.Insert(obj);       
+                msgImg = "Sin Imagen";
+            }
+
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
+            if (ProductBuss.Insert(obj))
+            {
+                msg = "Producto creado Exitosamente " + msgImg;
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error Intente nuevamente";
+                tipoResponse = "error";
+            }
+
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
+
             return RedirectToAction("Products", "Product");
         }
 
@@ -158,6 +194,10 @@ namespace tienda_virtual
             ViewBag.CategoryList = list;
             List<StockModel> Stocklist = StockBuss.listaStock();
             ViewBag.StockList = Stocklist;
+
+            ViewBag.TipoMensaje = Session["tipoMensaje"];
+            ViewBag.mensaje = Session["mensage"];
+
             return View();
         }
 
@@ -185,29 +225,38 @@ namespace tienda_virtual
             ViewBag.CategoryList = list;
 
             string talla = frm["talla"].ToString();
-            List<int> tallas = new List<int>();
 
-            for (int i = 0; i < talla.Length; i++)
-            {
-                if (talla[i] != ',' && talla[i] != '"')
-                {
-                    int l = int.Parse(talla[i].ToString());
-                    tallas.Add(l);
-                }
-            }
+            string[] nroTalla = talla.Split(',');
 
-            foreach (var addStock in tallas)
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
+
+            foreach (var addStock in nroTalla)
             {
                 StockModel obj = new StockModel();
                 obj.Producto = new ProductModel();
                 obj.Producto.Id_product = int.Parse(frm["ProductSelect"].ToString());
                 obj.Size = new SizeModel();
-                obj.Size.Id_size = addStock;
-                StockBuss.InsertStock(obj);
+                obj.Size.Id_size = int.Parse(addStock);
+
+                if(StockBuss.InsertStock(obj))
+                {
+                    msg = "Agregado a Productos en Stock Exitosamente";
+                    tipoResponse = "success";
+                }
+                else
+                {
+                    msg = "Error Intente nuevamente";
+                    tipoResponse = "error";
+                }
             }
+
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
 
             return RedirectToAction("Stock", "Product");
         }
+
 
         public ActionResult FormStock(int id)
         {
@@ -233,7 +282,23 @@ namespace tienda_virtual
             obj.Producto = new ProductModel();
             obj.Producto.Price = int.Parse(frm["precio"].ToString());
             obj.Producto.Cantidad = int.Parse(frm["stock"].ToString());
-            StockBuss.UpdatetStock(obj);    
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
+
+            if (StockBuss.UpdatetStock(obj))
+            {
+                msg = "Agregado Stock y precio Exitosamente";
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error Intente nuevamente";
+                tipoResponse = "error";
+            }
+
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
+
             return RedirectToAction("Stock", "Product");
         }
 
@@ -261,20 +326,50 @@ namespace tienda_virtual
             {
                 obj.Imagen = frm["img_old"].ToString();
             }
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
 
-            ProductBuss.Update(obj);
+            if (ProductBuss.Update(obj))
+            {
+                msg = "Producto Editado Exitosamente";
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error Intente nuevamente";
+                tipoResponse = "error";
+            }
+
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
+
             return RedirectToAction("Products", "Product");
         }
 
         [HttpPost]
         public ActionResult Eliminar(FormCollection frm)
         {
+            string msg = string.Empty;
+            string tipoResponse = string.Empty;
 
             int idProduct = int.Parse(frm["idProduct"].ToString());
-            ProductBuss.Eliminar(idProduct);
+
+            if (ProductBuss.Eliminar(idProduct))
+            {
+                msg = "Producto Eliminado Exitosamente";
+                tipoResponse = "success";
+            }
+            else
+            {
+                msg = "Error puede que el producto no se pueda eliminar, Intente nuevamente y/o revise sus vinculos";
+                tipoResponse = "error";
+            }
+
+            Session["mensage"] = msg;
+            Session["tipoMensaje"] = tipoResponse;
+
             return RedirectToAction("Products", "Product"); 
         }
-
 
         [HttpGet]
         public JsonResult ProductWhitStocks(int id)

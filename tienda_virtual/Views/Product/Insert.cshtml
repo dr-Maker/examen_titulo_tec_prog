@@ -8,6 +8,8 @@
 
 <div class="w-100 height">
 
+
+
     <h1 class="txt-center">Ingresar un nuevo Producto </h1>
     <br />
     <form class="form" method="post" id="form-insert-product" enctype="multipart/form-data">
@@ -25,7 +27,7 @@
         <br />
         <div class="d-flex">
             <label class="f-label">Nombre del producto</label>
-            <input class="f-input" type="text" name="product" required placeholder="Ingrese el nombre del producto" />
+            <input class="f-input" type="text" name="product" pattern="[A-Za-z ]{1,37}" required placeholder="Ingrese el nombre del producto" />
         </div>
         <br />
         <div class="d-flex">
@@ -48,11 +50,11 @@
         <br />
         <div class="d-flex">
             <label class="f-label">Imagen</label>
-            <input class="f-input" type="file" name="file" />
+            <input class="f-input" type="file" accept="image/*" name="file" />
         </div>
         <br />
         <div class="d-flex space-between">
-            <input class="btn_new mg-top-30" id="btn-insert-product" type="submit" value="Ingresar Producto" disabled />
+            <input class="btn_new mg-top-30 btn_disable" id="btn-insert-product" type="submit" value="Ingresar Producto" disabled />
             @Html.ActionLink("volver", "Products", "Product",null, new { @class = "btn-cancelar mg-top-30" })
         </div>
     </form>
