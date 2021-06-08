@@ -1,5 +1,6 @@
 
-![image](./assets_markdown/logo_aiep.png "Instituto Prodesional AIEP"){:height="36px" width="36px"}.
+![](./assets_markdown/logo_aiep.png "Instituto Prodesional AIEP")
+<img scr="./assets_markdown/logo_aiep.png" width="20%" />
 
 
 ## INSTITUTO PROFESIONAL AIEP
