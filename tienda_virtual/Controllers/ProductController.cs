@@ -27,7 +27,7 @@ namespace tienda_virtual
             else
             {
                 System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-                string date = DateTime.Now.ToString();
+                string date = DateTime.Now.ToString("yyyy-MM-ddhh:mm:ss");
                 byte[] data = System.Text.Encoding.ASCII.GetBytes(date);
                 data = md5.ComputeHash(data);
                 Session["token"] = date + System.Text.Encoding.ASCII.GetString(data);
@@ -48,6 +48,10 @@ namespace tienda_virtual
                 
         public ActionResult Products()
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<ProductModel> productos = ProductBuss.Products();
@@ -108,6 +112,10 @@ namespace tienda_virtual
 
         public ActionResult FormProducts(int id, string accion)
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             ViewBag.action = accion;
             ViewBag.idProduct = id;
 
@@ -124,6 +132,10 @@ namespace tienda_virtual
 
         public ActionResult Insert()
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<BrandModel> Brandlist = Tools.marcas();
@@ -190,6 +202,11 @@ namespace tienda_virtual
 
         public ActionResult Stock()
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
+
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             List<StockModel> Stocklist = StockBuss.listaStock();
@@ -203,6 +220,10 @@ namespace tienda_virtual
 
         public ActionResult AddStock()
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
 
@@ -224,32 +245,45 @@ namespace tienda_virtual
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
 
-            string talla = frm["talla"].ToString();
-
-            string[] nroTalla = talla.Split(',');
 
             string msg = string.Empty;
             string tipoResponse = string.Empty;
 
-            foreach (var addStock in nroTalla)
-            {
-                StockModel obj = new StockModel();
-                obj.Producto = new ProductModel();
-                obj.Producto.Id_product = int.Parse(frm["ProductSelect"].ToString());
-                obj.Size = new SizeModel();
-                obj.Size.Id_size = int.Parse(addStock);
 
-                if(StockBuss.InsertStock(obj))
+            if (frm["talla"].ToString() != null || frm["talla"].ToString() != string.Empty)
+            {
+
+                string talla = frm["talla"].ToString();
+
+                string[] nroTalla = talla.Split(',');
+                
+                foreach (var addStock in nroTalla)
                 {
-                    msg = "Agregado a Productos en Stock Exitosamente";
-                    tipoResponse = "success";
-                }
-                else
-                {
-                    msg = "Error Intente nuevamente";
-                    tipoResponse = "error";
+                    StockModel obj = new StockModel();
+                    obj.Producto = new ProductModel();
+                    obj.Producto.Id_product = int.Parse(frm["ProductSelect"].ToString());
+                    obj.Size = new SizeModel();
+                    obj.Size.Id_size = int.Parse(addStock);
+
+                    if (StockBuss.InsertStock(obj))
+                    {
+                        msg = "Agregado a Productos en Stock Exitosamente";
+                        tipoResponse = "success";
+                    }
+                    else
+                    {
+                        msg = "Error Intente nuevamente";
+                        tipoResponse = "error";
+                    }
                 }
             }
+            else
+            {
+                msg = "Error Talla no Seleccionada";
+                tipoResponse = "error";
+            }
+
+
 
             Session["mensage"] = msg;
             Session["tipoMensaje"] = tipoResponse;
@@ -260,6 +294,10 @@ namespace tienda_virtual
 
         public ActionResult FormStock(int id)
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
 

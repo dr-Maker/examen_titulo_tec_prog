@@ -80,16 +80,16 @@
 
 
     <div class="d-flex dflex-s-around ">
-                <div class="opt-cart-shopping-product">
+                <div class="d-flex opt-cart-shopping-product">
                     <a class="txt-center btn-shopping-cart" href="@Url.Action("Index", "Product" ,  new { id=1 })"><i class="fas fa-store"></i> Continuar Comprando</a>
                 </div>
-                <div class="opt-cart-shopping-product">
+                <div class="d-flex opt-cart-shopping-product">
                     <a class="txt-center btn-shopping-cart" href="@Url.Action("DeleteAllCart","ShoppingCart")"><i class="fas fa-trash"></i> Borrar todo</a>
                 </div>
                 @if (@Session["user"] != "")
                 {
-                <div class="opt-cart-shopping-product">
-                    <a class="txt-center" href="@Url.Action("DoShopping", "ShoppingCart")"><i class="fas fa-cash-register"></i> Hacer Pedido</a>
+                <div class="d-flex opt-cart-shopping-product">
+                    <a class="txt-center btn-shopping-cart" href="@Url.Action("DoShopping", "ShoppingCart")"><i class="fas fa-cash-register"></i> Hacer Pedido</a>
                 </div>
                 }
                 else

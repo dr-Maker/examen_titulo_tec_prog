@@ -13,6 +13,10 @@ namespace tienda_virtual
         // GET: Category
         public ActionResult Index()
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             return View();      
@@ -20,6 +24,11 @@ namespace tienda_virtual
 
         public ActionResult Categories()
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
+
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
 
@@ -32,6 +41,10 @@ namespace tienda_virtual
 
         public ActionResult FormCategory(int id, string accion)
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             ViewBag.action = accion;
             ViewBag.idCategory = id;
             List<CategoryModel> list = CategoryBuss.Categories();
@@ -43,6 +56,10 @@ namespace tienda_virtual
 
         public ActionResult Register()
         {
+            if (Session["role"].ToString() != "admin")
+            {
+                return RedirectToAction("Index", "Product", new { id = 1 });
+            }
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;
             return View();

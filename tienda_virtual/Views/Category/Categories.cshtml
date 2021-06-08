@@ -6,6 +6,7 @@
 
 <div class="w-100 height">
 
+    <h1 class="txt-center">Listado de Categorias</h1>
     @if (msg != null && msg != " ")
     {
         <div class="container-categories-msg">
@@ -14,38 +15,40 @@
 
         Session["mensage"] = string.Empty;
         Session["tipoMensaje"] = string.Empty;
-     
+
 
     }
 
 
     @Html.ActionLink("Nueva Categoria", "Register", "Category", null, new { @class = "mg-10 btn_new" })
-
-
-
-    <table class="tab">
-        <thead class="txt-center">
-            <tr>
-                <th>Id Categoría</th>
-                <th>Nombre de la Categoria</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody class="txt-center">
-            @foreach (var item in ListCategory)
-            {
-
+    <br />
+    <br />
+    <br />
+    <div class="contenedor-lista-compra">
+        <table class="tab">
+            <thead class="txt-center">
                 <tr>
-                    <td>@item.Id_category</td>
-                    <td>@item.Category</td>
-                    <!--Implementar Editar y Eliminar categoria-->
-                    <td>
-                        @Html.ActionLink("Editar", "FormCategory", "Category", new { id = item.Id_category, accion = "Editar" }, null)
-                        @Html.ActionLink("Eliminar", "FormCategory", "Category", new { id = item.Id_category, accion = "Eliminar" }, null)
-
-                    </td>
+                    <th>Id Categoría</th>
+                    <th>Nombre de la Categoria</th>
+                    <th>Acciones</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="txt-center">
+                @foreach (var item in ListCategory)
+                {
+
+                    <tr>
+                        <td>@item.Id_category</td>
+                        <td>@item.Category</td>
+                        <!--Implementar Editar y Eliminar categoria-->
+                        <td>
+                            @Html.ActionLink("Editar", "FormCategory", "Category", new { id = item.Id_category, accion = "Editar" }, null)
+                            @Html.ActionLink("Eliminar", "FormCategory", "Category", new { id = item.Id_category, accion = "Eliminar" }, null)
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

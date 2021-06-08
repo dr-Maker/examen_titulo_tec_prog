@@ -223,7 +223,8 @@ FOREIGN KEY (id_carrito) REFERENCES orden_carrito(id_cesta)
 )
 
 
-
+==================================================
+SELECT * FROM usuario
 
 
 

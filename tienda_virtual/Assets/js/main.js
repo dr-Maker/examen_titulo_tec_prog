@@ -97,12 +97,13 @@
         console.log(valor);
         if (valor == 1)
         {
+            $("#container-old-address").addClass("diplayNone");
             $(".container_new_address").removeClass("diplayNone");
         }
         else
         {
             $(".container_new_address").addClass("diplayNone");
-                      
+            $("#container-old-address").removeClass("diplayNone");          
         }
         
     });
@@ -247,7 +248,7 @@ function getTallaSelect()
             })
             $(".containerChekbox").children().remove();
             Sizest.forEach(function (element) {
-                $(".containerChekbox").append("<input type='checkbox' value='" + element.id + "' name='talla'/>")
+                $(".containerChekbox").append("<input type='checkbox'  value='" + element.id + "' name='talla'/>")
                     .append("<label  class='tallaCheckBox' >" + element.size + "</label>").append("<br/>");
                 
             });

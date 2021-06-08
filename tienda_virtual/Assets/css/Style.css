@@ -342,6 +342,7 @@ margin-top:75%;
         margin: 0 auto;
     }
 
+    /* contenedores max-page */
 .contenedor-lista-compra {
     display: block;
     height: 480px;
@@ -356,6 +357,26 @@ margin-top:75%;
         border-left: 1px rgba(29,117,189,0.6) solid;
         border-radius:15px;
     }
+
+
+.contenedor-orden-compra {
+    display: block;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+    .contenedor-orden-compra::-webkit-scrollbar {
+        width: 9px;
+    }
+
+    .contenedor-orden-compra::-webkit-scrollbar-thumb {
+        background: rgba(29,117,189, 0.5);
+        border-left: 1px rgba(29,117,189,0.6) solid;
+        border-radius: 15px;
+    }
+
+
+
 
 .cont-total-a-pagar {
     margin-left: 73%;
@@ -376,8 +397,10 @@ margin-top:75%;
     width:100%;
 }
 
-
-
+.container_new_address {
+    width: 70%;
+    margin: 0 auto;
+}
 /*Mensajes*/
 .container-msg {
 }
@@ -406,4 +429,23 @@ margin:20px auto;
     font-size: 1.2rem;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+/*Order*/
+
+.container-user-data-order{
+    width: 60%;
+    margin: 0 auto;
+}
+
+    .container-user-data-order p{
+        margin:3px;
+    }
+
+    .container-user-data-order span {
+        margin-left: 35%;
+    }
+.container-medio-pago{
+    margin: 0 auto;
+    width: 80%;
 }
