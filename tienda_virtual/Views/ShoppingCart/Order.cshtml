@@ -14,125 +14,145 @@
 }
 
 
-<div class="w-100 height background-color">
+<div class="w-100 height background-color div-order">
     <h3 class="txt-center">Tienda online Dream Maker pedido N º @Oden.Id_cart.ToString()</h3>
     <h2 class="txt-center">Datos de Cliente </h2>
 
     <div class="container-user-data-order">
-        <p>Nombre:<span>@Oden.Usuario.Firstname</span></p>
-        <p>Apellido:<span>@Oden.Usuario.Fatherlastname</span></p>
-        <p>Teléfono:<span>9 779 779 44</span></p>
-        <p>email:<span> Jonathanvenegas@correo.cl</span></p>
-    </div>
-
-    <h2 class="txt-center">Datos Del Pedido </h2>
-    <div class="contenedor-orden-compra">
-    <table class="tab">
-        <thead class="txt-center">
-            <tr>
-                <th>id_producto</th>
-                <th> imagen </th>
-                <th> Producto </th>
-                <th> Marca </th>
-                <th> Talla </th>
-                <th> Cantidad</th>
-                <th> Precio </th>
-                <th> Sub Total </th>
-
-
-            </tr>
-        </thead>
-        <tbody class="txt-center">
-            @foreach (var product in Oden.Productos)
-            {
-                <tr>
-                    <td>@product.Id_product</td>
-
-                    <td>
-                        <div>
-                            <img src="~/Assets/uploads/" />
-                        </div>
-                    </td>
-                    <td>@product.Name_product</td>
-                    <td>@product.Brand.Brand</td>
-                    <td>@product.Talla.Size</td>
-                    <td>@product.Cantidad</td>
-                    <td>@product.Price</td>
-                    <td>@product.Price*@product.Cantidad</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="cont-total-a-pagar">
-        <h3>Total a pagar <span>@Oden.Total</span></h3>
-    </div>
+        <div class="d-flex user-data-order">
+            <h3>Nombre   :</h3><p><span>@Oden.Usuario.Firstname</span>
         </div>
+        <div class="d-flex user-data-order">
+            <h3>Apellido :</h3><p><span>@Oden.Usuario.Fatherlastname</span></p>
+        </div>
+        <div class="d-flex user-data-order">
+            <h3>Teléfono :</h3><p><span>@Oden.Usuario.Telefono</span></p>
+        </div>
+        <div class="d-flex user-data-order">
+            <h3>Email    :</h3><p><span> @Oden.Usuario.Email</span></p>
+        </div>
+
+    </div>
+
+    <hr />
+    <div class="contenedor-orden-compra">
+        <table class="tab">
+            <thead class="txt-center">
+                <tr>
+                    <th>id_producto</th>
+                    <th> imagen </th>
+                    <th> Producto </th>
+                    <th> Marca </th>
+                    <th> Talla </th>
+                    <th> Cantidad</th>
+                    <th> Precio </th>
+                    <th> Sub Total </th>
+
+
+                </tr>
+            </thead>
+            <tbody class="txt-center">
+                @foreach (var product in Oden.Productos)
+                {
+                    <tr>
+                        <td>
+                            @product.Id_product
+                        </td>
+
+                        <td>
+                            <div style="max-width:50px; margin:0 auto;">
+                                <img src="~/Assets/uploads/@product.Imagen" />
+                            </div>
+                        </td>
+                        <td>@product.Name_product</td>
+                        <td>@product.Brand.Brand</td>
+                        <td>@product.Talla.Size</td>
+                        <td>@product.Cantidad</td>
+                        <td>$ @product.Price.ToString("N0")</td>
+                        <td>$ @product.SubTotal.ToString("N0")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="cont-total-a-pagar">
+        <h3>Total a pagar $ <span> @Oden.Total.ToString("N0")</span></h3>
+    </div>
     <hr />
     <div id="container-old-address" class="container-user-data-order">
-        <h2 class="txt-center">Dirección de Envío</h2>
-        <p>Región:    <span> @Oden.Usuario.Region.Nombre_region</span></p>
-        <p>Comuna:    <span>@Oden.Usuario.Comuna.Nombre_comuna</span></p>
-        <p>Direccion: <span>@Oden.Usuario.Addres</span></p>
+        <h4 class="txt-center">Dirección de Envío</h4>
+        <div class="d-flex user-data-order">
+            <h3>Región   :</h3><p><span>@Oden.Usuario.Region.Nombre_region</span>
+        </div>
+        <div class="d-flex user-data-order">
+            <h3>Comuna   :</h3><p><span>@Oden.Usuario.Comuna.Nombre_comuna</span>
+        </div>
+        <div class="d-flex user-data-order">
+            <h3>Dirección:</h3><p><span>@Oden.Usuario.Addres</span>
+        </div>
+
     </div>
 
+    <hr />
+    <h4 class="txt-center">¿Desea Ingresar una direccion distinta?</h4>
 
-        <h2 class="txt-center">¿Desea Ingresar una direccion distinta?</h2>
+    @using (Html.BeginForm("Pagar", "ShoppingCart", FormMethod.Post))
+    {
 
-        @using (Html.BeginForm("Pagar", "ShoppingCart", FormMethod.Post))
-        {
+        <div class="d-flex correct_address" style="margin-left:48%;">
+            <input type="radio" value="1" name="new_address" />
+            <label for="">Si</label>
+            <br>
+            <input type="radio" value="2" name="new_address" checked />
+            <label for="">No</label>
+            <br>
+        </div>
 
-            <div class="d-flex correct_address" style="margin-left:48%;">
-                <input type="radio" value="1" name="new_address" />
-                <label for="">SI</label>
-                <br>
-                <input type="radio" value="2" name="new_address" checked />
-                <label for="">NO</label>
-                <br>
+        <div class="container_new_address diplayNone">
+            <br />
+            <div class="d-flex">
+                <label class="f-label">Región</label>
+                @Html.DropDownList("RegionSelect", itemsRegion, new { @class = "f-input", id = "RegionSelect" })
             </div>
-
-            <div class="container_new_address diplayNone">
-                <div class="d-flex">
-                    <label class="f-label">Región</label>
-                    @Html.DropDownList("RegionSelect", itemsRegion, new { @class = "f-input", id = "RegionSelect" })
-                </div>
-                <br />
-                <div class="d-flex">
-                    <label class="f-label">Provincia</label>
-                    <select class="optionProvincia f-input" id="optionProvincia"></select>
-                </div>
-                <br />
-                <div class="d-flex">
-                    <label class="f-label">Comuna</label>
-                    <select class="optionComuna f-input" name="comuna"></select>
-                </div>
-                <br />
-                <div class="d-flex">
-                    <label class="f-label">Direccion de envío</label>
-                    <input class="f-input" type="text" name="direccion" placeholder="Ingrese la dirección de envío" />
-                </div>
+            <br />
+            <div class="d-flex">
+                <label class="f-label">Provincia</label>
+                <select class="optionProvincia f-input" id="optionProvincia"></select>
             </div>
-
-            <h2 class="txt-center">Seleccione medio de pago</h2>
-
-            <div class="d-flex container-medio-pago">
-                <input style="margin-left:35%;"  type="radio" value="1" name="type_tc" checked />
-                <label for=""><i class="fas fa-money-bill-wave"></i>Tarjeta debito</label>
-                <br>
-                <input type="radio" value="1" name="type_tc" />
-                <label for=""><i class="far fa-credit-card"></i>Tarjeta credito</label>
-                <br>
+            <br />
+            <div class="d-flex">
+                <label class="f-label">Comuna</label>
+                <select class="optionComuna f-input" name="comuna"></select>
             </div>
-
-            <input type="hidden" readonly value="@Oden.Usuario.Iduser.ToString()" name="idusuario" />
-            <input type="hidden" readonly value=" @Oden.Id_cart.ToString()" name="idcesta" />
-
-            <div class="d-flex dflex-s-around ">
-                <input type="submit" value="pagar" />
-
-                <br />
-                <button>Cancelar Pedido</button>
+            <br />
+            <div class="d-flex">
+                <label class="f-label">Direccion de envío</label>
+                <input class="f-input" type="text" name="direccion" placeholder="Ingrese la dirección de envío" />
             </div>
+        </div>
+        <hr />
+        <h4 class="txt-center">Seleccione medio de pago</h4>
 
-        }
-    </div>
+        <div class="d-flex container-medio-pago">
+            <input style="margin-left:35%;" type="radio" value="1" name="type_tc" checked />
+            <label for=""><i class="fas fa-money-bill-wave"></i>Tarjeta debito</label>
+            <br>
+            <input type="radio" value="1" name="type_tc" />
+            <br>
+            <label for=""><i class="far fa-credit-card"></i>Tarjeta credito</label>
+            <br>
+        </div>
+
+        <input type="hidden" readonly value="@Oden.Usuario.Iduser.ToString()" name="idusuario" />
+        <input type="hidden" readonly value=" @Oden.Id_cart.ToString()" name="idcesta" />
+
+        <div class="d-flex dflex-s-around ">
+            <input class="btn_new" type="submit" value="pagar" />
+
+            <br />
+            <button>Cancelar Pedido</button>
+        </div>
+
+    }
+</div>
 

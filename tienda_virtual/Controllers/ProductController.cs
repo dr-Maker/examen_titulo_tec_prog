@@ -38,7 +38,9 @@ namespace tienda_virtual
             {
                 id = id * paginador.Cantidad_por_hoja;
             }
- 
+
+            ViewBag.msg = Session["mensage"];
+            ViewBag.TipoMsg = Session["tipoMensaje"];
 
             List<CategoryModel> list = CategoryBuss.Categories();
             ViewBag.CategoryList = list;

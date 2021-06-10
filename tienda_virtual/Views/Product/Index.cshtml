@@ -10,6 +10,7 @@
     Double cantidprovstotal = (Double)decimal.Divide(cantidadproductos, cantidadporhoja);
     int cantidad_pag = (int)Math.Ceiling(cantidprovstotal);
     int pag_actual = ViewBag.actual;
+    string btn_actual = "";
 }
 
 
@@ -38,7 +39,17 @@
 
         @for (int i = 1; i < @cantidad_pag + 1; i++)
         {
-            <button class="btn_numero_pag" onclick="goPage(@i);">@i.ToString()</button>
+
+            if (@pag_actual == @i)
+            {
+                btn_actual = "pag_actual_selected";
+            }
+            else
+            {
+                btn_actual = "";
+            }
+
+            <button class="btn_numero_pag @btn_actual" onclick="goPage(@i);">@i.ToString()</button>
 
         }
 

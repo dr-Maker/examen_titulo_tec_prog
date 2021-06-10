@@ -13,19 +13,18 @@
     int cantidad_pag = (int)Math.Ceiling(cantidprovstotal);
     int pag_actual = ViewBag.actual;
     int categoria = ViewBag.category;
+    string btn_actual = "";
 }
 
 <main class="w-100 height background-color">
-    <h1 class="txt-center oferta">Venta de @modeloCategoria.Category </h1>
+    <h1 class="txt-center oferta_by_category">Venta de @modeloCategoria.Category </h1>
     <input id="token" type="hidden" readonly value="@token" />
-
 
     <div class="products">
 
         @foreach (var pdto in Model)
         {
             <div class="product">
-
 
                 <a href="@Url.Action("Product","Product", new { id = pdto.Id_product })">
 
@@ -41,12 +40,20 @@
         }
 
     </div>
-    <div class="indicator_page">
+    <div class="indicator_page_bycategory">
 
 
         @for (int i = 1; i < @cantidad_pag + 1; i++)
         {
-            <button class="btn_numero_pag" onclick="goPageCategory(@categoria, @i);">@i.ToString()</button>
+            if (@pag_actual == @i)
+            {
+                btn_actual = "pag_actual_selected";
+            }
+            else
+            {
+                btn_actual = "";
+            }
+            <button class="btn_numero_pag @btn_actual" onclick="goPageCategory(@categoria, @i);">@i.ToString()</button>
         }
 
     </div>

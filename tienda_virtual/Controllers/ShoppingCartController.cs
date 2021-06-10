@@ -190,6 +190,13 @@ namespace tienda_virtual
 
             OrderBuss.PayMethod(idcesta, typepay, pay);
 
+            System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            string date = DateTime.Now.ToString("yyyy-MM-ddhh:mm:ss");
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(date);
+            data = md5.ComputeHash(data);
+            Session["token"] = date + System.Text.Encoding.ASCII.GetString(data);
+
+
             return RedirectToAction("Orders", "ShoppingCart");
         }
     }

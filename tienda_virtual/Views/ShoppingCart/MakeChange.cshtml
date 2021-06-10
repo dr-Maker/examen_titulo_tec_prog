@@ -6,79 +6,173 @@
     List<ShoppingCartModel> ListOrdenes = ViewBag.OrdersList;
 
     List<EstadoOrdenModel> ListEstado = ViewBag.EstadoList;
-
-    int id = 0;
-    int contador = 1;
+    string selected = "";
+    int contador = 0;
 
 }
 
 <div class="w-100 height">
     <h1 class="txt-center">Pedidos en Proceso </h1>
+        
+    <div class="contenedor-ordenes-all-usuario">
+        <table class="tab table-order-all-user">
+            <thead class="txt-center">
+                <tr>
+                    <th>Id Pedido</th>
+                    <th>Id Producto</th>
+                    <th>Imagen</th>
+                    <th>Nombre producto</th>
+                    <th>descripción </th>
+                    <th>Talla </th>
+                    <th>marca </th>
+                    <th>cantidad </th>
+                    <th>Precio </th>
+                    <th>SubTotal </th>
+                    <th>Total </th>
+                    <th>Fecha Pedido </th>
+                    <th>Estado Pago </th>
+                    <th>Estado Pedido Envío</th>
+                    <th>Dirección Envío</th>
+                    <th class="th-chge">Cambiar Estado</th>
+                </tr>
+            </thead>
+            <tbody class="txt-center">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id Pedido</th>
-                <th>Id Producto</th>
-                <th>Nombre producto</th>
-                <th>descripción </th>
-                <th>Talla </th>
-                <th>marca </th>
-                <th>cantidad </th>
-                <th>Precio </th>
-                <th>Total </th>
-                <th>Fecha Pedido </th>
-                <th>Estado Pago </th>
-                <th>Estado</th>
-                <th>Modificar Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var ordenes in ListOrdenes)
-            {
-            <tr>
-
-                @if (@id != @ordenes.Id_cart)
+                @foreach (var ordenes in ListOrdenes)
                 {
+                <tr>
 
-                    <td rowspan="3" class="idcesta">@ordenes.Id_cart</td>
-                    contador = 1;
-                }
-                @foreach (var producto in ordenes.Productos)
-                {
+                    @foreach (var producto in ordenes.Productos)
+                    {
 
-                    <td>@producto.Id_product</td>
-                    <td>@producto.Name_product</td>
-                    <td>@producto.Pdto_description</td>
-                    <td>@producto.Talla</td>
-                    <td>@producto.Brand.Brand</td>
-                    <td>@producto.Cantidad</td>
-                    <td>@producto.Price</td>
-                }
-                <td>@ordenes.Total</td>
-                <td>@ordenes.FechaPedido</td>
-                <td>@ordenes.EstadoPago</td>
-                <td>@ordenes.EstadoPedido</td>
-                <td>
-                    <select class="ChangeState">
-                        <option>seleccione...</option>
-
-                        @foreach (var estado in ListEstado)
+                        if (ordenes.Cest_count == 1)
                         {
-                            <option value="@estado.Id_estado">@estado.Estado_orden</option>
+                            <td class="idcesta">@ordenes.Id_cart</td>
+                            <td>@producto.Id_product</td>
+                            <td>
+                                <div class="cont-img-all-ord">
+                                    <img src="~/Assets/uploads/@producto.Imagen" />
+                                </div>
+                            </td>
+                            <td>@producto.Name_product</td>
+                            <td>@producto.Pdto_description</td>
+                            <td>@producto.Talla.Size</td>
+                            <td>@producto.Brand.Brand</td>
+                            <td>@producto.Cantidad</td>
+                            <td>$ @producto.Price.ToString("N0")</td>
+                            <td>$ @producto.SubTotal.ToString("N0")</td>
+                            <td>$ @ordenes.Total.ToString("N0")</td>
+                            <td>@ordenes.FechaPedido.ToString("dd-MM-yyy")</td>
+                            <td>@ordenes.EstadoPago</td>
+                            <td>@ordenes.EstadoPedido.Estado_orden</td>
+                            <td>@ordenes.Usuario.Comuna.Nombre_comuna, @ordenes.Usuario.Addres</td>
+                            <td>
+                                <select class="ChangeState">
+                                
+                                    @foreach (var estado in ListEstado)
+                                    {
+                                        if (ordenes.EstadoPedido.Id_estado <= estado.Id_estado)
+                                        {
+                                            if (ordenes.EstadoPedido.Id_estado == estado.Id_estado)
+                                            {
+                                                selected = "selected";
+                                            }
+                                            else
+                                            {
+                                                selected = "";
+                                            }
+                                            <option @selected value="@estado.Id_estado">@estado.Estado_orden</option>
+                                        }
+
+                                    }
+                                </select>
+                            </td>
+
                         }
-                    </select>
-                </td>
-                @{id = @ordenes.Id_cart;
-                    contador++;
-                }
-            </tr>
+                        else
+                        {
+                            if (contador == 0)
+                            {
 
+                                <td rowspan="@ordenes.Cest_count" class="idcesta">@ordenes.Id_cart</td>
+                                <td>@producto.Id_product</td>
+                                <td>
+                                    <div class="cont-img-all-ord">
+                                        <img src="~/Assets/uploads/@producto.Imagen" />
+                                    </div>
+                                </td>
+                                <td>@producto.Name_product</td>
+                                <td>@producto.Pdto_description</td>
+                                <td>@producto.Talla.Size</td>
+                                <td>@producto.Brand.Brand</td>
+                                <td>@producto.Cantidad</td>
+                                <td>$ @producto.Price.ToString("N0")</td>
+                                <td>$ @producto.SubTotal.ToString("N0")</td>
+                                <td>$ @ordenes.Total.ToString("N0")</td>
+                                <td rowspan="@ordenes.Cest_count">@ordenes.FechaPedido.ToString("dd-MM-yyy")</td>
+                                <td rowspan="@ordenes.Cest_count">@ordenes.EstadoPago</td>
+                                <td rowspan="@ordenes.Cest_count">@ordenes.EstadoPedido.Estado_orden</td>
+                                <td rowspan="@ordenes.Cest_count">@ordenes.Usuario.Comuna.Nombre_comuna, @ordenes.Usuario.Addres</td>
+                                <td rowspan="@ordenes.Cest_count">
+                                    <select class="ChangeState">
+                            
+                                        @foreach (var estado in ListEstado)
+                                        {
+                                            if (ordenes.EstadoPedido.Id_estado <= estado.Id_estado)
+                                            {
+                                                if (ordenes.EstadoPedido.Id_estado == estado.Id_estado)
+                                                {
+                                                    selected = "selected";
+                                                }
+                                                else
+                                                {
+                                                    selected = "";
+                                                }
+                                                <option @selected value="@estado.Id_estado">@estado.Estado_orden</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+
+                                contador = contador + 1;
+
+                            }
+                            else
+                            {
+
+                                <td>@producto.Id_product</td>
+                                <td>
+                                    <div class="cont-img-all-ord">
+                                        <img src="~/Assets/uploads/@producto.Imagen" />
+                                    </div>
+                                </td>
+                                <td>@producto.Name_product</td>
+                                <td>@producto.Pdto_description</td>
+                                <td>@producto.Talla.Size</td>
+                                <td>@producto.Brand.Brand</td>
+                                <td>@producto.Cantidad</td>
+                                <td>$ @producto.Price.ToString("N0")</td>
+                                <td>$ @producto.SubTotal.ToString("N0")</td>
+                                <td>$ @ordenes.Total.ToString("N0")</td>
+
+
+
+
+                                contador = contador + 1;
+                                if (contador == ordenes.Cest_count)
+                                {
+                                    contador = 0;
+                                }
+                            }
+                        }
                     }
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-        </tbody>
-    </table>
+
 
 
 </div>

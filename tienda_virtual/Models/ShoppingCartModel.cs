@@ -9,11 +9,12 @@ namespace tienda_virtual
     {
 
         private int id_cart;
+        private int cest_count;
         private string token;
         private int cantidad;
         private DateTime fechaPedido;
         private DateTime fechaEntrega;
-        private string estadoPedido;
+        private EstadoOrdenModel estadoPedido;
         private string estadoPago;
         private int precio;
         private int subtotal;
@@ -36,8 +37,10 @@ namespace tienda_virtual
         public int Total { get => total; set => total = value; }
         public DateTime FechaPedido { get => fechaPedido; set => fechaPedido = value; }
         public DateTime FechaEntrega { get => fechaEntrega; set => fechaEntrega = value; }
-        public string EstadoPedido { get => estadoPedido; set => estadoPedido = value; }
+
         public string EstadoPago { get => estadoPago; set => estadoPago = value; }
+        public int Cest_count { get => cest_count; set => cest_count = value; }
+        public EstadoOrdenModel EstadoPedido { get => estadoPedido; set => estadoPedido = value; }
     }
 
 }

@@ -154,12 +154,13 @@ FOREIGN KEY (id_pdto_stock) REFERENCES stocks_and_price(id_pdto_stock)
 DROP TABLE orden_usuario;
 CREATE TABLE orden_usuario(
 id INT IDENTITY(1, 1) PRIMARY KEY,
---id usuario
+id_usuario INT NOT NULL,
 Nombre VARCHAR(255) NOT NULL,
 Apellido VARCHAR(255) NOT NULL,
 username VARCHAR(255) NOT NULL,
 fechaNacimiento DATETIME NOT NULL,
 email VARCHAR(255) NOT NULL,
+telefono VARCHAR(255) NOT NULL,
 genero VARCHAR(255),
 id_region INT,
 id_comuna INT NOT NULL,
@@ -196,8 +197,8 @@ id_tipo_medio_pago INT DEFAULT 1 NOT NULL,
 id_estado_pago INT DEFAULT 1 NOT NULL,
 id_envio INT DEFAULT 1 NOT NULL,
 token VARCHAR(255) NOT NULL,
---direccion envio
--- id comuna
+direccion_envío VARCHAR(255) NOT NULL,
+id_comuna INT NOT NULL,
 Total INT NOT NULL,
 FOREIGN KEY (id_persona) REFERENCES orden_usuario(id),
 FOREIGN KEY (id_tipo_medio_pago) REFERENCES orden_medio_pago(id_tipo_medio_pago),
@@ -214,6 +215,7 @@ id_stock INT NOT NULL,
 nombre_producto VARCHAR(255) NOT NULL,
 descripcion VARCHAR(500) NOT NULL,
 categoria VARCHAR(255) NOT NULL,
+imagen VARCHAR(255) NOT NULL,
 marca VARCHAR(500) NOT NULL,
 talla VARCHAR(500) NOT NULL,
 cantidad INT NOT NULL,

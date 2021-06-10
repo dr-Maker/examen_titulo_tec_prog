@@ -77,6 +77,7 @@ namespace tienda_virtual
 
         public ActionResult Login()
         {
+          
             return View();
         }
 
@@ -94,9 +95,12 @@ namespace tienda_virtual
                 Session["user"] = dt.Rows[0]["username"].ToString();
                 Session["role"] = dt.Rows[0]["rol"].ToString();
 
-
             }
-
+            else
+            {
+                Session["mensage"] = "usuario y/o contraseña invalido"; 
+                Session["tipoMensaje"] = "error-login";
+            }
 
             return RedirectToAction("Index", "Product", new { id =1});
         }

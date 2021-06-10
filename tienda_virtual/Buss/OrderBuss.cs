@@ -33,20 +33,17 @@ namespace tienda_virtual
                 obj.Usuario.Firstname = row["Nombre"].ToString();
                 obj.Usuario.Fatherlastname = row["Apellido"].ToString();
                 obj.Usuario.Email = row["email"].ToString();
+                obj.Usuario.Telefono = row["telefono"].ToString();
                 obj.Total = int.Parse(row["Total"].ToString());
 
                 obj.Usuario.Region = new RegionModel();
                 obj.Usuario.Region.Nombre_region = row["nombre_region"].ToString();
 
                 obj.Usuario.Comuna = new ComunaModel();
+                obj.Usuario.Comuna.Id_comuna = int.Parse(row["id_comuna"].ToString());
                 obj.Usuario.Comuna.Nombre_comuna = row["nombre_comuna"].ToString();
 
-                obj.Usuario.Addres = row["direccion"].ToString();
-                /*
-                obj.Id_cart = int.Parse(row["id_cesta"].ToString());
-                obj.Token = row["token"].ToString();
-                obj.Subtotal = int.Parse(row["Sub_total"].ToString());
-                 */
+                obj.Usuario.Addres = row["direccion_envío"].ToString();
 
 
                 List<ProductModel> lista = new List<ProductModel>();
@@ -62,9 +59,12 @@ namespace tienda_virtual
                     item.Brand.Brand = dt.Rows[i]["marca"].ToString();
                     item.Price = int.Parse(dt.Rows[i]["precio"].ToString());
                     item.Pdto_description = dt.Rows[i]["descripcion"].ToString();
+                    item.Imagen = dt.Rows[i]["imagen"].ToString();
                     item.Cantidad = int.Parse(dt.Rows[i]["cantidad"].ToString());
                     item.Talla = new SizeModel();
                     item.Talla.Size = dt.Rows[i]["talla"].ToString();
+                    item.SubTotal = int.Parse(dt.Rows[i]["subTotal"].ToString());
+
 
                     lista.Add(item);
                 }
@@ -94,39 +94,51 @@ namespace tienda_virtual
 
             foreach (DataRow row in dt.Rows)
             {
+
                 obj = new ShoppingCartModel();
                 obj.Usuario = new UserModel();
-                obj.Id_cart = int.Parse(row["id_carrito"].ToString());
+              
+                obj.Id_cart = int.Parse(row["id_cesta"].ToString());
+                obj.Usuario.Username = row["username"].ToString();
+                obj.Cest_count = int.Parse(row["cesta_count"].ToString());
 
-                obj.Subtotal = int.Parse(row["subTotal"].ToString());
-                obj.Usuario.Firstname = row["Nombre"].ToString();
-                obj.Usuario.Fatherlastname = row["Apellido"].ToString();
-                obj.Usuario.Email = row["email"].ToString();
-
-
+                obj.Usuario.Comuna = new ComunaModel();
+                obj.Usuario.Comuna.Nombre_comuna = row["nombre_comuna"].ToString();
+                obj.Usuario.Addres = row["direccion"].ToString();
                 obj.FechaPedido = DateTime.Parse(row["fecha_pedido"].ToString());
-                obj.EstadoPago = row["estado_pago"].ToString();
-                obj.EstadoPedido = row["estado_pedido"].ToString();
 
+                //obj.Subtotal = int.Parse(row["subTotal"].ToString());
+                //obj.Usuario.Firstname = row["Nombre"].ToString();
+                //obj.Usuario.Fatherlastname = row["Apellido"].ToString();
+                //obj.Usuario.Email = row["email"].ToString();
+
+
+                //obj.FechaPedido = DateTime.Parse(row["fecha_pedido"].ToString());
+                obj.EstadoPago = row["estado_pago"].ToString();
+                obj.EstadoPedido = new EstadoOrdenModel();
+                obj.EstadoPedido.Estado_orden = row["estado_pedido"].ToString();
+                
                 lista = new List<ProductModel>();                
 
                     item = new ProductModel();
                     item.Id_product = int.Parse(row["id_producto"].ToString());
+                
                     item.Category = new CategoryModel();
-                    item.Category.Category = row["categoria"].ToString();
+                    //item.Category.Category = row["categoria"].ToString();
                     item.Name_product = row["nombre_producto"].ToString();
                     item.Brand = new BrandModel();
                     item.Brand.Brand = row["marca"].ToString();
                     item.Price = int.Parse(row["precio"].ToString());
                     item.Pdto_description = row["descripcion"].ToString();
                     item.Cantidad = int.Parse(row["cantidad"].ToString());
+                    item.Imagen = row["imagen"].ToString();
                     item.Talla = new SizeModel();
                     item.Talla.Size= row["talla"].ToString();
-
-                    obj.Subtotal = int.Parse(row["subTotal"].ToString());
+                    item.SubTotal= int.Parse(row["subTotal"].ToString());
                     obj.Total = int.Parse(row["Total"].ToString());
-                    lista.Add(item);
-
+                
+                lista.Add(item);
+                    
                 obj.Productos = lista;
                 lista_obj.Add(obj);
             }
@@ -171,37 +183,50 @@ namespace tienda_virtual
 
             foreach (DataRow row in dt.Rows)
             {
+
                 obj = new ShoppingCartModel();
                 obj.Usuario = new UserModel();
-                obj.Id_cart = int.Parse(row["id_carrito"].ToString());
 
-                obj.Subtotal = int.Parse(row["subTotal"].ToString());
-                obj.Usuario.Firstname = row["Nombre"].ToString();
-                obj.Usuario.Fatherlastname = row["Apellido"].ToString();
-                obj.Usuario.Email = row["email"].ToString();
+                obj.Id_cart = int.Parse(row["id_cesta"].ToString());
+                obj.Usuario.Username = row["username"].ToString();
+                obj.Cest_count = int.Parse(row["cesta_count"].ToString());
 
-
+                obj.Usuario.Comuna = new ComunaModel();
+                obj.Usuario.Comuna.Nombre_comuna = row["nombre_comuna"].ToString();
+                obj.Usuario.Addres = row["direccion"].ToString();
                 obj.FechaPedido = DateTime.Parse(row["fecha_pedido"].ToString());
+
+                //obj.Subtotal = int.Parse(row["subTotal"].ToString());
+                //obj.Usuario.Firstname = row["Nombre"].ToString();
+                //obj.Usuario.Fatherlastname = row["Apellido"].ToString();
+                //obj.Usuario.Email = row["email"].ToString();
+
+
+                //obj.FechaPedido = DateTime.Parse(row["fecha_pedido"].ToString());
                 obj.EstadoPago = row["estado_pago"].ToString();
-                obj.EstadoPedido = row["estado_pedido"].ToString();
+                obj.EstadoPedido = new EstadoOrdenModel();
+                obj.EstadoPedido.Id_estado = int.Parse(row["id_envio"].ToString());
+                obj.EstadoPedido.Estado_orden = row["estado_pedido"].ToString();
 
                 lista = new List<ProductModel>();
 
                 item = new ProductModel();
                 item.Id_product = int.Parse(row["id_producto"].ToString());
+
                 item.Category = new CategoryModel();
-                item.Category.Category = row["categoria"].ToString();
+                //item.Category.Category = row["categoria"].ToString();
                 item.Name_product = row["nombre_producto"].ToString();
                 item.Brand = new BrandModel();
                 item.Brand.Brand = row["marca"].ToString();
                 item.Price = int.Parse(row["precio"].ToString());
                 item.Pdto_description = row["descripcion"].ToString();
                 item.Cantidad = int.Parse(row["cantidad"].ToString());
+                item.Imagen = row["imagen"].ToString();
                 item.Talla = new SizeModel();
                 item.Talla.Size = row["talla"].ToString();
-
-                obj.Subtotal = int.Parse(row["subTotal"].ToString());
+                item.SubTotal = int.Parse(row["subTotal"].ToString());
                 obj.Total = int.Parse(row["Total"].ToString());
+
                 lista.Add(item);
 
                 obj.Productos = lista;

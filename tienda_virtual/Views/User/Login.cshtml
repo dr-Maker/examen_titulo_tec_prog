@@ -1,13 +1,20 @@
 ﻿
+@{
+
+    string msg = ViewBag.msg;
+    string tipoMsg = ViewBag.TipoMsg;
+ }
 
 <aside>
 
-    <div>
-        <h1 class="txt-center">Entrar a Mi Web</h1>
-    </div>
 
     @if (@Session["user"] == "")
     {
+
+        <div>
+            <h1 class="txt-center">Entrar a Mi Web</h1>
+        </div>
+
         <form action="~/User/Login" method="post">
             <div>
                 <div class="d-flex">
@@ -26,6 +33,15 @@
                 </div>
             </div>
 
+            @if (msg != null && msg != " ")
+            {
+                <div class="container-login-msg @tipoMsg">
+                    <p>@msg</p>
+                </div>
+                Session["mensage"] = string.Empty;
+                Session["tipoMensaje"] = string.Empty;
+            }
+            <br />
             <div class="d-flex">
                 <input class="btn_submit" type="submit" value="Ingresar" />
             </div>
@@ -38,54 +54,71 @@
     }
     else
     {
-        <h2>@Session["user"]</h2>
-
+        <br />
+        <h2 class="txt-center">Bienvenido @Session["user"]</h2>
+        if (@Session["role"].ToString() != "admin")
+        {
+            <br />
+            <br />
+        }
     }
 
-        <ul>
-            @if (@Session["role"] != null && @Session["role"].ToString() == "admin")
-            {
+    <ul>
+        @if (@Session["role"] != null && @Session["role"].ToString() == "admin")
+        {
 
-                <li>
-                    @Html.ActionLink("Registro de Categoria", "Categories", "Category")
+            <li>
+                <i class="fas fa-book-open"></i> @Html.ActionLink("Registro de Categoria", "Categories", "Category")
+            </li>
 
-                </li>
-                <li>
-                    @Html.ActionLink("Registro de Productos", "Products", "Product")
-                </li>
-                <li>
-                    @Html.ActionLink("Mantención Stock  de Productos", "Stock", "Product")
-                </li>
-                <li>
-                    @Html.ActionLink("Cambio Estado de Productos", "MakeChange", "ShoppingCart")
-                </li>
-            }
-            else
-            {
-            }
+            <li>
+                <i class="fas fa-pen"></i> @Html.ActionLink("Registro de Productos", "Products", "Product")
+            </li>
+
+            <li>
+                <i class="far fa-list-alt"></i> @Html.ActionLink("Mantención Stock  de Productos", "Stock", "Product")
+            </li>
+
+            <li>
+                <i class="fas fa-tasks"></i>  @Html.ActionLink("Cambio Estado de Productos", "MakeChange", "ShoppingCart")
+            </li>
+        }
+        else
+        {
+        }
 
 
-            @if (@Session["role"] != null && @Session["role"].ToString() == "user" || @Session["role"].ToString() == "admin")
-            {
-                <li>
-                    @Html.ActionLink("Mis Productos", "Index", "ShoppingCart")
-                </li>
-                <li>
-                    @Html.ActionLink("Mis Pedido", "Orders", "ShoppingCart")
-                </li>
-                <li>
-                    @Html.ActionLink("Cerrar Sesión", "Logout", "User")
-                </li>
-            }
-            else
-            {
-            }
-        </ul>
+        @if (@Session["role"] != null && @Session["role"].ToString() == "user" || @Session["role"].ToString() == "admin")
+        {
+
+
+            <li>
+                <i class="fas fa-boxes"></i> @Html.ActionLink("Mis Productos", "Index", "ShoppingCart")
+
+            </li>
+
+            <li>
+                <i class="fas fa-truck-moving"></i> @Html.ActionLink("Mis Pedido", "Orders", "ShoppingCart")
+
+            </li>
+            <br />
+            <li>
+                <i class="fas fa-window-close"></i> @Html.ActionLink("Cerrar Sesión", "Logout", "User")
+
+            </li>
+            <br />
+            <br />
+
+        }
+        else
+        {
+        }
+    </ul>
 
     <hr />
 
-    <div class="conteiner_rrss">
-        <h3 class="txt-center">Siguenos en nuestras Redes Sociales</h3>
+    <div class="conteiner_rrss height-rrhh">
+        <h3 class="txt-center">Siguenos en nuestras <br /> Redes Sociales</h3>
         <ul class="place_rrss">
             <li><a href="#"><div class="rrss_img_container"><img src="~/Assets/images/RRSS/instagram.jfif" /></div></a></li>
             <li><a href="#"><div class="rrss_img_container"><img src="~/Assets/images/RRSS/facebook.jpg" /></div></a></li>

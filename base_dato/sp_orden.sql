@@ -6,30 +6,24 @@ CREATE PROCEDURE sp_make_order
 @id_usuario INT
 AS
 DECLARE @nro_orden_carrito INT,
---NECESITAMOS RECIBIR EL USUARIO y token por parametro
 		@Total INT = 0,
 		@nombre VARCHAR(255),
 		@apellido VARCHAR(255),
 		@username VARCHAR(255),
 		@fechaNacimiento DATETIME,
+		@telefono VARCHAR(255),
 		@email VARCHAR(255),
 		@genero VARCHAR(255),
 		@idUsuario INT, 
 		@idComuna INT,
 		@direccion VARCHAR(255)
 
---AGREGAR UN IF SI ES NULL COMIENZA EN 0 SINO SE TOMA EL ULTIMO ID Y SE LE SUMA 1
---SELECT id_cesta FROM orden_carrito
-/*
-SELECT /*@nro_orden_carrito =*/ COUNT(*) FROM orden_carrito
-SET @nro_orden_carrito = @nro_orden_carrito +1;
-*/
--- NECESITAMOS LLENAR LA TABLA USUARIO CON LOS DATOS DE QUIEN COMPRA
 SELECT  @nombre = first_name,
 		@apellido = father_lastname, 
 		@username = username , 
 		@fechaNacimiento = birthday , 
 		@email = email, 
+		@telefono = telefono,
 		@genero= nombre_sexo,
 		@idComuna = comuna_id,
 		@direccion = home_address
@@ -38,10 +32,9 @@ SELECT  @nombre = first_name,
 		ON usuario.sex_id = sexo.id_sexo
 		WHERE id = @id_usuario
 
-		Select * from orden_usuario
 
-INSERT INTO orden_usuario(Nombre, Apellido, username, fechaNacimiento, email, genero, id_comuna, direccion)
-VALUES(@nombre, @apellido, @username, @fechaNacimiento, @email, @genero, @idComuna, @direccion)
+INSERT INTO orden_usuario(id_usuario, Nombre, Apellido, username, fechaNacimiento, email, telefono ,genero, id_comuna, direccion)
+VALUES(@id_usuario, @nombre, @apellido, @username, @fechaNacimiento, @email, @telefono,  @genero, @idComuna, @direccion)
 
 
 SELECT @idUsuario = id FROM orden_usuario
@@ -51,7 +44,8 @@ OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY
 
 
 --LLENAMOS EL CARRITO
-INSERT INTO orden_carrito(id_persona, token ,fecha_pedido,Total)VALUES(@idUsuario, @token ,GETDATE(), 0);
+SELECT * FROM orden_carrito
+INSERT INTO orden_carrito(id_persona, token ,fecha_pedido,Total, direccion_envío, id_comuna)VALUES(@idUsuario, @token ,GETDATE(), 0, @direccion, @idComuna);
 
 
 SELECT @nro_orden_carrito = id_cesta FROM orden_carrito
@@ -71,6 +65,7 @@ DECLARE cursor_make_order CURSOR FOR
 		name_category,
 		brand,
 		size,
+		imagen,
 		cantidad_lleva,
 		precio_lleva
 		FROM lista_productos
@@ -86,6 +81,7 @@ DECLARE cursor_make_order CURSOR FOR
 		ON stocks_and_price.id_size = sizesProduct.id_size
 		WHERE token = @token and id_usuario = @id_usuario
 
+
 		DECLARE 
 		@Id_Cesta NUMERIC,
 		@id_producto NUMERIC,
@@ -95,57 +91,37 @@ DECLARE cursor_make_order CURSOR FOR
 		@name_category VARCHAR(255),
 		@brand VARCHAR(255),
 		@size VARCHAR(255),
+		@imagen VARCHAR(255),
 		@cantidad_lleva NUMERIC,
 		@precio_lleva NUMERIC	
 				BEGIN 
 					OPEN cursor_make_order
-					FETCH NEXT FROM cursor_make_order INTO @Id_Cesta, @id_producto,@id_pdto_stock,@name_product,@pdto_description,@name_category,@brand,@size,@cantidad_lleva,@precio_lleva 	
+					FETCH NEXT FROM cursor_make_order INTO @Id_Cesta, @id_producto,@id_pdto_stock,@name_product,@pdto_description,@name_category,@brand,@size,@imagen,@cantidad_lleva,@precio_lleva 	
 					WHILE @@FETCH_STATUS = 0
 					BEGIN	
 
-						-- INSERTAR DATOS EN tabla orden producto
-
-		-- No se puede insertar un valor explícito en la columna de identidad de la tabla 'orden_carrito' cuando IDENTITY_INSERT es OFF.
-		-- Instrucción INSERT en conflicto con la restricción FOREIGN KEY 'FK__orden_car__id_ca__40257DE4'. El conflicto ha aparecido en la base de datos 'db_tienda_virtual', tabla 'dbo.orden_carrito', column 'id_cesta'.
-		
-	
-
-		/*
-		CREATE TABLE orden_carrito_compra(
-		id INT IDENTITY(1, 1) PRIMARY KEY,
-		id_carrito INT NOT NULL,
-		id_producto INT NOT NULL,
-		id_stock INT NOT NULL,
-		nombre_producto VARCHAR(255) NOT NULL,
-		descripcion VARCHAR(500) NOT NULL,
-		categoria VARCHAR(255) NOT NULL,
-		marca VARCHAR(500) NOT NULL,
-		talla VARCHAR(500) NOT NULL,
-		cantidad INT NOT NULL,
-		precio INT NOT NULL,
-		subTotal INT NOT NULL,
-		FOREIGN KEY (id_carrito) REFERENCES orden_carrito(id_cesta)
-		)
-		*/
 
 
-		INSERT INTO orden_carrito_compra(id_carrito,id_producto,id_stock,nombre_producto,descripcion,categoria, marca, talla, cantidad, precio, subTotal)
-		VALUES(@nro_orden_carrito, @id_producto,@id_pdto_stock,@name_product,@pdto_description, @name_category,@brand,@size, @cantidad_lleva, @precio_lleva, (@cantidad_lleva*@precio_lleva) )
+		INSERT INTO orden_carrito_compra(id_carrito,id_producto,id_stock,nombre_producto,descripcion,categoria, imagen, marca, talla, cantidad, precio, subTotal)
+		VALUES(@nro_orden_carrito, @id_producto,@id_pdto_stock,@name_product,@pdto_description, @name_category,@imagen, @brand,@size, @cantidad_lleva, @precio_lleva, (@cantidad_lleva*@precio_lleva) )
 
 		SET @Total = @Total + (@cantidad_lleva*@precio_lleva);  
 						-- eliminar datos de la tabal lista_producto
 		DELETE FROM lista_productos WHERE id_cesta = @id_cesta
-						FETCH NEXT FROM cursor_make_order  INTO @Id_Cesta,@id_producto,@id_pdto_stock,@name_product,@pdto_description,@name_category,@brand,@size,@cantidad_lleva,@precio_lleva 
+						FETCH NEXT FROM cursor_make_order  INTO @Id_Cesta,@id_producto,@id_pdto_stock,@name_product,@pdto_description,@name_category,@brand,@size,@imagen,@cantidad_lleva,@precio_lleva 
 					END					
 					CLOSE cursor_make_order
 					DEALLOCATE cursor_make_order
 				END
 	UPDATE orden_carrito SET Total = @Total WHERE id_cesta = @nro_orden_carrito
-
 GO
+
+sp_make_order '2021-06-0501:55:18????s?D??YN.??.?', 10003
 
 /*=================================*/
 select * from lista_productos
+
+
 
 DROP PROCEDURE sp_update_user_order
 CREATE PROCEDURE sp_update_user_order
@@ -157,6 +133,10 @@ AS
 GO
 
 
+
+
+sp_update_user_order 10003 ,'2021-06-0501:55:18????s?D??YN.??.?'
+
 UPDATE lista_productos SET id_usuario = 10001
 sp_make_order 'user001', 10001
 
@@ -164,6 +144,7 @@ select * from orden_usuario
 select * from orden_carrito_compra
 select * from orden_carrito
 select * from lista_productos
+select * from usuario
 truncate table lista_productos
 
 SELECT * FROM orden_carrito
@@ -257,11 +238,17 @@ ON provincia.id_region = region.id_region
 WHERE token = @token
 GO
 
-sp_get_order 3
+
+sp_get_order '2021-06-0808:14:49??*?_W?q???Q??'
 
 select * from 
 
 
+
+
+
+
+/*
 DROP PROCEDURE sp_list_order
 CREATE PROCEDURE sp_list_order
 @user VARCHAR(255)
@@ -280,32 +267,8 @@ ON orden_estado_pedido.id_envio = orden_carrito.id_envio
 WHERE username = @user
 -- order by id_cesta , mas reciente y por estado
 GO
+*/
 
-
-DROP PROCEDURE sp_list_orders_pending
-CREATE PROCEDURE sp_list_orders_pending
-AS
-DECLARE @contador INT, 
-@id_carrito INT
-SELECT @contador = COUNT(orden_carrito_compra.id_carrito) as cantidad_id, orden_carrito_compra.id_carrito from orden_carrito_compra GROUP BY id_carrito
-SELECT @contador, orden_carrito_compra.id_carrito,
-id_producto, categoria, nombre_producto, marca, precio, descripcion, cantidad, talla, subTotal, Total,
-Nombre, Apellido, email, fecha_pedido, estado_pago, estado_pedido
-FROM orden_carrito
-INNER JOIN orden_carrito_compra
-ON orden_carrito.id_cesta = orden_carrito_compra.id_carrito
-INNER JOIN orden_usuario
-ON orden_carrito.id_persona = orden_usuario.id
-INNER JOIN orden_medio_pago
-ON orden_carrito.id_tipo_medio_pago = orden_medio_pago.id_tipo_medio_pago
-INNER JOIN orden_id_estado_pago
-ON orden_id_estado_pago.id_estado_pago = orden_carrito.id_estado_pago
-INNER JOIN orden_estado_pedido
-ON orden_estado_pedido.id_envio = orden_carrito.id_envio
-WHERE orden_estado_pedido.id_envio <> 6
-
--- order by id_cesta , mas reciente y por estado
-GO
 
 sp_list_orders_pending
 
@@ -386,3 +349,275 @@ select * from comuna
 SELECT * FROM orden_medio_pago
 SELECT * FROM orden_id_estado_pago
 
+
+
+
+sp_get_order '2021-06-0805:44:16?????G??Q?i??D??' 
+
+
+DROP PROCEDURE sp_list_order
+CREATE PROCEDURE sp_list_order
+@user VARCHAR(255)
+AS
+DECLARE cursor_get_orders CURSOR FOR 
+		SELECT
+		id_cesta,
+		id_producto,
+		nombre_producto,
+		descripcion,
+		talla,
+		marca,
+		cantidad,
+		precio,
+		subTotal,
+		fecha_pedido,
+		estado_pago,
+		estado_pedido,
+		direccion 
+		FROM orden_carrito
+		INNER JOIN orden_carrito_compra
+		ON orden_carrito.id_cesta = orden_carrito_compra.id_carrito
+		INNER JOIN orden_usuario
+		ON orden_carrito.id_persona = orden_usuario.id
+		INNER JOIN orden_medio_pago
+		ON orden_carrito.id_tipo_medio_pago = orden_medio_pago.id_tipo_medio_pago
+		INNER JOIN orden_id_estado_pago
+		ON orden_id_estado_pago.id_estado_pago = orden_carrito.id_estado_pago
+		INNER JOIN orden_estado_pedido
+		ON orden_estado_pedido.id_envio = orden_carrito.id_envio
+		WHERE username = @user		
+		DECLARE 
+		@id_Cesta NUMERIC,
+		@id_producto NUMERIC,
+		@nombre_producto VARCHAR(255),
+		@pdto_description VARCHAR(500),
+		@talla VARCHAR(255),
+		@marca VARCHAR(255),
+		@cantidad NUMERIC,
+		@precio NUMERIC,
+		@subTotal NUMERIC,
+		@fecha_pedido DATETIME,
+		@Estado_pago VARCHAR(255),
+		@Estado_pedido VARCHAR(255),
+		@direccion VARCHAR(255)
+				BEGIN 
+					OPEN cursor_get_orders
+					FETCH NEXT FROM cursor_get_orders INTO @id_Cesta, @id_producto, @nombre_producto, @pdto_description, @talla, @marca, @cantidad, @precio, @subTotal, @fecha_pedido, @Estado_pago, @Estado_pedido, @direccion 	
+					WHILE @@FETCH_STATUS = 0
+					BEGIN	
+					SELECT 'hola'
+					FETCH NEXT FROM cursor_get_orders  INTO @id_Cesta, @id_producto, @nombre_producto, @pdto_description, @talla, @marca, @cantidad, @precio, @subTotal, @fecha_pedido, @Estado_pago, @Estado_pedido, @direccion 
+					END					
+					CLOSE cursor_get_orders
+					DEALLOCATE cursor_get_orders
+				END
+GO
+
+
+sp_list_order 'admin'
+
+-- order by id_cesta , mas reciente y por estado
+
+
+DROP VIEW v_orders
+CREATE VIEW v_orders
+	AS
+	SELECT id_cesta,
+		id_producto,
+		nombre_producto,
+		descripcion,
+		talla,
+		marca,
+		cantidad,
+		precio,
+		subTotal,
+		fecha_pedido,
+		username,
+		imagen,
+		Total,
+		estado_pago,
+		estado_pedido,
+		direccion, 
+		nombre_comuna,
+		fecha_pedido
+		FROM orden_carrito
+	INNER JOIN orden_carrito_compra
+	ON orden_carrito.id_cesta = orden_carrito_compra.id_carrito
+	INNER JOIN orden_usuario
+	ON orden_carrito.id_persona = orden_usuario.id
+	INNER JOIN orden_medio_pago
+	ON orden_carrito.id_tipo_medio_pago = orden_medio_pago.id_tipo_medio_pago
+	INNER JOIN orden_id_estado_pago
+	ON orden_id_estado_pago.id_estado_pago = orden_carrito.id_estado_pago
+	INNER JOIN orden_estado_pedido
+	ON orden_estado_pedido.id_envio = orden_carrito.id_envio
+	INNER JOIN comuna
+	ON orden_carrito.id_comuna = comuna.id_comuna
+	GROUP BY id_cesta,
+		id_producto,
+		nombre_producto,
+		descripcion,
+		talla,
+		marca,
+		cantidad,
+		precio,
+		subTotal,
+		fecha_pedido,
+		username,
+		imagen,
+		Total,
+		estado_pago,
+		estado_pedido,
+		direccion, 
+		nombre_comuna,
+		fecha_pedido
+GO
+
+
+
+
+SELECT COUNT(id_carrito) as cesta_count from orden_carrito_compra 
+GROUP BY id_carrito
+
+
+SELECT * from v_orders
+SELECT * from orden_carrito_compra
+
+
+
+DROP PROCEDURE sp_list_order
+CREATE PROCEDURE sp_list_order
+@user VARCHAR(255)
+AS
+SELECT COUNT(id_carrito) as cesta_count, username , v_orders.id_cesta, v_orders.id_producto, 
+v_orders.nombre_producto, v_orders.descripcion, v_orders.talla, v_orders.marca, v_orders.cantidad, v_orders.precio, v_orders.direccion,
+v_orders.imagen, v_orders.subTotal, v_orders.Total, v_orders.estado_pago, v_orders.estado_pedido, v_orders.nombre_comuna,
+v_orders.fecha_pedido
+from orden_carrito_compra 
+INNER JOIN v_orders
+ON v_orders.id_cesta = orden_carrito_compra.id_carrito
+WHERE username = @user
+GROUP BY id_cesta, username, v_orders.id_cesta, v_orders.id_producto,
+v_orders.nombre_producto, v_orders.descripcion, v_orders.talla, v_orders.marca, v_orders.cantidad, v_orders.precio, v_orders.direccion,
+v_orders.imagen, v_orders.subTotal, v_orders.Total, v_orders.estado_pago, v_orders.estado_pedido, v_orders.nombre_comuna,
+v_orders.fecha_pedido
+GO
+
+sp_list_order 'admin'
+
+
+SELECT * FROM orden_carrito
+
+DROP VIEW v_orders_whit_user
+CREATE VIEW v_orders_whit_user
+	AS
+	SELECT id_cesta,
+		id_producto,
+		nombre_producto,
+		descripcion,
+		talla,
+		marca,
+		cantidad,
+		precio,
+		subTotal,
+		fecha_pedido,
+		username,
+		imagen,
+		Total,
+		estado_pago,
+		orden_carrito.id_envio,
+		estado_pedido,
+		direccion, 
+		nombre_comuna,
+		Nombre,
+		Apellido,
+		telefono,
+		email
+		FROM orden_carrito
+	INNER JOIN orden_carrito_compra
+	ON orden_carrito.id_cesta = orden_carrito_compra.id_carrito
+	INNER JOIN orden_usuario
+	ON orden_carrito.id_persona = orden_usuario.id
+	INNER JOIN orden_medio_pago
+	ON orden_carrito.id_tipo_medio_pago = orden_medio_pago.id_tipo_medio_pago
+	INNER JOIN orden_id_estado_pago
+	ON orden_id_estado_pago.id_estado_pago = orden_carrito.id_estado_pago
+	INNER JOIN orden_estado_pedido
+	ON orden_estado_pedido.id_envio = orden_carrito.id_envio
+	INNER JOIN comuna
+	ON orden_carrito.id_comuna = comuna.id_comuna
+	GROUP BY id_cesta,
+		id_producto,
+		nombre_producto,
+		descripcion,
+		talla,
+		marca,
+		cantidad,
+		precio,
+		subTotal,
+		fecha_pedido,
+		username,
+		imagen,
+		Total,
+		estado_pago,
+		orden_carrito.id_envio,
+		estado_pedido,
+		direccion, 
+		nombre_comuna,
+		Nombre,
+		Apellido,
+		telefono,
+		email
+GO
+
+
+select * from v_orders_whit_user
+
+
+DROP PROCEDURE sp_list_orders_pending
+CREATE PROCEDURE sp_list_orders_pending
+AS
+SELECT COUNT(id_carrito) as cesta_count, username , v_orders_whit_user.id_cesta, v_orders_whit_user.id_producto, 
+v_orders_whit_user.nombre_producto, v_orders_whit_user.descripcion, v_orders_whit_user.talla, v_orders_whit_user.marca, v_orders_whit_user.cantidad, v_orders_whit_user.precio, v_orders_whit_user.direccion,
+v_orders_whit_user.imagen, v_orders_whit_user.subTotal, v_orders_whit_user.Total, v_orders_whit_user.estado_pago, v_orders_whit_user.id_envio ,v_orders_whit_user.estado_pedido, v_orders_whit_user.nombre_comuna,
+v_orders_whit_user.fecha_pedido
+from orden_carrito_compra 
+INNER JOIN v_orders_whit_user
+ON v_orders_whit_user.id_cesta = orden_carrito_compra.id_carrito
+WHERE v_orders_whit_user.id_envio <> 6
+GROUP BY id_cesta, username, v_orders_whit_user.id_cesta, v_orders_whit_user.id_producto,
+v_orders_whit_user.nombre_producto, v_orders_whit_user.descripcion, v_orders_whit_user.talla, v_orders_whit_user.marca, v_orders_whit_user.cantidad, v_orders_whit_user.precio, v_orders_whit_user.direccion,
+v_orders_whit_user.imagen, v_orders_whit_user.subTotal, v_orders_whit_user.Total, v_orders_whit_user.estado_pago, v_orders_whit_user.id_envio, v_orders_whit_user.estado_pedido, v_orders_whit_user.nombre_comuna,
+v_orders_whit_user.fecha_pedido
+GO
+
+sp_list_orders_pending
+
+/*
+DROP PROCEDURE sp_list_orders_pending
+CREATE PROCEDURE sp_list_orders_pending
+AS
+DECLARE @contador INT, 
+@id_carrito INT
+SELECT @contador = COUNT(orden_carrito_compra.id_carrito) as cantidad_id, orden_carrito_compra.id_carrito from orden_carrito_compra GROUP BY id_carrito
+SELECT @contador, orden_carrito_compra.id_carrito,
+id_producto, categoria, nombre_producto, marca, precio, descripcion, cantidad, talla, subTotal, Total,
+Nombre, Apellido, email, fecha_pedido, estado_pago, estado_pedido
+FROM orden_carrito
+INNER JOIN orden_carrito_compra
+ON orden_carrito.id_cesta = orden_carrito_compra.id_carrito
+INNER JOIN orden_usuario
+ON orden_carrito.id_persona = orden_usuario.id
+INNER JOIN orden_medio_pago
+ON orden_carrito.id_tipo_medio_pago = orden_medio_pago.id_tipo_medio_pago
+INNER JOIN orden_id_estado_pago
+ON orden_id_estado_pago.id_estado_pago = orden_carrito.id_estado_pago
+INNER JOIN orden_estado_pedido
+ON orden_estado_pedido.id_envio = orden_carrito.id_envio
+
+
+-- order by id_cesta , mas reciente y por estado
+GO
+*/
+
+SELECT * FROM usuario
