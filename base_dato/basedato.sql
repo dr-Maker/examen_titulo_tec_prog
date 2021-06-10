@@ -114,6 +114,7 @@ SELECT * FROM stocks_and_price
 TRUNCATE TABLE stocks_and_price
 
 
+TRUNCATE TABLE lista_productos
 SELECT * FROM stocks_and_price
 SELECT * FROM sizesProduct
 
@@ -226,8 +227,12 @@ FOREIGN KEY (id_carrito) REFERENCES orden_carrito(id_cesta)
 
 
 ==================================================
-SELECT * FROM usuario
+DELETE FROM usuario WHERE id = 10003
+
+DELETE 
+
+select * from usuario
 
 
 
-
+SELECT * FROM lista

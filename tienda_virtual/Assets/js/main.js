@@ -192,7 +192,14 @@
             $("#btn_add_talla_product").removeClass("btn_disable");
         }
     });
-   
+
+    $(".product").hover(function () {
+        $(this).children().children().children().css("display", "block");
+      
+    }, function () {
+        $(".look-product").css("display", "none");
+       
+    })
 });
 
 function goPage(page) {

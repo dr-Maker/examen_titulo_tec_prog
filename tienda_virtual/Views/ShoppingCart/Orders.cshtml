@@ -43,7 +43,7 @@
                             if (ordenes.Cest_count == 1)
                             {
                                 <td>@ordenes.Id_cart</td>
-                                <td>@producto.Id_product</td>
+                                <td><a href="@Url.Action("Product", "Product", new { id = @producto.Id_product }, null)"><i class="fas fa-search"></i> Ver producto</a></td>                               
                                 <td>
                                     <div >
                                         <img src="~/Assets/uploads/@producto.Imagen" />
@@ -71,7 +71,7 @@
                                 {
 
                                     <td rowspan="@ordenes.Cest_count">@ordenes.Id_cart</td>
-                                    <td>@producto.Id_product</td>
+                                    <td><a href="@Url.Action("Product", "Product", new { id = @producto.Id_product }, null)"><i class="fas fa-search"></i> Ver producto</a></td>
                                     <td>
                                         <div>
                                             <img src="~/Assets/uploads/@producto.Imagen" />
@@ -97,7 +97,7 @@
                                 else
                                 {
 
-                                    <td>@producto.Id_product</td>
+                                    <td><a href="@Url.Action("Product", "Product", new { id = @producto.Id_product }, null)"><i class="fas fa-search"></i> Ver producto</a></td>
                                     <td>
                                         <div>
                                             <img src="~/Assets/uploads/@producto.Imagen" />

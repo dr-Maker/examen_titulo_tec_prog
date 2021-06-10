@@ -270,11 +270,23 @@ main, .div_remplace {
     width: 300px;
     margin: 0 auto;
     max-height:235px;
+    position: relative;
 }
-            .buy {
-                width: 30%;
-                margin: 0 auto;
-            }
+.look-product {
+    display:none;
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    color: rgba(28,116,189,1);
+    background-color:rgba(0,0,0,0.36);
+    font-size: 1.2rem;
+}
+
+
+    .buy {
+        width: 30%;
+        margin: 0 auto;
+    }
 .volver-product {
     margin-left: 80%;
     padding: 10px;
@@ -566,4 +578,7 @@ background-color:rgba(105,140,218,1);
     padding: 2px;
     background-color: rgba(157,170,181, 0.41);
     text-transform: uppercase;
+}
+.btn_numero_pag {
+cursor:pointer;
 }

@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_layout.cshtml";
     ShoppingCartModel Shopping = ViewBag.Shopping;
     List<ProductModel> ProductoList = ViewBag.ProductList;
- }
+    string active = string.Empty;
+    }
 
 
 <div class="w-100 height background-color">
@@ -14,6 +15,7 @@
     <br>
     @if (ProductoList != null)
     {
+        active = "activo";
         <div class="contenedor-lista-compra">
         <table class="tab">
             <thead class="txt-center">
@@ -46,10 +48,16 @@
                         </td>
                         <td>@item.Name_product</td>
                         <td>@item.Talla.Size</td>
-                        <td>@item.Price</td>
+                        <td>$ @item.Price.ToString("N0")</td>
                         <td>
                             <div class="d-flex">
-                                <a  style="width:33%; margin:0 auto; padding-top: 15%;" href="@Url.Action("RestProduct", "ShoppingCart" , new {id = @item.Id_cesta }, null)">-</a> <p  style="width:33%;">@item.Cantidad</p> <a  style="width:33%; padding-top:15%;" href="@Url.Action("AddShoppingCart", "ShoppingCart" , new {id = @item.Id_cesta }, null)">+</a>
+
+                                @if (@item.Cantidad > 1)
+                                {
+                                    <a style="width:33%; margin:0 auto; padding-top: 15%;" href="@Url.Action("RestProduct", "ShoppingCart" , new {id = @item.Id_cesta }, null)">-</a>
+                                }
+                                <p style="width:33%;">@item.Cantidad</p>
+                                <a style="width:33%; padding-top:15%;" href="@Url.Action("AddShoppingCart", "ShoppingCart" , new {id = @item.Id_cesta }, null)">+</a>
                             </div>
                         </td>
                         
@@ -66,6 +74,7 @@
     }
     else
     {
+        active = "inactivo";
     <h2 class="txt-center">Su Canasta de Compra esta Vacía </h2>
     }
 
@@ -88,7 +97,14 @@
                 @if (@Session["user"] != "")
                 {
                 <div class="d-flex opt-cart-shopping-product">
-                    <a class="txt-center btn-shopping-cart" href="@Url.Action("DoShopping", "ShoppingCart")"><i class="fas fa-cash-register"></i> Hacer Pedido</a>
+                    @if (active == "activo")
+                    {
+                        <a class="txt-center btn-shopping-cart" href="@Url.Action("DoShopping", "ShoppingCart")"><i class="fas fa-cash-register"></i> Hacer Pedido</a>
+                    }
+                    else
+                    {
+                        <a class="txt-center btn-shopping-cart" href="@Url.Action("Index", "Product" ,  new { id=1 })"><i class="fas fa-store"></i> Agregue producto</a>
+                    }
                 </div>
                 }
                 else
