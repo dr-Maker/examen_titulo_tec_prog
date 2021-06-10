@@ -67,10 +67,11 @@ width:33%;
 .height-rrhh {
     height: calc(100vh - 48%);
 }
-    img {
-        width: 100%;
-        max-height: 235px;
-    }
+img {
+    width: 100%;
+    max-height: 235px;
+    border-radius: 12px;
+}
 .txt-center {
     text-align:center;
 }
